@@ -10,6 +10,8 @@ import Playernavigationbar from "./bars/Playernavigationbar";
 import Organizernavigationbar from "./bars/Organizernavigationbar";
 import Adminnavigationbar from "./bars/Adminnavigationbar";
 import Dashboard from "./profilePages/Dashboard";
+import Requests from "./profilePages/requestsPage/Requests";
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +19,7 @@ function App() {
         <Route exact path="player" element={<Playernavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<Playerprofile />} />
+          
           <Route
             exact
             path="profileSettings"
@@ -36,6 +39,7 @@ function App() {
         <Route path="admin" element={<Adminnavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<AdminProfile />} />
+          <Route path="requests" element={<Requests/>}/>
           <Route
             exact
             path="profileSettings"

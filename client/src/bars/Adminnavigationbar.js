@@ -16,7 +16,7 @@ function Adminnavigationbar(pros) {
           <Nav className="mr-auto">
             <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
-            <Nav.Link href="organizerrequests">Organizer Requests</Nav.Link>
+            <Nav.Link href="requests">Organizer Requests</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -17,6 +17,23 @@ const getProfile = async (req, res) => {
     });
 };
 
+const getRequests = async (req,res) =>{
+  await adminModel
+  .getRequests()
+  .then((result)=>{
+    res.json({
+      success: true,
+      result,
+    });
+  })
+  .catch((err)=>{
+    res.json({
+      success: false,
+      err,
+    });
+  });
+};
+
 const updateProfile = async (req, res) => {
   await adminModel
     .updateProfile(req.body)
@@ -47,8 +64,39 @@ const confirmPasswords = async (req, res) => {
       });
     });
 };
+
+const acceptRequest = async (req,res) =>{
+  await adminModel
+  .acceptRequest(req.body)
+  .then((result)=>{
+    res.json({success:true, result});
+  })
+  .catch((err)=>{
+    res.json({
+      success:false,
+      err,
+    });
+  });
+};
+
+const rejectRequest = async (req,res) =>{
+  await adminModel
+  .rejectRequest(req.body)
+  .then((result)=>{
+    res.json({success:true, result});
+  })
+  .catch((err)=>{
+    res.json({
+      success:false,
+      err,
+    });
+  });
+};
 module.exports = {
   getProfile,
+  getRequests,
   updateProfile,
   confirmPasswords,
+  acceptRequest,
+  rejectRequest
 };
