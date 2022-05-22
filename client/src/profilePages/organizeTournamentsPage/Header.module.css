@@ -1,0 +1,43 @@
+header {
+    /* background-color: rgb(65, 18, 82); */
+    /* margin: auto -16px; */
+    /* padding: 2px 30px; */
+    /* box-shadow: 0 0 10px 0 black; */
+    /* margin: 16px; */
+  }
+  
+
+header button {
+
+  border-radius: 50%;
+  padding: 5px 5px 8px 5px;
+  margin: 10px;
+  border: none;
+  width: 40px;
+  margin-left: 95%;
+  transition: transform .2s; 
+}  
+
+header button:hover{
+
+  transform: scale(1.2)
+
+}
+
+.footer-btn{
+  border-radius: 10px;
+  width: 60px;
+  background-color: rgba(0, 0, 0, 0.795);
+  color: #fff;
+  padding: 5px 5px 8px 5px;
+  margin: 10px;
+  border: none;
+  transition: transform .2s;
+}
+
+.footer-btn:hover{
+
+  transform: scale(1.1)
+
+}
+
