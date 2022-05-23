@@ -4,19 +4,18 @@ import { Nav, Navbar } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import { Outlet } from "react-router-dom";
 
-function Adminnavigationbar(pros) {
+export default function HomeNavbar() {
   return (
     <div className="NavDiv">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand style={{ paddingLeft: 30 }} href="dashboard">
-          {pros.username} Dashboard
+        <Navbar.Brand style={{ paddingLeft: 30 }} >
+           IJ Games
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="profile">Profile</Nav.Link>
-            <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
-            <Nav.Link href="organizerrequests">Organizer Requests</Nav.Link>
+        <Navbar.Collapse id="responsive-navbar-nav" >
+          <Nav className="mr-auto" style={{paddingLeft:"80vw"}}>
+            <Nav.Link href="login" >LOGIN</Nav.Link>
+            
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -25,4 +24,4 @@ function Adminnavigationbar(pros) {
   );
 }
 
-export default Adminnavigationbar;
+
