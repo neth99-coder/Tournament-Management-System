@@ -43,7 +43,7 @@ const Table = (props) => {
                    
                 </td>
     
-                <td><button type="button" className="btn btn-success" onClick={handleClick} id={'btn '+cur.REQUEST_ID}>View</button></td>
+                <td><button type="button view-btn" className="btn btn-success" onClick={handleClick} id={'btn '+cur.REQUEST_ID}>View</button></td>
             </tr>)
                 })}
 

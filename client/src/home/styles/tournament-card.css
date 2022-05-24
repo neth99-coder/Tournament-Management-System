@@ -1,0 +1,16 @@
+.card{
+ 
+  width: 180px;
+  height: 250px;
+  background-image: url("/src/images/tournament-bg.jpg");
+  border: 2px rgba(238, 233, 233, 0.626) solid;
+  padding: 10px;
+  color:rgb(205, 211, 218);
+  text-align: center;
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+  
+}
+
+
