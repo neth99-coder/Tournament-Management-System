@@ -25,9 +25,9 @@ export default function TournamentCard(props) {
             <div>{props.data.GAME}</div>
             <div>{date}</div>
             <div>{time}</div>
-            <button type="button" className="btn btn-light btn-sm">
+            <div type="button reg-now" className="btn btn-light btn-sm">
                 REGISTER NOW
-            </button>
+            </div>
 
         </div>
     );

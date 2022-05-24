@@ -16,6 +16,40 @@ const getProfile = async (req, res) => {
     });
 };
 
+const getTournaments = async (req, res) => {
+  await organizerModel
+    .getTournaments(req.params.organizerID)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const getGameTypes = async (req, res) => {
+  await organizerModel
+    .getGameTypes()
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 const updateProfile = async (req, res) => {
   await organizerModel
     .updateProfile(req.body)
@@ -46,8 +80,26 @@ const confirmPasswords = async (req, res) => {
       });
     });
 };
+
+const createNewTournament = async (req, res) => {
+  await organizerModel
+    .createNewTournament(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   confirmPasswords,
+  getTournaments,
+  getGameTypes,
+  createNewTournament
 };

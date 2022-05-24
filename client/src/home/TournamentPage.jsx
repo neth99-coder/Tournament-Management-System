@@ -162,7 +162,15 @@ export default function TournamentPage(props) {
             <Button
               variant="outline-dark"
               style={{ color: "white", borderColor: "white" }}
-              onClick={handleSubmit}
+              onClick={(e)=>{
+                if(team!=''){
+                  handleSubmit(e)
+                }
+                else{
+                  alert("team name cannot be empty")
+                }
+                
+              }}
               
             >
               Submit
