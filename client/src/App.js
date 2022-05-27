@@ -13,12 +13,19 @@ import Dashboard from "./profilePages/Dashboard";
 import Requests from "./profilePages/requestsPage/Requests";
 import OrganizeTournaments from "./profilePages/organizeTournamentsPage/OrganizeTournaments";
 import OrganizedTournament from "./profilePages/organizeTournamentsPage/OrganizedTournament";
+import Home from "./home/Home"
+import TournamentPage from "./home/TournamentPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<Home/>}/>
+        <Route path="/tournamentPage" element={<TournamentPage/>}/>
         <Route exact path="player" element={<Playernavigationbar />}>
+
+        
+
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<Playerprofile />} />
           
