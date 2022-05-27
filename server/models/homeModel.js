@@ -22,7 +22,7 @@ function addNewTeamRequest(data) {
     let playerId = data.playerID;
     let tournamentId = data.tournamentID;
     let team = data.teamName;
-    
+
 
     const sql = `insert into PLAYER_TOURNAMENT values(null,${playerId},${tournamentId});`;
     const sql2 = `select PLAYER_TOURNAMENT_ID from PLAYER_TOURNAMENT where PLAYER_ID=${playerId} and TOURNAMENT_ID=${tournamentId};`
@@ -31,15 +31,15 @@ function addNewTeamRequest(data) {
       if (err) {
         return reject(err);
       } else {
-        
+
         db.query(sql2, (err2, result2) => {
           if (err2) {
             console.log(err2);
             return reject(err2);
           } else {
-            
+
             const p_t_id = result2[0].PLAYER_TOURNAMENT_ID;
-            
+
             const sql3 = `insert into TEAM_REQUEST(PLAYER_TOURNAMENT_ID,TEAM_NAME) values(${p_t_id},"${team}");`;
             db.query(sql3, (err3, result3) => {
               if (err3) {
@@ -56,5 +56,125 @@ function addNewTeamRequest(data) {
   });
 }
 
+function getTeams(data) {
 
-module.exports = { getTournaments, addNewTeamRequest };
+  return new Promise((resolve, reject) => {
+
+    var sql = `select TEAM_ID,NAME from TEAM,PLAYER_TOURNAMENT WHERE TEAM.LEADER_TOURNAMENT_ID=PLAYER_TOURNAMENT.PLAYER_TOURNAMENT_ID and PLAYER_TOURNAMENT.TOURNAMENT_ID=${data.tournamentID};`;
+    db.query(sql, (err, result) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(result);
+      }
+    });
+  });
+}
+
+// function joinTeam(data) {
+
+//   return new Promise((resolve, reject) => {
+//     console.log(data);
+//     var sql = `start  transaction;insert into PLAYER_TEAM values(null,${data.playerId},${data.teamID});insert into PLAYER_TOURNAMENT values(null,${data.playerId},${data.tournamentID});commit ;`;
+//     db.query(sql, (err, result) => {
+//       if (err) {
+//         console.log(err)
+//         return reject(err);
+//       } else {
+
+//         return resolve(result);
+//       }
+//     });
+//   });
+// }
+function joinTeam(data) {
+
+  return new Promise((resolve, reject) => {
+    db.beginTransaction(function (err) {
+      if (err) { console.log(err);reject(err); }
+      db.query(`insert into PLAYER_TEAM values(null,${data.playerId},${data.teamID});`, function (err, result) {
+        if (err) {
+          db.rollback(function () {
+            console.log(err);
+            reject(err);
+          });
+        }
+        db.query(`insert into PLAYER_TOURNAMENT values(null,${data.playerId},${data.tournamentID});`, function (err, result) {
+          if (err) {
+            db.rollback(function () {
+              console.log(err);
+              reject(err);
+            });
+          }
+          db.commit(function (err,result) {
+            if (err) {
+              db.rollback(function () {
+                console.log(err);
+                reject(err);
+              });
+            }else {
+              return resolve(result);
+            }
+          });
+        });
+      });
+    });
+  });
+}
+
+// function leaveTeam(data) {
+
+//   return new Promise((resolve, reject) => {
+
+//     var sql = `start transaction;
+//     delete from  PLAYER_TEAM where PLAYER_ID=${data.playerId} and TEAM_ID=${data.teamID};
+//     delete from PLAYER_TOURNAMENT where PLAYER_ID=${data.playerId} and TOURNAMENT_ID=${data.tournamentID};
+//     commit;`;
+//     db.query(sql, (err, result) => {
+//       if (err) {
+
+//         return reject(err);
+//       } else {
+
+//         return resolve(result);
+//       }
+//     });
+//   });
+// }
+
+function leaveTeam(data) {
+
+  return new Promise((resolve, reject) => {
+    db.beginTransaction(function (err) {
+      if (err) { console.log(err);reject(err); }
+      db.query(`delete from  PLAYER_TEAM where PLAYER_ID=${data.playerId} and TEAM_ID=${data.teamID};`, function (err, result) {
+        if (err) {
+          db.rollback(function () {
+            console.log(err);
+            reject(err);
+          });
+        }
+        db.query(`delete from PLAYER_TOURNAMENT where PLAYER_ID=${data.playerId} and TOURNAMENT_ID=${data.tournamentID};`, function (err, result) {
+          if (err) {
+            db.rollback(function () {
+              console.log(err);
+              reject(err);
+            });
+          }
+          db.commit(function (err,result) {
+            if (err) {
+              db.rollback(function () {
+                console.log(err);
+                reject(err);
+              });
+            }else {
+              return resolve(result);
+            }
+          });
+        });
+      });
+    });
+  });
+}
+
+module.exports = { getTournaments, addNewTeamRequest, getTeams, joinTeam, leaveTeam };
