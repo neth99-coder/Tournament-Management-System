@@ -32,6 +32,60 @@ const addNewTeamRequest = async (req, res) => {
     });
 }
 
+const getTeams = async (req, res) => {
+ 
+  await homeModel
+    .getTeams(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const joinTeam = async (req, res) => {
+ 
+  await homeModel
+    .joinTeam(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const leaveTeam = async (req, res) => {
+ 
+  await homeModel
+    .leaveTeam(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
-  getTournaments,addNewTeamRequest
+  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam
 };
