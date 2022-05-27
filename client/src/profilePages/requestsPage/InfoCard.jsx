@@ -39,11 +39,16 @@ const [validated, setValidated] = useState(false);
 
       const data = {
         reqId:props.request.REQUEST_ID,
+        orgName : props.request.NAME,
         password:password,
         email:props.request.EMAIL
       } ;
 
-      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data);
+      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data)
+      .then((response)=>{
+        if(!response.data.success){alert("Email exist"); return;}
+      })
+      
     }
 
     if (password !== '') { 
