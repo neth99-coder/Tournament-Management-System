@@ -41,8 +41,9 @@ export default function HomeNavbar() {
           left: "0",
           position: "absolute",
           backgroundColor: "black",
-          opacity:"1",
+          opacity:"0.7",
           display:"none",
+          zIndex:"3"
           
         }}
         onClick={()=>{ document.querySelector(".signup-options-overlay").style.display='none';
@@ -70,7 +71,7 @@ export default function HomeNavbar() {
             display: "none",
             flexDirection:"column",
             justifyContent:"space-around",
-      
+            zIndex:"3"
 
           }} >
 
