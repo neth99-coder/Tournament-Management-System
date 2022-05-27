@@ -12,11 +12,17 @@ export default function HomeNavbar() {
            IJ Games
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav" >
-          <Nav className="mr-auto" style={{paddingLeft:"80vw"}}>
+        <Navbar.Collapse id="responsive-navbar-nav"  >
+     
+        <Nav className="ms-auto gap-0"  >
+            <Nav.Link href="login" >SIGN UP</Nav.Link>
+            
+          </Nav>
+          <Nav className="ms" >
             <Nav.Link href="login" >LOGIN</Nav.Link>
             
           </Nav>
+         
         </Navbar.Collapse>
       </Navbar>
       <Outlet />
