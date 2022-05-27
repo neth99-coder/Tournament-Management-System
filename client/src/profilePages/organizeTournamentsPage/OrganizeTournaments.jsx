@@ -22,23 +22,25 @@ const OrganizeTournaments = (props) => {
         
       },[]);
 
-    return (
-        <div>
-            <Header />
-                <div className="row">
-                    {tournaments?.map((cur,index) =>{
-                    return <div className="col-lg-3 col-md-4 col-ms-6"> 
-                    <Link to={`../tournament/${cur.ORGANIZER_ID}`} state={{obj:cur}}>
-                        <Card key={index} id={index} title={cur.NAME}/>
-                        </Link> 
-                    </div>})}
-                </div>
-
-            {/* <TournamentModal />  */}
-
-        </div>
-
-    );
+      if(tournaments.length === 0){return <div className="alert alert-dark" role="alert" style={{marginTop: 30}}> No Organized Tournaments Yet !!</div>}
+      else{
+        return (
+            <div>
+                <Header />
+                    <div className="row">
+                        {tournaments?.map((cur,index) =>{
+                        return <div className="col-lg-3 col-md-4 col-ms-6"> 
+                        <Link to={`../tournament/${cur.ORGANIZER_ID}`} state={{obj:cur}}>
+                            <Card key={index} id={index} title={cur.NAME}/>
+                            </Link> 
+                        </div>})}
+                    </div>
+                    
+            </div>
+    
+        );
+      }
+    
 };
 
 export default OrganizeTournaments;

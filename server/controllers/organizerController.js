@@ -95,11 +95,27 @@ const createNewTournament = async (req, res) => {
     });
 };
 
+const addRequest = async (req, res) => {
+  await organizerModel
+    .addRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+
 module.exports = {
   getProfile,
   updateProfile,
   confirmPasswords,
   getTournaments,
   getGameTypes,
-  createNewTournament
+  createNewTournament,
+  addRequest
 };

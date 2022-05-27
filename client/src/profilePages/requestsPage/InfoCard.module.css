@@ -1,9 +1,10 @@
 .btn-accept{
-    position: absolute;
-    margin-left: 60%;
+    position: relative;
+    float: right;
 }
 
 .btn-reject{
-        position: absolute;
-        margin-left: 72%;
+    position: relative;
+    float: right;
+    margin-right:20px; 
 }

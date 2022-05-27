@@ -115,4 +115,31 @@ function createNewTournament(data){
   })
 }
 
-module.exports = { getProfile,getTournaments,getGameTypes, updateProfile, confirmPasswords,createNewTournament };
+function addRequest(data){
+  return new Promise((resolve,reject)=>{
+
+    const name = data.name;
+    const email = data.email;
+    const proof = data.proof;
+
+    const haveEmail = async ()=>{
+      await db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email],(err,res)=>{
+        if(res != []){
+          return true;
+        }else{
+          return false;
+        }
+    });}
+    if(haveEmail){return reject(new Error("Email exists !!"));}
+    
+    const sql = "INSERT INTO organizer_request (NAME,EMAIL,PROOF) VALUES (?,?,?)";
+
+    db.query(sql,[name,email,proof],(err,result)=>{
+        if(result){return resolve(result);}
+        else{return reject(err);}
+    });
+
+  });
+}
+
+module.exports = { getProfile,getTournaments,getGameTypes, updateProfile, confirmPasswords,createNewTournament, addRequest };

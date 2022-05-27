@@ -44,10 +44,8 @@ const [validated, setValidated] = useState(false);
         email:props.request.EMAIL
       } ;
 
-      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data)
-      .then((response)=>{
-        if(!response.data.success){alert("Email exist"); return;}
-      })
+      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data);
+    
       
     }
 

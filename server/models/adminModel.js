@@ -94,10 +94,6 @@ function acceptRequest(data){
     const status = 1;
     const name = data.orgName;
     
-    if(emailExist){
-       return reject(new Error("Email exisits!!"));
-    }
-  
   bcrypt.genSalt(10, function (err, salt) {
   bcrypt.hash(password, salt, function (err, hash) {
 
@@ -190,14 +186,5 @@ function rejectRequest(data){
   })
 }
 
-function emailExist(email){
-  db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email],(err,res)=>{
-      if(res != []){
-        return true;
-      }else{
-        return false;
-      }
-  });
-}
 
 module.exports = { getProfile, getRequests, updateProfile, confirmPasswords, acceptRequest, rejectRequest };

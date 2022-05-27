@@ -8,4 +8,5 @@ router.get("/games-type",organizerController.getGameTypes);
 router.put("/updateProfile", organizerController.updateProfile);
 router.post("/confirmPasswords", organizerController.confirmPasswords);
 router.post("/submit-new-tournament-form",organizerController.createNewTournament);
+router.post("/submit-new-organizer-form",organizerController.addRequest);
 module.exports = router;
