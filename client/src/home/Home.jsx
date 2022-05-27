@@ -7,7 +7,7 @@ import TournamentsCarousel from "./TournamentsCarousel";
 export default function Home(){
     return(
         <div>
-            <HomeNavbar/>
+            {/* <HomeNavbar/> */}
             <TournamentsCarousel/>
             {/* <TournamentPage/> */}
 

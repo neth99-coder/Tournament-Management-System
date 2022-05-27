@@ -13,22 +13,23 @@ import Dashboard from "./profilePages/Dashboard";
 import Requests from "./profilePages/requestsPage/Requests";
 import OrganizeTournaments from "./profilePages/organizeTournamentsPage/OrganizeTournaments";
 import OrganizedTournament from "./profilePages/organizeTournamentsPage/OrganizedTournament";
-import Home from "./home/Home"
+import Home from "./home/Home";
 import TournamentPage from "./home/TournamentPage";
-
+import HomeNavbar from "./bars/HomeNavbar";
+import Login from "./loginPage/loginPage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Home/>}/>
-        <Route path="/tournamentPage" element={<TournamentPage/>}/>
+        <Route exact path="/" element={<HomeNavbar />}>
+          <Route path="" element={<Home />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+        <Route path="/tournamentPage" element={<TournamentPage />} />
         <Route exact path="player" element={<Playernavigationbar />}>
-
-        
-
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<Playerprofile />} />
-          
+
           <Route
             exact
             path="profileSettings"
@@ -38,20 +39,19 @@ function App() {
         <Route path="organizer" element={<Organizernavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<OrganizerProfile />} />
-          <Route path="tournaments" element={<OrganizeTournaments/>}/>
-          <Route path="tournament/:userid" element={<OrganizedTournament/>}/>
+          <Route path="tournaments" element={<OrganizeTournaments />} />
+          <Route path="tournament/:userid" element={<OrganizedTournament />} />
           <Route
             exact
             path="profileSettings"
             element={<UpdateOrganizerProfile />}
           />
-
         </Route>
 
         <Route path="admin" element={<Adminnavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<AdminProfile />} />
-          <Route path="requests" element={<Requests/>}/>
+          <Route path="requests" element={<Requests />} />
           <Route
             exact
             path="profileSettings"
