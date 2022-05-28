@@ -18,10 +18,10 @@ function getProfile(organizerID) {
   });
 }
 
-function getTournaments(organizerID){
+async function getTournaments(organizerID){
   
-  return new Promise((resolve,reject)=>{
-    var sql = "SELECT * FROM tournament WHERE ORGANIZER_ID = ? ";
+  return await new Promise((resolve,reject)=>{
+    var sql = "SELECT TOURNAMENT_ID,ORGANIZER_ID,NAME,GAME_ID,DATE_FORMAT(START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME  FROM tournament WHERE ORGANIZER_ID = ? ";
     db.query(sql,[organizerID],(err,result)=>{
       if(result){
           // console.log(result); 
@@ -115,31 +115,39 @@ function createNewTournament(data){
   })
 }
 
-function addRequest(data){
-  return new Promise((resolve,reject)=>{
+async function addRequest(data){
+  return await new Promise((resolve,reject)=>{
 
     const name = data.name;
     const email = data.email;
     const proof = data.proof;
+          
+          // await db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email]).then((err,res)=>{
+          //   if(res.length === 0){
+              const sql = "INSERT INTO organizer_request (NAME,EMAIL,PROOF) VALUES (?,?,?)";
+  
+              db.query(sql,[name,email,proof],(err,result)=>{
+                  if(result){return resolve(result);}
+                  else{return reject(err);}
+              });
+            // }else{
+            //   return reject(err);
+            // }
+         });
+    //console.log(haveEmail());
+     //if(haveEmail()){return reject(new Error("Email exists !!"));}
+  }
 
-    const haveEmail = async ()=>{
-      await db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email],(err,res)=>{
-        if(res != []){
-          return true;
-        }else{
-          return false;
-        }
-    });}
-    if(haveEmail){return reject(new Error("Email exists !!"));}
+function emailExist(email){
+  return new Promise((resolve,reject)=>{
     
-    const sql = "INSERT INTO organizer_request (NAME,EMAIL,PROOF) VALUES (?,?,?)";
-
-    db.query(sql,[name,email,proof],(err,result)=>{
-        if(result){return resolve(result);}
-        else{return reject(err);}
-    });
-
-  });
-}
-
-module.exports = { getProfile,getTournaments,getGameTypes, updateProfile, confirmPasswords,createNewTournament, addRequest };
+    db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email],(err,result)=>{
+         if(result){
+            return resolve(result);
+         }else{
+           return reject(err); 
+         }
+    }); 
+  })
+}  
+module.exports = { getProfile,getTournaments,getGameTypes, updateProfile, confirmPasswords,createNewTournament, addRequest, emailExist };

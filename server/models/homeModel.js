@@ -13,7 +13,7 @@ function getTournaments() {
     });
   });
 }
-
+   
 function addNewTeamRequest(data) {
 
 

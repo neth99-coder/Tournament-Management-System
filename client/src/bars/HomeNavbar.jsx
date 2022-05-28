@@ -44,17 +44,27 @@ export default function HomeNavbar() {
 
     if(name !== '' && email !== '' && proof!== ''){
 
-      Axios.post("http://localhost:3001/api/organizer/submit-new-organizer-form",{
-        name : name,
-        email: email,
-        proof:proof
-      
-      })
+      Axios.get("http://localhost:3001/api/organizer/email-exist/"+ email)
       .then((res)=>{
-        if(!res.data.success){
+        //console.log(res.data.result);
+        if(res.data.result.length === 0){
+           Axios.post("http://localhost:3001/api/organizer/submit-new-organizer-form",{
+            name : name,
+            email: email,
+            proof:proof
+          
+          }).then((res)=>{
+            if(res.data.success){
+              window.location.reload(false);
+            }
+          })
+          
+        }else{
           setShowAlert(true);
         }
-      });
+      })
+    
+
       
     }
     
