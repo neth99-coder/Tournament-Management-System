@@ -15,7 +15,7 @@ function Playerprofile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/player/getProfile/2")
+      .get("http://localhost:3001/api/player/getProfile/1")
       .then((response) => {
         const data = response.data.result[0];
         setCountry(data["COUNTRY"]);
@@ -28,11 +28,10 @@ function Playerprofile() {
       });
   }, [ID, country, name, email, gender, profilePic]);
 
-  
   return (
     <>
       {/* <Navigationbar username={name} /> */}
-      <form >
+      <form>
         <div className="container rounded bg-white mt-5 mb-5">
           <div className="row">
             <div className="col-md-3 border-right">
@@ -150,7 +149,6 @@ function Playerprofile() {
           </div>
         </div>
       </form>
-
     </>
   );
 }

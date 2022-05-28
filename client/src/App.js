@@ -11,6 +11,7 @@ import Organizernavigationbar from "./bars/Organizernavigationbar";
 import Adminnavigationbar from "./bars/Adminnavigationbar";
 import Dashboard from "./profilePages/Dashboard";
 import Requests from "./profilePages/requestsPage/Requests";
+import TeamRequests from "./profilePages/teamRequestsPage/TeamRequests";
 import OrganizeTournaments from "./profilePages/organizeTournamentsPage/OrganizeTournaments";
 import OrganizedTournament from "./profilePages/organizeTournamentsPage/OrganizedTournament";
 import Home from "./home/Home";
@@ -41,6 +42,7 @@ function App() {
           <Route path="profile" element={<OrganizerProfile />} />
           <Route path="tournaments" element={<OrganizeTournaments />} />
           <Route path="tournament/:userid" element={<OrganizedTournament />} />
+          <Route path="teamrequests" element={<TeamRequests />} />
           <Route
             exact
             path="profileSettings"

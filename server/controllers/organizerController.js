@@ -122,7 +122,53 @@ const emailExist = async (req, res) => {
       });
     });
 };
-module.exports = { 
+
+const getTeamRequest = async (req, res) => {
+  await organizerModel
+    .getTeamRequest()
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const acceptTeamRequest = async (req, res) => {
+  await organizerModel
+    .acceptTeamRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const rejectTeamRequest = async (req, res) => {
+  await organizerModel
+    .rejectTeamRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+module.exports = {
   getProfile,
   updateProfile,
   confirmPasswords,
@@ -130,5 +176,8 @@ module.exports = {
   getGameTypes,
   createNewTournament,
   addRequest,
-  emailExist
+  emailExist,
+  getTeamRequest,
+  acceptTeamRequest,
+  rejectTeamRequest,
 };
