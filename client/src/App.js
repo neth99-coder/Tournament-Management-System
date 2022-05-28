@@ -17,7 +17,21 @@ import Home from "./home/Home";
 import TournamentPage from "./home/TournamentPage";
 import HomeNavbar from "./bars/HomeNavbar";
 import Login from "./loginPage/loginPage";
+import { useEffect, useState } from "react";
+import AuthService from "./services/auth.service";
+
 function App() {
+  // const [currentUser, setCurrentUser] = useState(undefined);
+
+  useEffect(() => {
+    // const user = AuthService.getCurrentUser();
+    AuthService.login({
+      email: "hasitha.19@cse.mrt.ac.lk",
+      password: "12345",
+      type: 0,
+    });
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
