@@ -144,21 +144,6 @@ function acceptTeamRequest(data) {
   return new Promise((resolve, reject) => {
     const request_id = data.request_id;
     const status = 1;
-    const sql = "UPDATE team_request SET status=? WHERE request_id=?";
-    db.query(sql, [status, request_id], (err, result) => {
-      if (err) {
-        return reject(err);
-      } else {
-        return resolve(result);
-      }
-    });
-  });
-}
-
-function acceptTeamRequest(data) {
-  return new Promise((resolve, reject) => {
-    const request_id = data.request_id;
-    const status = 1;
     const leader_tournament_id = data.player_id;
     const name = data.team_name;
 
