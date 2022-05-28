@@ -4,3 +4,23 @@
     text-align: center;
 }
 
+.footer-btn{
+    border-radius: 10px;
+    width: 65px;
+    background-color: rgba(0, 0, 0, 0.795);
+    color: #fff;
+    padding: 5px 5px 8px 5px;
+    margin: 10px;
+    border: none;
+    transition: transform .2s;
+  }
+
+.footer-btn:hover{
+
+    transform: scale(1.1)
+  
+  }
+
+.input{
+    margin: 5px;
+}

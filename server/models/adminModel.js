@@ -92,37 +92,66 @@ function acceptRequest(data){
     const password = data.password.toString();
     const email = data.email;
     const status = 1;
-  
-  
+    const name = data.orgName;
+    
   bcrypt.genSalt(10, function (err, salt) {
   bcrypt.hash(password, salt, function (err, hash) {
-    const sql = "UPDATE organizer_request SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
+
+    try{
+      db.beginTransaction((err)=>{
+
+      if(err){throw err;}
+        
+      const sql = "UPDATE organizer_request SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
   
-    db.query(sql,[status,hash,id],(err,result)=>{
-        if(result){
-            //console.log(id+ " this is email");
-            var mailOptions = {
-                from: 'squ4doption@gmail.com',
-                to: email,
-                subject: 'Temporary Password For IJGmaes Organizer account',
-                text: 'Password: '+ password
-              };
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                  return reject(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                  return resolve("Email Sent");
-                }
-              });
-        }
-        else{return reject(err);}
-    });
+      db.query(sql,[status,hash,id],(err,result)=>{
+
+          if(result){
+              //console.log(id+ " this is email");
+            const sql = "INSERT INTO organizer (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
+            db.query(sql,[name,email,hash],(err,result)=>{
+              if(err){throw err;}
+              else{
+                db.commit((err)=>{
+                  if(err){
+                    throw err;
+                  }else{
+                    //db.end();
+                  }   
+                });
+                var mailOptions = {
+                  from: 'squ4doption@gmail.com',
+                  to: email,
+                  subject: 'Temporary Password For IJGmaes Organizer account',
+                  text: 'Password: '+ password
+                };
+                transporter.sendMail(mailOptions, function(error, info){
+                  if (error) {
+                    console.log(error);
+                    throw err;
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                    return resolve("Email Sent");
+                  }
+                });
+              }
+            });
+
+          }
+          else{throw err;}
+      });      
+      });
+
+    }
+    catch (err){
+        db.rollback();
+        return reject(err);
+    }
+
   });
   });
 
-  }) 
+  }); 
 
 }
 
@@ -156,7 +185,6 @@ function rejectRequest(data){
     });    
   })
 }
-
 
 
 module.exports = { getProfile, getRequests, updateProfile, confirmPasswords, acceptRequest, rejectRequest };

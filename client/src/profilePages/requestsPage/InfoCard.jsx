@@ -39,11 +39,14 @@ const [validated, setValidated] = useState(false);
 
       const data = {
         reqId:props.request.REQUEST_ID,
+        orgName : props.request.NAME,
         password:password,
         email:props.request.EMAIL
       } ;
 
       Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data);
+    
+      
     }
 
     if (password !== '') { 

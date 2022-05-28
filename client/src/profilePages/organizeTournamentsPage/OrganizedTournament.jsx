@@ -11,12 +11,12 @@ const OrganizedTournament = (props) => {
     // const endDateTime = new Date(obj.END_DATETIME);
     // const registerCloseDateTime = new Date(obj.REGISTERCLOSE_DATETIME);
 
-    const startDate = obj.START_DATETIME.split("T")[0];
-    const startTime = obj.START_DATETIME.split("T")[1];
-    const endDate = obj.END_DATETIME.split("T")[0];
-    const endTime = obj.END_DATETIME.split("T")[1];
-    const registerCloseDate = obj.REGISTERCLOSE_DATETIME.split("T")[0];
-    const registerCloseTime = obj.REGISTERCLOSE_DATETIME.split("T")[1];
+    const startDate = obj.START_DATETIME.split(" ")[0];
+    const startTime = obj.START_DATETIME.split(" ")[1];
+    const endDate = obj.END_DATETIME.split(" ")[0];
+    const endTime = obj.END_DATETIME.split(" ")[1];
+    const registerCloseDate = obj.REGISTERCLOSE_DATETIME.split(" ")[0];
+    const registerCloseTime = obj.REGISTERCLOSE_DATETIME.split(" ")[1];
     
  
     return (
