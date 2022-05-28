@@ -95,11 +95,59 @@ const createNewTournament = async (req, res) => {
     });
 };
 
+const getTeamRequest = async (req, res) => {
+  await organizerModel
+    .getTeamRequest()
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const acceptTeamRequest = async (req, res) => {
+  await organizerModel
+    .acceptTeamRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const rejectTeamRequest = async (req, res) => {
+  await organizerModel
+    .rejectTeamRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   confirmPasswords,
   getTournaments,
   getGameTypes,
-  createNewTournament
+  createNewTournament,
+  getTeamRequest,
+  acceptTeamRequest,
+  rejectTeamRequest,
 };

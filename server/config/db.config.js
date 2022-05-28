@@ -1,6 +1,6 @@
 module.exports = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    db: 'ijgames'
-}
+  host: "localhost",
+  user: "root",
+  password: "password",
+  db: "ijgames",
+};

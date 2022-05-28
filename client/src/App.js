@@ -11,6 +11,7 @@ import Organizernavigationbar from "./bars/Organizernavigationbar";
 import Adminnavigationbar from "./bars/Adminnavigationbar";
 import Dashboard from "./profilePages/Dashboard";
 import Requests from "./profilePages/requestsPage/Requests";
+import TeamRequests from "./profilePages/teamRequestsPage/TeamRequests";
 import OrganizeTournaments from "./profilePages/organizeTournamentsPage/OrganizeTournaments";
 import OrganizedTournament from "./profilePages/organizeTournamentsPage/OrganizedTournament";
 
@@ -21,7 +22,7 @@ function App() {
         <Route exact path="player" element={<Playernavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<Playerprofile />} />
-          
+
           <Route
             exact
             path="profileSettings"
@@ -31,20 +32,20 @@ function App() {
         <Route path="organizer" element={<Organizernavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<OrganizerProfile />} />
-          <Route path="tournaments" element={<OrganizeTournaments/>}/>
-          <Route path="tournament/:userid" element={<OrganizedTournament/>}/>
+          <Route path="tournaments" element={<OrganizeTournaments />} />
+          <Route path="tournament/:userid" element={<OrganizedTournament />} />
+          <Route path="teamrequests" element={<TeamRequests />} />
           <Route
             exact
             path="profileSettings"
             element={<UpdateOrganizerProfile />}
           />
-
         </Route>
 
         <Route path="admin" element={<Adminnavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<AdminProfile />} />
-          <Route path="requests" element={<Requests/>}/>
+          <Route path="requests" element={<Requests />} />
           <Route
             exact
             path="profileSettings"
