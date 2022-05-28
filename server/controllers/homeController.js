@@ -86,6 +86,88 @@ const leaveTeam = async (req, res) => {
     });
 };
 
+const register = async (req, res) => {
+ 
+  await homeModel
+    .register(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const unregister = async (req, res) => {
+ 
+  await homeModel
+    .unregister(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const isRegistered = async (req, res) => {
+ 
+  await homeModel
+    .isRegistered(req.body)
+    .then((result) => {
+      console.log(result);
+      if (result.length >0){
+        res.json({
+          success: true,
+          registered:true,
+        });
+      }else{
+        res.json({
+          success: true,
+          registered:false,
+        });
+      }
+      
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const isInTeam = async (req, res) => {
+ 
+  await homeModel
+    .isInTeam(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      console.log(err)
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
-  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam
+  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam,register,unregister,isRegistered,isInTeam
 };

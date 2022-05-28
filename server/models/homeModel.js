@@ -14,6 +14,69 @@ function getTournaments() {
   });
 }
 
+function isInTeam(data){
+
+  return new Promise((resolve, reject) => {
+    
+    var sql = `select TEAM_ID from PLAYER_TEAM where PLAYER_ID=${data.playerId} and TEAM_ID in (select TEAM_ID from TEAM,PLAYER_TOURNAMENT where TEAM.LEADER_TOURNAMENT_ID=PLAYER_TOURNAMENT.PLAYER_TOURNAMENT_ID and TOURNAMENT_ID=${data.tournamentID});
+    `;
+    db.query(sql, (err, result) => {
+      if (err) {
+        return reject(err);
+      } else {
+       
+        return resolve(result);
+      }
+    });
+  });
+}
+
+function isRegistered(data) {
+  return new Promise((resolve, reject) => {
+    var sql = `select * from PLAYER_TOURNAMENT where PLAYER_ID=${data.playerId} and TOURNAMENT_ID=${data.tournamentID};`;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+        return reject(err);
+      } else {
+        return resolve(result);
+      }
+    });
+  });
+}
+
+
+function register(data) {
+  return new Promise((resolve, reject) => {
+    var sql = `insert into PLAYER_TOURNAMENT values(null,${data.playerId},${data.tournamentID});`;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+        return reject(err);
+      } else {
+        return resolve(result);
+      }
+    });
+  });
+}
+
+function unregister(data) {
+  return new Promise((resolve, reject) => {
+    var sql = `delete from PLAYER_TOURNAMENT where PLAYER_ID=${data.playerId} and TOURNAMENT_ID=${data.tournamentID};`;
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.log(err)
+        return reject(err);
+      } else {
+        return resolve(result);
+      }
+    });
+  });
+}
+
+
+
+
 function addNewTeamRequest(data) {
 
 
@@ -177,4 +240,4 @@ function leaveTeam(data) {
   });
 }
 
-module.exports = { getTournaments, addNewTeamRequest, getTeams, joinTeam, leaveTeam };
+module.exports = { getTournaments, addNewTeamRequest, getTeams, joinTeam, leaveTeam,register,unregister,isRegistered ,isInTeam};

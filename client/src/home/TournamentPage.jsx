@@ -12,54 +12,151 @@ export default function TournamentPage(props) {
 
   const [team, setTeam] = useState('');
   const [teamArray, setTeamArray] = useState([]);
-  const [joinedTeam,setJoinedTeam]=useState(null);
+  const [joinedTeam, setJoinedTeam] = useState(null);
+  const [regState, setRegState] = useState('AS INDIVIDUAL');
   
-  const player_id=2;
+
+  const player_id = 4;
 
   const location = useLocation();
 
-  const handleJoinTeam = (event,team_id) => {
+
+  useEffect(() => {
+    axios.post('http://localhost:3001/getReg', { playerId: 4, tournamentID: location.state.TOURNAMENT_ID, }).then(function (response) {
+      // handle success 
+      if (response.data.registered === true && joinedTeam===null) {
+        setRegState('UN REGISTER');
+      }
+    })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+
+      axios.post('http://localhost:3001/isInTeam', { playerId: 4, tournamentID: location.state.TOURNAMENT_ID, }).then(function (response) {
+        // handle success 
+        if(response.data.success===true){
+          if (response.data.result.length>0){
+            setJoinedTeam(response.data.result[0].TEAM_ID)
+          }
+
+        }
+       
+      })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      
+      
+      
+
+
+  }, []);
+
+
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/register', {
+
+      playerId: 4,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          document.querySelector('.team-reg').classList.add('disabled');
+          setRegState('UN REGISTER');
+          alert("registerd successfully!");
+        }
+        else {
+
+          alert("unable to register!")
+        }
+
+      }, (error) => {
+        alert("unable to register!")
+        console.log(error);
+      });
+  }
+
+
+  const handleUnregister = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/unregister', {
+
+      playerId: 4,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          document.querySelector('.team-reg').classList.remove('disabled');
+          setRegState('AS INDIVIDUAL');
+          alert("unregisterd !");
+        }
+        else {
+
+          alert("unable to unregister!")
+        }
+
+      }, (error) => {
+        alert("unable to unregister!")
+        console.log(error);
+      });
+  }
+
+
+  const handleJoinTeam = (event, team_id) => {
     event.preventDefault();
     axios.post('http://localhost:3001/jointeam', {
 
       teamID: team_id,
-      playerId:player_id,
-      tournamentID:location.state.TOURNAMENT_ID,
+      playerId: player_id,
+      tournamentID: location.state.TOURNAMENT_ID,
 
     })
       .then((response) => {
-        if (response.data.success===true){
+        if (response.data.success === true) {
           setJoinedTeam(team_id);
-        alert("joined!");}
-        else{
-          
+          alert("joined!");
+          document.querySelector('.ind-reg').classList.add('disabled');
+
+        }
+        else {
+
           alert("unable to join!")
         }
 
       }, (error) => {
-        
+        alert("unable to join!")
         console.log(error);
       });
   }
 
   const handleLeaveTeam = (event) => {
-  
+
     event.preventDefault();
     axios.post('http://localhost:3001/leaveteam', {
 
       teamID: joinedTeam,
-      playerId:player_id,
-      tournamentID:location.state.TOURNAMENT_ID,
+      playerId: player_id,
+      tournamentID: location.state.TOURNAMENT_ID,
 
     })
       .then((response) => {
         console.log(response)
-        if (response.data.success===true){setJoinedTeam(null);
-          alert("left!");}
-        else{
+        if (response.data.success === true) {
+          setJoinedTeam(null);
+          alert("left!");
+          document.querySelector('.ind-reg').classList.remove('disabled');
+
+        }
+        else {
           alert("unable to leave!");
         }
-        
+
 
       }, (error) => {
         setJoinedTeam(null);
@@ -235,10 +332,18 @@ export default function TournamentPage(props) {
           style={{ flexDirection: "column", justifyContent: "space-around", height: "200px" }}
         >
 
-          <button type="button" className="btn btn-outline-light">
-            AS INDIVIDUAL
+          <button type="button" className="btn btn-outline-light ind-reg" onClick={(e) => {
+            if (regState === 'AS INDIVIDUAL') {
+
+              handleRegister(e);
+
+            } else {
+              handleUnregister(e);
+            }
+          }}>
+            {regState}
           </button>
-          <button type="button" className="btn btn-outline-light" onClick={(e) => {
+          <button type="button" className="btn btn-outline-light team-reg" onClick={(e) => {
             handleViewTeams(e);
             document.querySelector(".select-team-overlay").style.display = 'block';
             document.querySelector(".select-team-box").style.display = 'block';
@@ -262,31 +367,31 @@ export default function TournamentPage(props) {
 
           {
             teamArray.map((item, i) => {
-            if (joinedTeam!=null){
-            if(joinedTeam === item['TEAM_ID']){
-              return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
-              <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
-              <button type="button" class="btn btn-dark" onClick={(e)=>{
-                handleLeaveTeam(e);
-              }}>Leave</button>
-            </div>)
-            }
-            else{
-            return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
-              <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
-              <button type="button" class="btn btn-dark disabled" >Join</button>
-            </div>)
-            }
-          }else{
-            return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
-              <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
-              <button type="button" class="btn btn-dark " onClick={(e)=>{
-               
-                handleJoinTeam(e,item['TEAM_ID']);
-              }}>Join</button>
-            </div>)
-          }
-          })}
+              if (joinedTeam != null) {
+                if (joinedTeam === item['TEAM_ID']) {
+                  return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                    <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                    <button type="button" class="btn btn-dark" onClick={(e) => {
+                      handleLeaveTeam(e);
+                    }}>Leave</button>
+                  </div>)
+                }
+                else {
+                  return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                    <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                    <button type="button" class="btn btn-dark disabled" >Join</button>
+                  </div>)
+                }
+              } else {
+                return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                  <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                  <button type="button" class="btn btn-dark " onClick={(e) => {
+
+                    handleJoinTeam(e, item['TEAM_ID']);
+                  }}>Join</button>
+                </div>)
+              }
+            })}
 
         </div>
       </div>
