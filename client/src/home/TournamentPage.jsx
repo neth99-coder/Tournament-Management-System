@@ -2,43 +2,208 @@ import axios from "axios";
 import { React, useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./styles/tournament-card.css";
+import "./styles/overlay-model.css";
 import HomeNavbar from "../bars/HomeNavbar";
 import { useLocation } from "react-router-dom";
 
 
+
 export default function TournamentPage(props) {
-    
-    const [team,setTeam]=useState('');
-    
-    const location = useLocation();
 
-    
+  const [team, setTeam] = useState('');
+  const [teamArray, setTeamArray] = useState([]);
+  const [joinedTeam, setJoinedTeam] = useState(null);
+  const [regState, setRegState] = useState('AS INDIVIDUAL');
+  
 
-    const handleSubmit =(event)=>{
-        event.preventDefault();
-        axios.post('http://localhost:3001/teamreq', {
-            playerID: 2,
-            tournamentID: location.state.TOURNAMENT_ID,
-            teamName:team
-          })
-          .then((response) => {
-            alert("Team Create Request Sent!");
-            window.location.reload();
-            
-          }, (error) => {
-            console.log(error);
-          });
-    }
+  const player_id = 4;
+
+  const location = useLocation();
 
 
-    return (
+  useEffect(() => {
+    axios.post('http://localhost:3001/getReg', { playerId: 4, tournamentID: location.state.TOURNAMENT_ID, }).then(function (response) {
+      // handle success 
+      if (response.data.registered === true && joinedTeam===null) {
+        setRegState('UN REGISTER');
+      }
+    })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+
+      axios.post('http://localhost:3001/isInTeam', { playerId: 4, tournamentID: location.state.TOURNAMENT_ID, }).then(function (response) {
+        // handle success 
+        if(response.data.success===true){
+          if (response.data.result.length>0){
+            setJoinedTeam(response.data.result[0].TEAM_ID)
+          }
+
+        }
+       
+      })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+      
+      
+      
+
+
+  }, []);
+
+
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/register', {
+
+      playerId: 4,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          document.querySelector('.team-reg').classList.add('disabled');
+          setRegState('UN REGISTER');
+          alert("registerd successfully!");
+        }
+        else {
+
+          alert("unable to register!")
+        }
+
+      }, (error) => {
+        alert("unable to register!")
+        console.log(error);
+      });
+  }
+
+
+  const handleUnregister = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/unregister', {
+
+      playerId: 4,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          document.querySelector('.team-reg').classList.remove('disabled');
+          setRegState('AS INDIVIDUAL');
+          alert("unregisterd !");
+        }
+        else {
+
+          alert("unable to unregister!")
+        }
+
+      }, (error) => {
+        alert("unable to unregister!")
+        console.log(error);
+      });
+  }
+
+
+  const handleJoinTeam = (event, team_id) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/jointeam', {
+
+      teamID: team_id,
+      playerId: player_id,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        if (response.data.success === true) {
+          setJoinedTeam(team_id);
+          alert("joined!");
+          document.querySelector('.ind-reg').classList.add('disabled');
+
+        }
+        else {
+
+          alert("unable to join!")
+        }
+
+      }, (error) => {
+        alert("unable to join!")
+        console.log(error);
+      });
+  }
+
+  const handleLeaveTeam = (event) => {
+
+    event.preventDefault();
+    axios.post('http://localhost:3001/leaveteam', {
+
+      teamID: joinedTeam,
+      playerId: player_id,
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        console.log(response)
+        if (response.data.success === true) {
+          setJoinedTeam(null);
+          alert("left!");
+          document.querySelector('.ind-reg').classList.remove('disabled');
+
+        }
+        else {
+          alert("unable to leave!");
+        }
+
+
+      }, (error) => {
+        setJoinedTeam(null);
+        console.log(error);
+      });
+  }
+
+  const handleViewTeams = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/viewteams', {
+
+      tournamentID: location.state.TOURNAMENT_ID,
+
+    })
+      .then((response) => {
+        setTeamArray(response.data.result);
+
+      }, (error) => {
+        console.log(error);
+      });
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3001/teamreq', {
+      playerID: player_id,
+      tournamentID: location.state.TOURNAMENT_ID,
+      teamName: team
+    })
+      .then((response) => {
+        alert("Team Create Request Sent!");
+        window.location.reload();
+
+      }, (error) => {
+        console.log(error);
+      });
+  }
+
+
+  return (
     <div>
-      <HomeNavbar/>
+      <HomeNavbar />
 
       <div
         className="tournament-page-bg"
         style={{
-          top: "80px",
+          top: "85px",
           bottom: "0",
           left: "0",
           right: "0",
@@ -98,85 +263,138 @@ export default function TournamentPage(props) {
             justifyContent: "space-evenly",
           }}
         >
-          <button type="button" className="btn btn-outline-light">
+          <button type="button" className="btn btn-outline-light" onClick={() => {
+            document.querySelector(".reg-options-overlay").style.display = 'block';
+            document.querySelector(".reg-options").style.display = 'flex';
+          }}>
             REGISTER NOW
           </button>
-          <button type="button" className="btn btn-outline-light" onClick={()=>{
-              document.querySelector(".create-team-form-overlay").style.display='block';
-              document.querySelector(".create-team-form").style.display='block';}
+          <button type="button" className="btn btn-outline-light" onClick={() => {
+            document.querySelector(".create-team-form-overlay").style.display = 'block';
+            document.querySelector(".create-team-form").style.display = 'block';
+          }
           }>
             CREATE TEAM
           </button>
         </div>
       </div>
       <div
-        className="create-team-form-overlay"
-        style={{
-          top: "0",
-          bottom: "0",
-          right: "0",
-          left: "0",
-          position: "absolute",
-          backgroundColor: "black",
-         
-          opacity:"0.5",
-          display:"none",
+        className="create-team-form-overlay overlay"
+        onClick={() => {
+          document.querySelector(".create-team-form-overlay").style.display = 'none';
+          document.querySelector(".create-team-form").style.display = 'none';
         }}
-        onClick={()=>{ document.querySelector(".create-team-form-overlay").style.display='none';
-        document.querySelector(".create-team-form").style.display='none';}}
       >
-    </div>
-        <Form className="create-team-form"
-        style={{
-          top: "0",
-          bottom: "0",
-          right: "0",
-          left: "0",
-          width: "300px",
-          margin: "auto",
-          marginTop: "200px",
-          position: "absolute",
-          color: "white",
-          border: "white solid 1px",
-          padding: "30px",
-          paddingTop: "40px",
-          height: "300px",
-          backgroundColor: "black",
-          borderRadius:"10px",
-          opacity:"0.9",
-          display:"none"
-          
-        }} >
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Team Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter team name"
-              required
-              onChange={(e)=>{setTeam(e.target.value);}}
-              style={{ backgroundColor: "black", color: "white" }}
-            />
-          </Form.Group>
+      </div>
+      <Form className="create-team-form model"
+      >
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Team Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter team name"
+            required
+            onChange={(e) => { setTeam(e.target.value); }}
+            style={{ backgroundColor: "black", color: "white" }}
+          />
+        </Form.Group>
 
-          <div style={{ textAlign: "center", paddingTop: "40px" }}>
-            <Button
-              variant="outline-dark"
-              style={{ color: "white", borderColor: "white" }}
-              onClick={(e)=>{
-                if(team!=''){
-                  handleSubmit(e)
-                }
-                else{
-                  alert("team name cannot be empty")
-                }
-                
-              }}
-              
-            >
-              Submit
-            </Button>
-          </div>
+        <div style={{ textAlign: "center", paddingTop: "40px" }}>
+          <Button
+            variant="outline-dark"
+            style={{ color: "white", borderColor: "white" }}
+            onClick={(e) => {
+              if (team != '') {
+                handleSubmit(e)
+              }
+              else {
+                alert("team name cannot be empty")
+              }
+
+            }}
+
+          >
+            Submit
+          </Button>
+        </div>
+      </Form>
+
+
+      <div >
+        <div
+          className="reg-options-overlay overlay"
+          onClick={() => {
+            document.querySelector(".reg-options-overlay").style.display = 'none';
+            document.querySelector(".reg-options").style.display = 'none';
+          }}
+        ></div>
+        <Form className="reg-options model"
+          style={{ flexDirection: "column", justifyContent: "space-around", height: "200px" }}
+        >
+
+          <button type="button" className="btn btn-outline-light ind-reg" onClick={(e) => {
+            if (regState === 'AS INDIVIDUAL') {
+
+              handleRegister(e);
+
+            } else {
+              handleUnregister(e);
+            }
+          }}>
+            {regState}
+          </button>
+          <button type="button" className="btn btn-outline-light team-reg" onClick={(e) => {
+            handleViewTeams(e);
+            document.querySelector(".select-team-overlay").style.display = 'block';
+            document.querySelector(".select-team-box").style.display = 'block';
+          }}>
+            AS TEAM
+          </button>
         </Form>
+      </div>
+
+      <div>
+        <div
+          className="select-team-overlay overlay"
+          onClick={() => {
+            document.querySelector(".select-team-overlay").style.display = 'none';
+            document.querySelector(".select-team-box").style.display = 'none';
+          }}
+        >
+          <h3 style={{ color: "white", marginTop: "90px", marginLeft: "20px" }}>PICK A TEAM</h3>
+        </div>
+        <div className="select-team-box model" style={{ width: "600px", border: "none", backgroundColor: "#F7F8F8" }}>
+
+          {
+            teamArray.map((item, i) => {
+              if (joinedTeam != null) {
+                if (joinedTeam === item['TEAM_ID']) {
+                  return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                    <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                    <button type="button" class="btn btn-dark" onClick={(e) => {
+                      handleLeaveTeam(e);
+                    }}>Leave</button>
+                  </div>)
+                }
+                else {
+                  return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                    <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                    <button type="button" class="btn btn-dark disabled" >Join</button>
+                  </div>)
+                }
+              } else {
+                return (<div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", borderBottom: "1px black solid ", padding: "10px" }}>
+                  <div style={{ color: "black", padding: "10px" }} id={item['TEAM_ID']}>{item['NAME']}</div>
+                  <button type="button" class="btn btn-dark " onClick={(e) => {
+
+                    handleJoinTeam(e, item['TEAM_ID']);
+                  }}>Join</button>
+                </div>)
+              }
+            })}
+
+        </div>
+      </div>
     </div >
   );
 }
