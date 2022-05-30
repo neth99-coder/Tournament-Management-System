@@ -20,6 +20,7 @@ import HomeNavbar from "./bars/HomeNavbar";
 import Login from "./loginPage/loginPage";
 import { useEffect, useState } from "react";
 import AuthService from "./services/auth.service";
+import Signup from "./signupPage/signupPage";
 
 function App() {
   // const [currentUser, setCurrentUser] = useState(undefined);
@@ -40,6 +41,12 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="login" element={<Login />} />
         </Route>
+
+        <Route exact path="/" element={<HomeNavbar />}>
+          <Route path="" element={<Home />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+
         <Route path="/tournamentPage" element={<TournamentPage />} />
         <Route exact path="player" element={<Playernavigationbar />}>
           <Route path="dashboard" element={<Dashboard />} />

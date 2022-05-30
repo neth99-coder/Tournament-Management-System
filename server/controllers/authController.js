@@ -16,6 +16,24 @@ const loginUser = async (req, res) => {
     });
 };
 
+const signupUser = async (req, res) => {
+  await authModel
+    .signupUser(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
   loginUser,
+  signupUser,
 };
