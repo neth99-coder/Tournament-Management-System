@@ -55,7 +55,11 @@ export default function HomeNavbar() {
           
           }).then((res)=>{
             if(res.data.success){
+              alert('request sent');
               window.location.reload(false);
+            }else{
+              alert('cannot send request');
+
             }
           })
           
@@ -164,7 +168,7 @@ export default function HomeNavbar() {
             zIndex: "3",
           }}
         >
-          <button type="button" className="btn btn-outline-light">
+          <button type="button" onClick={()=>{window.location.href="signUp"}} className="btn btn-outline-light">
             AS PLAYER
           </button>
           <button type="button" className="btn btn-outline-light" onClick={handleShow}>

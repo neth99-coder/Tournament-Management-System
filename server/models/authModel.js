@@ -66,10 +66,17 @@ function loginUser(obj) {
 function signupUser(obj) {
   const { name, email, password, gender, dob, country, type} = obj;
 
+<<<<<<< Updated upstream
   console.log("a");
   console.log(type);
 
   console.log(obj);
+=======
+  
+  // console.log(type);
+
+  // console.log(obj);
+>>>>>>> Stashed changes
 
   let user = "";
   return new Promise((resolve, reject) => {
@@ -88,7 +95,11 @@ function signupUser(obj) {
         break;
     }
 
+<<<<<<< Updated upstream
     var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
+=======
+    // var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
+>>>>>>> Stashed changes
 
     console.log(sql);
 
@@ -148,6 +159,11 @@ function signupUser(obj) {
         }
       }
          )
+<<<<<<< Updated upstream
+=======
+      }else{
+        return resolve("user found");
+>>>>>>> Stashed changes
       }
     }
 
