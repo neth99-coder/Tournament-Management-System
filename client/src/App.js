@@ -42,17 +42,10 @@ function App() {
           
         </Route>
 
-<<<<<<< Updated upstream
-        <Route exact path="/" element={<HomeNavbar />}>
-          <Route path="" element={<Home />} />
-          <Route path="signup" element={<Signup />} />
-        </Route>
-=======
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
 
         
->>>>>>> Stashed changes
 
         <Route path="/tournamentPage" element={<TournamentPage />} />
         <Route exact path="player" element={<Playernavigationbar />}>

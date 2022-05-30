@@ -9,6 +9,7 @@ const { use } = require("../transporter/transporter");
 
 function loginUser(obj) {
   const { email, password, type } = obj;
+  console.log(type);
   let user = "";
   return new Promise((resolve, reject) => {
     switch (type) {
@@ -27,6 +28,7 @@ function loginUser(obj) {
     var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
     var isUserIn;
     db.query(sql, (err, result) => {
+      console.log(err);
       isUserIn = result.find((element) => {
         return element.EMAIL === email;
       });
@@ -66,43 +68,17 @@ function loginUser(obj) {
 function signupUser(obj) {
   const { name, email, password, gender, dob, country, type} = obj;
 
-<<<<<<< Updated upstream
   console.log("a");
   console.log(type);
 
   console.log(obj);
-=======
-  
-  // console.log(type);
-
-  // console.log(obj);
->>>>>>> Stashed changes
 
   let user = "";
   return new Promise((resolve, reject) => {
-    console.log("b");
-    switch (type) {
-      case 0:
-        user = "player";
-        break;
-      case 1:
-        user = "organizer";
-        break;
-      case 2:
-        user = "admin";
-        break;
-      default:
-        break;
-    }
 
-<<<<<<< Updated upstream
-    var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
-=======
-    // var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
->>>>>>> Stashed changes
+    var sql = "SELECT player_ID as ID,EMAIL FROM player;";
 
     console.log(sql);
-
 
     var isUserIn;
     db.query(sql, (err, result) => {
@@ -113,11 +89,7 @@ function signupUser(obj) {
         
          bcrypt.hash(password, 8, function (err, hash) {
 
-        switch (type) {
-          case 0:
-            user = "player";
-            //db.query("INSERT INTO " + user + " VALUES")
-            db.query("INSERT INTO " + user + "(name, email, password, gender, dob, country) VALUES (?, ?, ?, ?, ?, ?);", [name, email, hash, gender, dob, country], function (err, result) {
+            db.query("INSERT INTO player (name, email, password, gender, dob, country) VALUES (?, ?, ?, ?, ?, ?);", [name, email, hash, gender, dob, country], function (err, result) {
               if (result) {
                 console.log("inserted");
                 return resolve(result);
@@ -126,44 +98,11 @@ function signupUser(obj) {
                 return reject(err);
               }
             })
-            break;
-          case 1:
-            user = "organizer";
-            db.query("INSERT INTO " + user + "(name, email, password) VALUES (?, ?, ?);", [name, email, hash], function (err, result) {
-              if (result) {
-                console.log("inserted");
-                return resolve(result);
-              } else {
-                console.log(err);
-                return reject(err);
-              }
-            })
-
-            break;
-          case 2:
-            user = "admin";
-
-            db.query("INSERT INTO " + user + "(name, email, password) VALUES (?, ?, ?);", [name, email, hash], function (err, result) {
-              if (result) {
-                console.log("inserted");
-                return resolve(result);
-              } else {
-                console.log(err);
-                return reject(err);
-              }
-            })
-
-            break;
-          default:
-            break;
+          
         }
-      }
          )
-<<<<<<< Updated upstream
-=======
       }else{
         return resolve("user found");
->>>>>>> Stashed changes
       }
     }
 

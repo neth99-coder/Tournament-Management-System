@@ -20,18 +20,10 @@ const signupUser = async (req, res) => {
   await authModel
     .signupUser(req.body)
     .then((result) => {
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
       res.json({
         success: true,
         result,
       });
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
     })
     .catch((err) => {
       res.json({
