@@ -4,7 +4,7 @@ import InfoCard from "./InfoCard";
 const Table = (props) => {
   function handleClick(e) {
     const btnId = e.target.id;
-    const [btn, id] = btnId.split(" ");
+    const [id] = btnId.split(" ")[1];
     const hidden = document.getElementById(id).hidden;
     document.getElementById(id).hidden = !hidden;
   }

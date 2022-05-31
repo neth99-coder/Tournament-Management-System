@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 
 import "./styles/signupPage.css"
@@ -20,11 +20,11 @@ function SignupPage() {
       const data = { name, email, password, gender, dob, country, type: 0 };
       if (name==="" ||email==="" || password===""||dob===null||country==="" || confirmPassword===""){
          alert("fill all fields");
-      }else if (password!=confirmPassword) {
+      }else if (password!==confirmPassword) {
          alert("Passwords don't match")
       } else {
       axios.post("http://localhost:3001/api/auth/signup", data).then(function (res) {
-         if (res.data.result == "user found") {
+         if (res.data.result === "user found") {
             alert("user already exist")
          } else {
 

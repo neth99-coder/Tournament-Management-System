@@ -6,7 +6,7 @@ import Navigationbar from "../bars/Adminnavigationbar";
 import "react-datepicker/dist/react-datepicker.css";
 import axios, { Axios } from "axios";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-
+import authService from "../services/auth.service";
 function AlertBox(props) {
   if (props.props) {
     return (
@@ -141,7 +141,9 @@ function UpdateAdminProfile() {
 
   useEffect(() => {
     const res = axios
-      .get("http://localhost:3001/api/admin/getProfile/2")
+      .get(
+        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID()
+      )
       .then((response) => {
         const data = response.data.result[0];
         setName(data["NAME"]);
