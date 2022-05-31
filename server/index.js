@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const mysql = require("mysql2");
 const playerRoutes = require("./routes/playerRoutes");
 const organizerRoutes = require("./routes/organizerRoutes");
@@ -18,7 +19,7 @@ app.use("/api/player", playerRoutes);
 app.use("/api/organizer", organizerRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/",homeRoutes);
+app.use("/", homeRoutes);
 app.listen(3001, () => {
   console.log("Running server");
 });
