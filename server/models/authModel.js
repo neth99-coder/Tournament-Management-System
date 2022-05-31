@@ -40,8 +40,8 @@ function loginUser(obj) {
         let qry = "SELECT PASSWORD FROM " + user + " WHERE EMAIL=?;";
         db.query(qry, [email], (err, result) => {
           //   bcrypt.hash(password, saltRounds, function (err, hash) {
-            console.log(password);
-            console.log(result[0].PASSWORD);
+          console.log(password);
+          console.log(result[0].PASSWORD);
           bcrypt.compare(password, result[0].PASSWORD, function (err, result) {
             if (result) {
               const token = JWT.sign(
@@ -66,7 +66,7 @@ function loginUser(obj) {
 }
 
 function signupUser(obj) {
-  const { name, email, password, gender, dob, country, type} = obj;
+  const { name, email, password, gender, dob, country, type } = obj;
 
   console.log("a");
   console.log(type);
@@ -75,7 +75,6 @@ function signupUser(obj) {
 
   let user = "";
   return new Promise((resolve, reject) => {
-
     var sql = "SELECT player_ID as ID,EMAIL FROM player;";
 
     console.log(sql);
@@ -86,10 +85,11 @@ function signupUser(obj) {
         return element.EMAIL === email;
       });
       if (isUserIn === undefined) {
-        
-         bcrypt.hash(password, 8, function (err, hash) {
-
-            db.query("INSERT INTO player (name, email, password, gender, dob, country) VALUES (?, ?, ?, ?, ?, ?);", [name, email, hash, gender, dob, country], function (err, result) {
+        bcrypt.hash(password, 8, function (err, hash) {
+          db.query(
+            "INSERT INTO player (name, email, password, gender, dob, country) VALUES (?, ?, ?, ?, ?, ?);",
+            [name, email, hash, gender, dob, country],
+            function (err, result) {
               if (result) {
                 console.log("inserted");
                 return resolve(result);
@@ -97,21 +97,17 @@ function signupUser(obj) {
                 console.log(err);
                 return reject(err);
               }
-            })
-          
-        }
-         )
-      }else{
+            }
+          );
+        });
+      } else {
         return resolve("user found");
       }
-    }
-
-    )
-  }
-  )
+    });
+  });
 }
 
 module.exports = {
   loginUser,
-  signupUser
+  signupUser,
 };

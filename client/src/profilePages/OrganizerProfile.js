@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../profilePages/styles/Organizerprofilestyle.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import authService from "../services/auth.service";
 function Organizerprofile() {
 
 
@@ -12,7 +12,10 @@ function Organizerprofile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/organizer/getProfile/2")
+      .get(
+        "http://localhost:3001/api/organizer/getProfile/" +
+          authService.getUserID()
+      )
       .then((response) => {
         const data = response.data.result[0];
         setName(data["NAME"]);

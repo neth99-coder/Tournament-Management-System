@@ -1,10 +1,9 @@
 import {React,useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar, Form, Modal, Alert } from "react-bootstrap";
+import { Nav, Navbar, Form, Modal } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import Axios from 'axios';
 import { Outlet } from "react-router-dom";
-import Home from "../home/Home";
 export default function HomeNavbar() {
 
   const [name,setName] = useState('');
@@ -161,7 +160,7 @@ export default function HomeNavbar() {
             backgroundColor: "black",
             borderRadius: "10px",
             opacity: "0.9",
-            display: "flex",
+            // display: "flex",
             display: "none",
             flexDirection: "column",
             justifyContent: "space-around",
