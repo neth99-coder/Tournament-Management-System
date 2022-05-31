@@ -7,6 +7,7 @@ const TeamRequests = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
+
     Axios.get(
       "http://localhost:3001/api/organizer/teamRequests/" +
         authService.getUserID()
@@ -14,6 +15,7 @@ const TeamRequests = () => {
       //console.log(res.data);
       setRequests(res.data.result);
     });
+
   }, []);
 
   return (

@@ -125,7 +125,7 @@ const emailExist = async (req, res) => {
 
 const getTeamRequest = async (req, res) => {
   await organizerModel
-    .getTeamRequest()
+    .getTeamRequest(req.params.organizerID)
     .then((result) => {
       res.json({
         success: true,
