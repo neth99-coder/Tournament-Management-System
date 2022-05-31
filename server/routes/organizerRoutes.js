@@ -13,7 +13,7 @@ router.post(
   organizerController.createNewTournament
 );
 router.post("/submit-new-organizer-form", organizerController.addRequest);
-router.get("/teamRequests", organizerController.getTeamRequest);
+router.get("/teamRequests/:organizerID", organizerController.getTeamRequest);
 router.post("/accept-teamrequest", organizerController.acceptTeamRequest);
 router.post("/reject-teamrequest", organizerController.rejectTeamRequest);
 
