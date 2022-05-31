@@ -1,10 +1,9 @@
 import {React,useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar, Form, Modal, Alert } from "react-bootstrap";
+import { Nav, Navbar, Form, Modal } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import Axios from 'axios';
 import { Outlet } from "react-router-dom";
-import Home from "../home/Home";
 export default function HomeNavbar() {
 
   const [name,setName] = useState('');
@@ -55,7 +54,11 @@ export default function HomeNavbar() {
           
           }).then((res)=>{
             if(res.data.success){
+              alert('request sent');
               window.location.reload(false);
+            }else{
+              alert('cannot send request');
+
             }
           })
           
@@ -157,14 +160,14 @@ export default function HomeNavbar() {
             backgroundColor: "black",
             borderRadius: "10px",
             opacity: "0.9",
-            display: "flex",
+            // display: "flex",
             display: "none",
             flexDirection: "column",
             justifyContent: "space-around",
             zIndex: "3",
           }}
         >
-          <button type="button" className="btn btn-outline-light">
+          <button type="button" onClick={()=>{window.location.href="signUp"}} className="btn btn-outline-light">
             AS PLAYER
           </button>
           <button type="button" className="btn btn-outline-light" onClick={handleShow}>

@@ -1,16 +1,19 @@
-const mysql = require('mysql');
-const dbConfig = require('../config/db.config');
+const mysql = require("mysql");
+
+const config = require("config");
+
+
 const connection = mysql.createConnection({
-    host: dbConfig.host,
-    user: dbConfig.user,
-    password: dbConfig.password,
-    database: dbConfig.db,
+  host: process.env.HOST,
+  user: config.get("db_username"),
+  password: config.get("db_password"),
+  database: process.env.DATABASE,
 });
-connection.connect(err => {
-    if (err) {
-        throw err;
-    } else {
-        console.log('Mysql connected!!');
-    }
+connection.connect((err) => {
+  if (err) {
+    throw err;
+  } else {
+    console.log("Mysql connected!!");
+  }
 });
 module.exports = connection;

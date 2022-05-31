@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../profilePages/styles/Adminprofilestyle.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import authService from "../services/auth.service";
 function Adminprofile() {
   const [ID, setID] = useState(null);
   const [name, setName] = useState(null);
@@ -9,7 +10,9 @@ function Adminprofile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/admin/getProfile/2")
+      .get(
+        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID()
+      )
       .then((response) => {
         const data = response.data.result[0];
         setName(data["NAME"]);

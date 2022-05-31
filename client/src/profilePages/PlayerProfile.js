@@ -1,10 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import "../profilePages/styles/Playerprofilestyle.css";
-function Playerprofile() {
+import { useParams } from "react-router-dom";
+import authService from "../services/auth.service";
+
+function Playerprofile(props) {
   const [ID, setID] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [country, setCountry] = useState(null);
@@ -12,10 +16,12 @@ function Playerprofile() {
   const [email, setEmail] = useState(null);
   const [gender, setGender] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
-
+  // let location = useLocation();
+  let { userid } = useParams();
   useEffect(() => {
+    console.log(userid);
     axios
-      .get("http://localhost:3001/api/player/getProfile/2")
+      .get("http://localhost:3001/api/player/getProfile/" + authService.getUserID())
       .then((response) => {
         const data = response.data.result[0];
         setCountry(data["COUNTRY"]);
@@ -28,11 +34,10 @@ function Playerprofile() {
       });
   }, [ID, country, name, email, gender, profilePic]);
 
-  
   return (
     <>
       {/* <Navigationbar username={name} /> */}
-      <form >
+      <form>
         <div className="container rounded bg-white mt-5 mb-5">
           <div className="row">
             <div className="col-md-3 border-right">
@@ -150,7 +155,6 @@ function Playerprofile() {
           </div>
         </div>
       </form>
-
     </>
   );
 }

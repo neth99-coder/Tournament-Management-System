@@ -21,15 +21,19 @@ function getProfile(adminID) {
   });
 }
 
-function getRequests(){
-  return new Promise((resolve, reject)=>{
-    db.query("SELECT * FROM organizer_request WHERE STATUS=0",(err,result)=>{
-      if(result){
-          // console.log(result); 
+function getRequests() {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT * FROM organizer_request WHERE STATUS=0",
+      (err, result) => {
+        if (result) {
+          // console.log(result);
           return resolve(result);
+        } else {
+          return reject(err);
+        }
       }
-      else{return reject(err);}
-    });
+    );
   });
 }
 
@@ -71,7 +75,7 @@ function confirmPasswords(data) {
         return reject(err);
       } else {
         const password = result[0].PASSWORD;
-       
+
         if (password == currentPassword) {
           let sql2 = "UPDATE admin SET PASSWORD=? WHERE admin_ID=?";
 
@@ -86,105 +90,112 @@ function confirmPasswords(data) {
   });
 }
 
-function acceptRequest(data){
-  return new Promise((resolve,reject) =>{
+function acceptRequest(data) {
+  return new Promise((resolve, reject) => {
     const id = data.reqId;
     const password = data.password.toString();
     const email = data.email;
     const status = 1;
     const name = data.orgName;
-    
-  bcrypt.genSalt(10, function (err, salt) {
-  bcrypt.hash(password, salt, function (err, hash) {
 
-    try{
-      db.beginTransaction((err)=>{
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, function (err, hash) {
+        try {
+          db.beginTransaction((err) => {
+            if (err) {
+              throw err;
+            }
 
-      if(err){throw err;}
-        
-      const sql = "UPDATE organizer_request SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
-  
-      db.query(sql,[status,hash,id],(err,result)=>{
+            const sql =
+              "UPDATE organizer_request SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
 
-          if(result){
-              //console.log(id+ " this is email");
-            const sql = "INSERT INTO organizer (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
-            db.query(sql,[name,email,hash],(err,result)=>{
-              if(err){throw err;}
-              else{
-                db.commit((err)=>{
-                  if(err){
-                    throw err;
-                  }else{
-                    //db.end();
-                  }   
-                });
-                var mailOptions = {
-                  from: 'squ4doption@gmail.com',
-                  to: email,
-                  subject: 'Temporary Password For IJGmaes Organizer account',
-                  text: 'Password: '+ password
-                };
-                transporter.sendMail(mailOptions, function(error, info){
-                  if (error) {
-                    console.log(error);
+            db.query(sql, [status, hash, id], (err, result) => {
+              if (result) {
+                //console.log(id+ " this is email");
+                const sql =
+                  "INSERT INTO organizer (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
+                db.query(sql, [name, email, hash], (err, result) => {
+                  if (err) {
                     throw err;
                   } else {
-                    console.log('Email sent: ' + info.response);
-                    return resolve("Email Sent");
+                    db.commit((err) => {
+                      if (err) {
+                        throw err;
+                      } else {
+                        //db.end();
+                      }
+                    });
+                    var mailOptions = {
+                      from: "squ4doption@gmail.com",
+                      to: email,
+                      subject:
+                        "Temporary Password For IJGmaes Organizer account",
+                      text: "Password: " + password,
+                    };
+                    transporter.sendMail(mailOptions, function (error, info) {
+                      if (error) {
+                        console.log(error);
+                        throw err;
+                      } else {
+                        console.log("Email sent: " + info.response);
+                        return resolve("Email Sent");
+                      }
+                    });
                   }
                 });
+              } else {
+                throw err;
               }
             });
-
-          }
-          else{throw err;}
-      });      
+          });
+        } catch (err) {
+          db.rollback();
+          return reject(err);
+        }
       });
-
-    }
-    catch (err){
-        db.rollback();
-        return reject(err);
-    }
-
+    });
   });
-  });
-
-  }); 
-
 }
 
-function rejectRequest(data){
-  return new Promise ((resolve,reject)=>{
+function rejectRequest(data) {
+  return new Promise((resolve, reject) => {
     const id = data.reqId;
     const email = data.email;
     const status = -1;
 
     const sql = "UPDATE organizer_request SET STATUS = ? WHERE REQUEST_ID = ?";
 
-    db.query(sql,[status,id],(err,result)=>{
-        if(result){//console.log('updated');
-            var mailOptions = {
-                from: 'squ4doption@gmail.com',
-                to: email,
-                subject: 'Request Rejection from IJGmaes',
-                text: "We are sorry to say that your account request has been rejected by IJGmaes"
-              };
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                  return reject(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                  return resolve("Email sent");
-                }
-              });
-        }
-        else{console.log(err); return reject(err);}
-    });    
-  })
+    db.query(sql, [status, id], (err, result) => {
+      if (result) {
+        //console.log('updated');
+        var mailOptions = {
+          from: "squ4doption@gmail.com",
+          to: email,
+          subject: "Request Rejection from IJGmaes",
+          text: "We are sorry to say that your account request has been rejected by IJGmaes",
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+            return reject(error);
+          } else {
+            console.log("Email sent: " + info.response);
+            return resolve("Email sent");
+          }
+        });
+      } else {
+        console.log(err);
+        return reject(err);
+      }
+    });
+  });
 }
 
-
-module.exports = { getProfile, getRequests, updateProfile, confirmPasswords, acceptRequest, rejectRequest };
+module.exports = {
+  getProfile,
+  getRequests,
+  updateProfile,
+  confirmPasswords,
+  acceptRequest,
+  rejectRequest,
+};
