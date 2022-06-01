@@ -172,7 +172,7 @@ function emailExist(email) {
 function getTeamRequest(organizerID) {
   return new Promise((resolve, reject) => {
     var sql =
-      "SELECT team_request.request_id,player_tournament.player_id,player.name,team_request.team_name from (team_request NATURAL JOIN player_tournament) NATURAL JOIN player WHERE team_request.status='0' and tournament_id in (select tournament_id from tournament where organizer_id=?);";
+      "SELECT team_request.request_id,team_request.player_tournament_id,player_tournament.player_id,player.name,team_request.team_name from (team_request NATURAL JOIN player_tournament) NATURAL JOIN player WHERE team_request.status='0' and tournament_id in (select tournament_id from tournament where organizer_id=?);";
     db.query(sql, [organizerID], (err, result) => {
       if (err) {
         return reject(err);
@@ -187,7 +187,7 @@ function acceptTeamRequest(data) {
   return new Promise((resolve, reject) => {
     const request_id = data.request_id;
     const status = 1;
-    const leader_tournament_id = data.player_id;
+    const leader_tournament_id = data.player_tournament_id;
     const name = data.team_name;
 
     try {

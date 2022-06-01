@@ -26,6 +26,7 @@ const InfoCard = (props) => {
       request_id: props.request.request_id,
       team_name: props.request.team_name,
       player_id: props.request.player_id,
+      player_tournament_id:props.request.player_tournament_id,
     };
 
     Axios.post("http://localhost:3001/api/organizer/accept-teamrequest", data);

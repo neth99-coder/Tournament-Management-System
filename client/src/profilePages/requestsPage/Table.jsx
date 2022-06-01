@@ -5,15 +5,11 @@ import InfoCard from './InfoCard';
 const Table = (props) => {
 
 
-    function handleClick() {
-        // const btnId = e.target.id;
-        console.log("inside click");
-        // const [btn,id] = btnId.split(" ");
-        // const hidden = document.getElementById(id).hidden;
-        // document.getElementById(id).hidden = !hidden;
-
-
-
+    function handleClick(e) {
+        const btnId = e.target.id;
+        const [btn,id] = btnId.split(" ");
+        const hidden = document.getElementById(id).hidden;
+        document.getElementById(id).hidden = !hidden;
     }
     if (props.requests.length === 0) { return <div className="alert alert-dark" role="alert" style={{ marginTop: 30 }}> No Organizer Requests</div> }
     else {

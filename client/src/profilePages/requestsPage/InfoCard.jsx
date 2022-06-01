@@ -6,6 +6,7 @@ import styles from "./InfoCard.module.css";
 
 const  InfoCard= (props) => {
 
+
   const [password,setPassword] = useState('');
   const [ID,setID] = useState();
  // const [email,setEmail] = useState('');
