@@ -2,13 +2,13 @@ import React from "react";
 //import DetailsBox from "./DetailsBox";
 import styles from "./Card.module.css";
 
-function Note(props) {
+function Card(props) {
 
  
 
   return (
     // <div className="col-lg-3 col-md-4 col-ms-6">
-      <div className={`${styles["note"]} bg-light`} >
+      <div className={`${styles["note"]}`} >
         <h1>{props.title}</h1>
        
       
@@ -17,4 +17,4 @@ function Note(props) {
   );
 }
 
-export default Note;
+export default Card;

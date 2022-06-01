@@ -16,7 +16,7 @@ function Navigationbar(pros) {
           {pros.username} Dashboard
         </Navbar.Brand> */}
         <Link
-          to="tournament"
+          to="tournaments"
           className="navbar-brand"
           style={{ paddingLeft: 30 }}
         >

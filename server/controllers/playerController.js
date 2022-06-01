@@ -16,6 +16,24 @@ const getProfile = async (req, res) => {
     });
 };
 
+const getRegisteredTournaments = async (req, res) => {
+  await playerModel
+    .getRegisteredTournaments(req.params.playerID)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+
 const updateProfile = async (req, res) => {
   await playerModel
     .updateProfile(req.body)
@@ -48,6 +66,7 @@ const confirmPasswords = async (req, res) => {
 };
 module.exports = {
   getProfile,
+  getRegisteredTournaments,
   updateProfile,
   confirmPasswords,
 };

@@ -3,6 +3,8 @@ import styles from "./Header.module.css";
 import { BsPlusLg } from 'react-icons/bs';
 import { Form, Modal} from 'react-bootstrap';
 import Axios from 'axios';
+import authService from "../../services/auth.service";
+
 function Header() {
 
    const [show, setShow] = useState(false);
@@ -19,13 +21,15 @@ function Header() {
   const [gameType,setGameType] = useState();
   const [gameId, setGameId] = useState('');
   const [closingTime,setClosingTime] = useState('');
-  const organizerId = 1 ;    //TODO: REMOVE HARD CODE 
+  const [organizerId,setOrganizerId] = useState('') ;    //TODO: REMOVE HARD CODE 
   //const navigate = useNavigate();
   
   const [validated, setValidated] = useState(false);
   
 
   useEffect(()=>{
+
+    setOrganizerId(authService.getUserID());
     Axios.get('http://localhost:3001/api/organizer/games-type').then((res)=>{
       // console.log(res.data);
       setOptions(res.data.result);
@@ -107,7 +111,6 @@ function Header() {
         {/* <h1 className="col">TOURNAMENTS</h1> */}
         <div className="col">
           <button onClick={handleShow} className="btn-dark"><BsPlusLg/></button>
-    
         </div>
         <Modal show={show} onHide={handleClose}>
 
