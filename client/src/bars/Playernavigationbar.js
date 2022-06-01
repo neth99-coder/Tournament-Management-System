@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar , Button} from "react-bootstrap";
+import { Nav, Navbar, Button } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import { Outlet, Link } from "react-router-dom";
 // import { Button } from "bootstrap";
@@ -20,7 +20,7 @@ function Navigationbar(pros) {
           className="navbar-brand"
           style={{ paddingLeft: 30 }}
         >
-           Dashboard
+          Dashboard
         </Link>
         <Link
           to="/player/tournaments"
@@ -41,18 +41,17 @@ function Navigationbar(pros) {
               Profile Settings
             </Link>
             {/* <Button className="nav-link active">Logout</Button> */}
-
-            
           </Nav>
           <Button
-              style={{marginRight:"20px"}}
-              className="ms-auto gap-0"
-              onClick={() => {
-                authService.logout() && navigate("/login");
-              }}
-            >
-              Logout
-            </Button>
+            style={{ marginRight: "20px" }}
+            className="ms-auto gap-0"
+            onClick={() => {
+              authService.logout() && navigate("/login");
+              window.location.reload(false);
+            }}
+          >
+            Logout
+          </Button>
         </Navbar.Collapse>
       </Navbar>
 

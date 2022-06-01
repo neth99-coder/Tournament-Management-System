@@ -54,7 +54,7 @@ const getRegisteredTournaments = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  console.log(req.body);
+ 
   if (
     req.body.ID.toString() !== req.tokenUserID.toString() ||
     req.tokenUserType.toString() !== "0"
