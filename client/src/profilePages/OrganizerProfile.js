@@ -14,7 +14,10 @@ function Organizerprofile() {
     axios
       .get(
         "http://localhost:3001/api/organizer/getProfile/" +
-          authService.getUserID()
+          authService.getUserID(),
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
       )
       .then((response) => {
         const data = response.data.result[0];

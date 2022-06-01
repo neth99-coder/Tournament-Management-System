@@ -7,8 +7,10 @@ const db = require("../db/db");
 
 function getProfile(playerID) {
   return new Promise((resolve, reject) => {
+    
     var sql = "SELECT * FROM player where PLAYER_ID=?;";
     db.query(sql, [playerID], (err, result) => {
+
       if (err) {
         return reject(err);
       } else {

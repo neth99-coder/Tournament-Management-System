@@ -15,11 +15,11 @@ app.use(cors());
 
 require("dotenv").config();
 
-app.use("/api/player", playerRoutes);
-app.use("/api/organizer", organizerRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/player", authToken, playerRoutes);
+app.use("/api/organizer", authToken, organizerRoutes);
+app.use("/api/admin", authToken, adminRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/", homeRoutes);
+app.use("/", authToken, homeRoutes);
 app.listen(3001, () => {
   console.log("Running server");
 });

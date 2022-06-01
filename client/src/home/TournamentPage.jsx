@@ -30,10 +30,16 @@ export default function TournamentPage(props) {
     }
 
     axios
-      .post("http://localhost:3001/getReg", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/getReg",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(function (response) {
         // handle success
         if (response.data.registered === true && joinedTeam === null) {
@@ -47,10 +53,16 @@ export default function TournamentPage(props) {
       });
 
     axios
-      .post("http://localhost:3001/isInTeam", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/isInTeam",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(function (response) {
         // handle success
         if (response.data.success === true) {
@@ -68,10 +80,16 @@ export default function TournamentPage(props) {
   const handleRegister = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/register", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/register",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -92,10 +110,16 @@ export default function TournamentPage(props) {
   const handleUnregister = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/unregister", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/unregister",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -116,11 +140,17 @@ export default function TournamentPage(props) {
   const handleJoinTeam = (event, team_id) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/jointeam", {
-        teamID: team_id,
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/jointeam",
+        {
+          teamID: team_id,
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -141,11 +171,17 @@ export default function TournamentPage(props) {
   const handleLeaveTeam = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/leaveteam", {
-        teamID: joinedTeam,
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/leaveteam",
+        {
+          teamID: joinedTeam,
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           console.log(response);
@@ -167,9 +203,15 @@ export default function TournamentPage(props) {
   const handleViewTeams = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/viewteams", {
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/viewteams",
+        {
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           setTeamArray(response.data.result);
@@ -183,11 +225,17 @@ export default function TournamentPage(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/teamreq", {
-        playerID: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-        teamName: team,
-      })
+      .post(
+        "http://localhost:3001/teamreq",
+        {
+          playerID: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+          teamName: team,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           alert("Team Create Request Sent!");

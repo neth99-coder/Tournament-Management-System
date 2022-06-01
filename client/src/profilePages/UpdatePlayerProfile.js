@@ -33,7 +33,14 @@ function Example(props) {
     if (currentPassword === "" || newPassword === "") {
     } else {
       axios
-        .post("http://localhost:3001/api/player/confirmPasswords", passwords)
+        .post(
+          "http://localhost:3001/api/player/confirmPasswords",
+
+          passwords,
+          {
+            headers: { "x-auth-token": authService.getUserToken() },
+          }
+        )
         .then((response) => {
           if (!response.data.success) {
             setError(true);
@@ -120,9 +127,14 @@ function UpdatePlayerprofile() {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
   useEffect(() => {
+    let token = authService.getUserToken();
     const res = axios
       .get(
-        "http://localhost:3001/api/player/getProfile/" + authService.getUserID()
+        "http://localhost:3001/api/player/getProfile/" +
+          authService.getUserID(),
+        {
+          headers: { "x-auth-token": token },
+        }
       )
       .then((response) => {
         const data = response.data.result[0];
@@ -135,7 +147,7 @@ function UpdatePlayerprofile() {
         setProfilePic(data["profilePic"]["data"]);
         setPassword(data["PASSWORD"]);
       });
-  }, [ID]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -160,10 +172,19 @@ function UpdatePlayerprofile() {
       default:
         break;
     }
-
+    console.log(putData);
     if (putData !== undefined) {
+      let token = authService.getUserToken();
+
       axios
-        .put("http://localhost:3001/api/player/updateProfile", putData)
+        .put(
+          "http://localhost:3001/api/player/updateProfile",
+
+          putData,
+          {
+            headers: { "x-auth-token": token },
+          }
+        )
         .then((response) => {
           window.location.reload(false);
         });

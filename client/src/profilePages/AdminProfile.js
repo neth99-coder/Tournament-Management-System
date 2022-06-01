@@ -11,7 +11,10 @@ function Adminprofile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID()
+        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID(),
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
       )
       .then((response) => {
         const data = response.data.result[0];

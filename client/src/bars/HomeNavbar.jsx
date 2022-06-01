@@ -4,6 +4,7 @@ import { Nav, Navbar, Form, Modal } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import Axios from 'axios';
 import { Outlet } from "react-router-dom";
+import authService from "../services/auth.service";
 export default function HomeNavbar() {
 
   const [name,setName] = useState('');
@@ -43,7 +44,13 @@ export default function HomeNavbar() {
 
     if(name !== '' && email !== '' && proof!== ''){
 
-      Axios.get("http://localhost:3001/api/organizer/email-exist/"+ email)
+
+
+
+      Axios.get("http://localhost:3001/api/organizer/email-exist/" + email,
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        })
       .then((res)=>{
         //console.log(res.data.result);
         if(res.data.result.length === 0){
@@ -52,7 +59,10 @@ export default function HomeNavbar() {
             email: email,
             proof:proof
           
-          }).then((res)=>{
+           },
+             {
+               headers: { "x-auth-token": authService.getUserToken() },
+             }).then((res)=>{
             if(res.data.success){
               alert('request sent');
               window.location.reload(false);
