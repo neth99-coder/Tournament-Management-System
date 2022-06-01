@@ -35,6 +35,7 @@ export default function TournamentPage(props) {
         // handle success
         if (response.data.registered === true && joinedTeam === null) {
           setRegState("UN REGISTER");
+          document.querySelector(".team-reg").classList.add("disabled");
         }
       })
       .catch(function (error) {

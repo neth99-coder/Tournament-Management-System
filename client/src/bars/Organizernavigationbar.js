@@ -35,8 +35,10 @@ function Organizernavigationbar(pros) {
             <Link to="tournaments" className="nav-link active">
               Tournaments
             </Link>
-            <Button
-              style={{ float: "right", right: "0" }}
+            
+          </Nav>
+          <Button
+                 style={{marginRight:"20px"}}
               className="ms-auto gap-0"
               onClick={() => {
                 authService.logout() && navigate("/login");
@@ -44,7 +46,6 @@ function Organizernavigationbar(pros) {
             >
               Logout
             </Button>
-          </Nav>
         </Navbar.Collapse>
       </Navbar>
       <Outlet />
