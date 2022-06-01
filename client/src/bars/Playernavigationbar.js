@@ -16,7 +16,14 @@ function Navigationbar(pros) {
           {pros.username} Dashboard
         </Navbar.Brand> */}
         <Link
-          to="tournaments"
+          to="/player/dashboard"
+          className="navbar-brand"
+          style={{ paddingLeft: 30 }}
+        >
+           Dashboard
+        </Link>
+        <Link
+          to="/player/tournaments"
           className="navbar-brand"
           style={{ paddingLeft: 30 }}
         >
@@ -27,10 +34,10 @@ function Navigationbar(pros) {
           <Nav className="mr-auto">
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link> */}
-            <Link to="profile" className="nav-link active">
+            <Link to="/player/profile" className="nav-link active">
               Profile
             </Link>
-            <Link to="profileSettings" className="nav-link active">
+            <Link to="/player/profileSettings" className="nav-link active">
               Profile Settings
             </Link>
             {/* <Button className="nav-link active">Logout</Button> */}

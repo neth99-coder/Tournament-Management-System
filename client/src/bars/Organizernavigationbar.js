@@ -13,7 +13,7 @@ function Organizernavigationbar(pros) {
         {/* <Navbar.Brand style={{ paddingLeft: 30 }} href="dashboard">
           {pros.username} Dashboard
         </Navbar.Brand> */}
-        <Link to="" className="navbar-brand" style={{ paddingLeft: 30 }}>
+        <Link to="/organizer" className="navbar-brand" style={{ paddingLeft: 30 }}>
           {pros.username} Tournaments
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -23,16 +23,16 @@ function Organizernavigationbar(pros) {
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
             <Nav.Link href="teamrequests">Team Requests</Nav.Link>
             <Nav.Link href="tournaments"> Tournaments</Nav.Link> */}
-            <Link to="profile" className="nav-link active">
+            <Link to="/organizer/profile" className="nav-link active">
               Profile
             </Link>
-            <Link to="profileSettings" className="nav-link active">
+            <Link to="/organizer/profileSettings" className="nav-link active">
               Profile Settings
             </Link>
-            <Link to="teamrequests" className="nav-link active">
+            <Link to="/organizer/teamrequests" className="nav-link active">
               Team Requests
             </Link>
-            <Link to="tournaments" className="nav-link active">
+            <Link to="/organizer/tournaments" className="nav-link active">
               Tournaments
             </Link>
             

@@ -7,6 +7,9 @@ import "./styles/overlay-model.css";
 import HomeNavbar from "../bars/HomeNavbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
+import Playernavigationbar from "../bars/Playernavigationbar"
+import Organizernavigationbar from "../bars/Organizernavigationbar"
+import Adminnavigationbar from "../bars/Adminnavigationbar"
 
 export default function TournamentPage(props) {
   const [team, setTeam] = useState("");
@@ -199,16 +202,18 @@ export default function TournamentPage(props) {
   let navigate = useNavigate();
   return (
     <div>
-      <HomeNavbar />
+      {/* <HomeNavbar /> */
+        !authService.getCurrentUser() ? <HomeNavbar /> : authService.getUserType() === 0 ? <Playernavigationbar /> : authService.getUserType() === 1 ? <Organizernavigationbar /> : <Adminnavigationbar />
+      }
       <div
         className="tournament-page-bg"
         style={{
-          top: "85px",
+          top:"70px",
           bottom: "0",
           left: "0",
           right: "0",
           width: "100%",
-          height: "500px",
+          height: "80%",
           backgroundImage: 'url("https://wallpaperaccess.com/full/7448.png")',
           position: "absolute",
           opacity: "0.25",
@@ -219,7 +224,7 @@ export default function TournamentPage(props) {
         className="tournament-container"
         style={{
           padding: "40px",
-          marginTop: "20px",
+          marginTop: "5vw",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-evenly",

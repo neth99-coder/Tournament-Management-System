@@ -14,7 +14,7 @@ function Adminnavigationbar(pros) {
           {pros.username} Dashboard
         </Navbar.Brand> */}
         <Link
-          to="dashboard"
+          to="/admin"
           className="navbar-brand"
           style={{ paddingLeft: 30 }}
         >
@@ -26,13 +26,13 @@ function Adminnavigationbar(pros) {
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
             <Nav.Link href="requests">Organizer Requests</Nav.Link> */}
-            <Link to="profile" className="nav-link active">
+            <Link to="/admin/profile" className="nav-link active">
               Profile
             </Link>
-            <Link to="profileSettings" className="nav-link active">
+            <Link to="/admin/profileSettings" className="nav-link active">
               Profile Settings
             </Link>
-            <Link to="requests" className="nav-link active">
+            <Link to="/admin/requests" className="nav-link active">
               Organizer Requests
             </Link>
             
