@@ -1,8 +1,9 @@
 const adminModel = require("../models/adminModel");
 
 const getProfile = async (req, res) => {
+ 
   if (
-    req.params.playerID.toString() !== req.tokenUserID.toString() ||
+    req.params.adminID.toString() !== req.tokenUserID.toString() ||
     req.tokenUserType.toString() !== "2"
   ) {
     res.json({
