@@ -1,15 +1,20 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Card from "./Card";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 // import TournamentModal from "./TournamentModal";
 import Axios from "axios";
 import authService from "../../services/auth.service";
+import styles from "./OrganizeTournaments.module.css";
 
 const OrganizeTournaments = (props) => {
-  const [tournaments, setTournaments] = useState([]);
+  const [tournaments, setTournaments] = useState(["empty"]);
 
-  getTournamnets();
+  useEffect(()=>{
+    getTournamnets();
+   // (tournaments.length === 0) ? document.getElementById("error-message").style.display="none": document.getElementById("tour-table").style.display="none";
+  },[]);
+  
 
   async function getTournamnets() {
     let res = await Axios({
@@ -24,36 +29,40 @@ const OrganizeTournaments = (props) => {
     });
 
     setTournaments(res.data.result);
+    // console.log(res.data.result);
+    
   }
 
   return (
     <div>
       <Header />
-      {tournaments.length === 0 ? (
+      {(tournaments.length === 0) ?
         <div
           className="alert alert-dark"
           role="alert"
           style={{ marginTop: "10%" }}
+          id = "error-message"
         >
-          {" "}
           No Organized Tournaments Yet !!
         </div>
-      ) : (
-        <div className="row">
+          :
+        <div className="row" id="tour-table">
           {tournaments?.map((cur, index) => {
             return (
-              <div className="col-lg-3 col-md-4 col-ms-6">
+              <div className='col-lg-3 col-md-4 col-ms-6' key={index}>
                 <Link
                   to={`../tournament/${cur.ORGANIZER_ID}`}
                   state={{ obj: cur }}
+                  key={index}
+                  style={{textDecoration: 'none',color:'white'}}
                 >
-                  <Card key={index} id={index} title={cur.NAME} />
+                  <Card key={index} id={index} title={cur.NAME}/>
                 </Link>
               </div>
             );
           })}
         </div>
-      )}
+          }
     </div>
   );
 };

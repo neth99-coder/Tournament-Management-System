@@ -5,7 +5,8 @@ header button {
   margin: 10px;
   border: none;
   width: 40px;
-  margin-left: 95%;
+  position: relative;
+  float: right;
   transition: transform .2s; 
 }  
 

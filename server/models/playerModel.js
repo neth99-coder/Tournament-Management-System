@@ -18,6 +18,20 @@ function getProfile(playerID) {
   });
 }
 
+function getRegisteredTournaments(PlayerID){
+  return new Promise((resolve,reject)=>{
+    var sql = "SELECT  tournament.TOURNAMENT_ID,tournament.ORGANIZER_ID,tournament.NAME,tournament.GAME_ID,DATE_FORMAT(tournament.START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(tournament.END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(tournament.REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME FROM player_tournament NATURAL JOIN tournament WHERE player_tournament.PLAYER_ID = ? ";
+    db.query(sql,[PlayerID],(err,result)=>{
+      if(err){
+        return reject(err);
+      }else{
+        return resolve(result);
+      }
+    })
+  })
+}
+
+
 function updateProfile(data) {
   return new Promise((resolve, reject) => {
     let player_id = data.ID;
@@ -69,4 +83,6 @@ function confirmPasswords(data) {
     });
   });
 }
-module.exports = { getProfile, updateProfile, confirmPasswords };
+
+
+module.exports = { getProfile, getRegisteredTournaments ,updateProfile, confirmPasswords };
