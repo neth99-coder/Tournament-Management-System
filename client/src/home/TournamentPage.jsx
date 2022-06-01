@@ -14,14 +14,15 @@ export default function TournamentPage(props) {
   const [joinedTeam, setJoinedTeam] = useState(null);
   const [regState, setRegState] = useState("AS INDIVIDUAL");
 
-  const player_id = authService.getCurrentUser();
+  const player_id = authService.getUserID();
+  console.log(player_id);
 
   const location = useLocation();
 
   useEffect(() => {
-    
+
     if (authService.getUserType() === 2 || authService.getUserType() === 1) {
-      document.getElementById("createTeamBtn").style.display="none";
+      document.getElementById("createTeamBtn").style.display = "none";
       document.getElementById("registerBtn").style.display = "none";
     }
 
@@ -265,10 +266,10 @@ export default function TournamentPage(props) {
                 navigate("/login");
                 window.location.reload(false);
               }
-               document.querySelector(
-                 ".reg-options-overlay"
-               ).style.display = "block";
-               document.querySelector(".reg-options").style.display = "flex";
+              document.querySelector(
+                ".reg-options-overlay"
+              ).style.display = "block";
+              document.querySelector(".reg-options").style.display = "flex";
             }}
           >
             REGISTER NOW{" "}
@@ -281,13 +282,13 @@ export default function TournamentPage(props) {
               if (!authService.getCurrentUser()) {
                 navigate("/login");
                 window.location.reload(false);
-              } 
-                document.querySelector(
-                  ".create-team-form-overlay"
-                ).style.display = "block";
-                document.querySelector(".create-team-form").style.display =
-                  "block";
               }
+              document.querySelector(
+                ".create-team-form-overlay"
+              ).style.display = "block";
+              document.querySelector(".create-team-form").style.display =
+                "block";
+            }
             }
           >
             CREATE TEAM{" "}
