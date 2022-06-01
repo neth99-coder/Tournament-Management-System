@@ -10,11 +10,10 @@ import styles from "./OrganizeTournaments.module.css";
 const OrganizeTournaments = (props) => {
   const [tournaments, setTournaments] = useState(["empty"]);
 
-  useEffect(()=>{
+  useEffect(() => {
     getTournamnets();
-   // (tournaments.length === 0) ? document.getElementById("error-message").style.display="none": document.getElementById("tour-table").style.display="none";
-  },[]);
-  
+    // (tournaments.length === 0) ? document.getElementById("error-message").style.display="none": document.getElementById("tour-table").style.display="none";
+  }, []);
 
   async function getTournamnets() {
     let res = await Axios({
@@ -25,44 +24,44 @@ const OrganizeTournaments = (props) => {
       timeout: 8000,
       headers: {
         "Content-Type": "application/json",
+        "x-auth-token": authService.getUserToken(),
       },
     });
 
     setTournaments(res.data.result);
     // console.log(res.data.result);
-    
   }
 
   return (
     <div>
       <Header />
-      {(tournaments.length === 0) ?
+      {tournaments.length === 0 ? (
         <div
           className="alert alert-dark"
           role="alert"
           style={{ marginTop: "10%" }}
-          id = "error-message"
+          id="error-message"
         >
           No Organized Tournaments Yet !!
         </div>
-          :
+      ) : (
         <div className="row" id="tour-table">
           {tournaments?.map((cur, index) => {
             return (
-              <div className='col-lg-3 col-md-4 col-ms-6' key={index}>
+              <div className="col-lg-3 col-md-4 col-ms-6" key={index}>
                 <Link
                   to={`../tournament/${cur.ORGANIZER_ID}`}
                   state={{ obj: cur }}
                   key={index}
-                  style={{textDecoration: 'none',color:'white'}}
+                  style={{ textDecoration: "none", color: "white" }}
                 >
-                  <Card key={index} id={index} title={cur.NAME}/>
+                  <Card key={index} id={index} title={cur.NAME} />
                 </Link>
               </div>
             );
           })}
         </div>
-          }
+      )}
     </div>
   );
 };

@@ -17,11 +17,16 @@ function Playerprofile(props) {
   const [gender, setGender] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
   // let location = useLocation();
-  let { userid } = useParams();
   useEffect(() => {
-    console.log(userid);
-    axios
-      .get("http://localhost:3001/api/player/getProfile/" + authService.getUserID())
+    let token = authService.getUserToken();
+     axios
+      .get(
+        "http://localhost:3001/api/player/getProfile/" +
+          authService.getUserID(),
+        {
+          headers: { "x-auth-token": token },
+        }
+      )
       .then((response) => {
         const data = response.data.result[0];
         setCountry(data["COUNTRY"]);
@@ -32,7 +37,7 @@ function Playerprofile(props) {
         setID(data["PLAYER_ID"]);
         setProfilePic(data["profilePic"]["data"]);
       });
-  }, [ID, country, name, email, gender, profilePic]);
+  }, []);
 
   return (
     <>

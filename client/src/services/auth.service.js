@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3001/api/auth";
 const signup = (userData) => {
   return axios.post(API_URL + "/signup", { userData }).then((response) => {
     if (response.data.accessToken) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", response.data);
     }
     return response.data;
   });
@@ -42,12 +42,19 @@ const logout = () => {
   }
   return false;
 };
+const getUserToken = () => {
+  if (localStorage.getItem("user")) {
+    return localStorage.getItem("user");
+  }
+  return null;
+};
 const authService = {
   signup,
   logout,
   getCurrentUser,
   getUserID,
   getUserType,
+  getUserToken,
 };
 
 export default authService;

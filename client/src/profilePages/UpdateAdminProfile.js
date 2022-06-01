@@ -43,7 +43,6 @@ function Example(props) {
         });
         setIsSubmit(false);
       } else {
-
         setFormError({ password: "" });
         setIsSubmit(true);
       }
@@ -56,7 +55,9 @@ function Example(props) {
     validate();
     if (isSubmit === true) {
       axios
-        .post("http://localhost:3001/api/admin/confirmPasswords", passwords)
+        .post("http://localhost:3001/api/admin/confirmPasswords", passwords, {
+          headers: { "x-auth-token": authService.getUserToken() },
+        })
         .then((response) => {
           if (!response.data.success) {
             setError(true);
@@ -142,7 +143,10 @@ function UpdateAdminProfile() {
   useEffect(() => {
     const res = axios
       .get(
-        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID()
+        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID(),
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
       )
       .then((response) => {
         const data = response.data.result[0];
@@ -185,7 +189,9 @@ function UpdateAdminProfile() {
 
     if (putData !== undefined) {
       axios
-        .put("http://localhost:3001/api/admin/updateProfile", putData)
+        .put("http://localhost:3001/api/admin/updateProfile", putData, {
+          headers: { "x-auth-token": authService.getUserToken() },
+        })
         .then((response) => {
           window.location.reload(false);
         });

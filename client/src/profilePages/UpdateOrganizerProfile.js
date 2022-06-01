@@ -31,7 +31,13 @@ function Example(props) {
     if (currentPassword === "" || newPassword === "") {
     } else {
       axios
-        .post("http://localhost:3001/api/organizer/confirmPasswords", passwords)
+        .post(
+          "http://localhost:3001/api/organizer/confirmPasswords",
+          passwords,
+          {
+            headers: { "x-auth-token": authService.getUserToken() },
+          }
+        )
         .then((response) => {
           if (!response.data.success) {
             setError(true);
@@ -107,7 +113,6 @@ function UpdateOrganizerProfile() {
   const [ID, setID] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
- 
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -116,7 +121,10 @@ function UpdateOrganizerProfile() {
     const res = axios
       .get(
         "http://localhost:3001/api/organizer/getProfile/" +
-          authService.getUserID()
+          authService.getUserID(),
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
       )
       .then((response) => {
         const data = response.data.result[0];
@@ -137,16 +145,16 @@ function UpdateOrganizerProfile() {
       case "email":
         putData = { ID, email };
         break;
-     
-    
-    
+
       default:
         break;
     }
 
     if (putData !== undefined) {
       axios
-        .put("http://localhost:3001/api/organizer/updateProfile", putData)
+        .put("http://localhost:3001/api/organizer/updateProfile", putData, {
+          headers: { "x-auth-token": authService.getUserToken() },
+        })
         .then((response) => {
           window.location.reload(false);
         });
@@ -231,7 +239,6 @@ function UpdateOrganizerProfile() {
                   </div>
                 </div>
               </form>
-          
 
               <form>
                 <div className="row mt-2">
