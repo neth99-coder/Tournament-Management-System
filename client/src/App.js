@@ -17,6 +17,7 @@ import Home from "./home/Home";
 import TournamentPage from "./home/TournamentPage";
 import HomeNavbar from "./bars/HomeNavbar";
 import Login from "./loginPage/loginPage";
+import RegisteredTournaments from "./profilePages/RegisterdTournaments/RegisteredTournaments";
 import { useEffect, useState } from "react";
 import NoPage from "./NoPage/NoPage";
 // import AuthService from "./services/auth.service";
@@ -51,8 +52,12 @@ function App() {
         {type === 0 ? (
           <Route exact path="player" element={<Playernavigationbar />}>
             <Route path="" element={<Home />} />
-            <Route path="tournament" element={<Home />} />
+            <Route path="tournaments" element={<RegisteredTournaments />} />
             <Route path="profile" element={<Playerprofile id={ID} />} />
+            <Route
+              path="tournament/:userid"
+              element={<OrganizedTournament />}
+            />
 
             <Route
               exact

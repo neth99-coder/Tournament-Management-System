@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar ,Button} from "react-bootstrap";
+import { Navbar ,Button} from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import { Outlet, Link } from "react-router-dom";
 import authService from "../services/auth.service";
@@ -22,7 +22,7 @@ function Adminnavigationbar(pros) {
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
+          <div className="mr-auto navbar-links">
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
             <Nav.Link href="requests">Organizer Requests</Nav.Link> */}
@@ -44,7 +44,7 @@ function Adminnavigationbar(pros) {
             >
               Logout
             </Button>
-          </Nav>
+          </div>
         </Navbar.Collapse>
       </Navbar>
       <Outlet />
