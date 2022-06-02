@@ -5,7 +5,7 @@ import Card from "../organizeTournamentsPage/Card";
 import { Link } from "react-router-dom";
 
 const RegisteredTournaments = () => {
-  const [tournaments, setTournaments] = useState(["empty"]);
+  const [tournaments, setTournaments] = useState(null);
 
   useEffect(() => {
     getTournamnets();
@@ -28,11 +28,12 @@ const RegisteredTournaments = () => {
     });
 
     setTournaments(res.data.result);
+    console.log(res.data);
   }
 
   return (
     <div>
-      {tournaments.length === 0 ? (
+      {tournaments === null || tournaments === undefined ? (
         <div
           className="alert alert-dark"
           role="alert"

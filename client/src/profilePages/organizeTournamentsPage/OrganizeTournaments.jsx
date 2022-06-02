@@ -8,7 +8,7 @@ import authService from "../../services/auth.service";
 import styles from "./OrganizeTournaments.module.css";
 
 const OrganizeTournaments = (props) => {
-  const [tournaments, setTournaments] = useState(["empty"]);
+  const [tournaments, setTournaments] = useState("");
 
   useEffect(() => {
     getTournamnets();
