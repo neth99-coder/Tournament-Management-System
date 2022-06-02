@@ -55,6 +55,8 @@ const InfoCard = (props) => {
   return (
     <div className="card w-100 text-white bg-dark">
       <div className="card-body">
+        <h5 className="card-title"> Tournament Name </h5>{" "}
+        <p className="card-text"> {props.request.tournament_name} </p>{" "}
         <h5 className="card-title"> Team Name </h5>{" "}
         <p className="card-text"> {props.request.team_name} </p>{" "}
         <h5 className="card-title"> Player Name </h5>{" "}

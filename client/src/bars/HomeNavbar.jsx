@@ -1,15 +1,14 @@
-import {React,useState} from "react";
+import { React, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar, Form, Modal } from "react-bootstrap";
 import "./styles/navbarstyle.css";
-import Axios from 'axios';
+import Axios from "axios";
 import { Outlet } from "react-router-dom";
 import authService from "../services/auth.service";
 export default function HomeNavbar() {
-
-  const [name,setName] = useState('');
-  const [email,setEmail] = useState('');
-  const [proof,setProof] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [proof, setProof] = useState("");
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -18,89 +17,77 @@ export default function HomeNavbar() {
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  function handleChange(e){
-
+  function handleChange(e) {
     const value = e.target.value;
     const type = e.target.name;
 
-    if(type === 'org-name'){
+    if (type === "org-name") {
       setName(value);
-    }else if(type === 'org-email'){
-       setEmail(value);
-    }else if(type==='org-proof'){
+    } else if (type === "org-email") {
+      setEmail(value);
+    } else if (type === "org-proof") {
       setProof(value);
-    } 
+    }
+  }
 
-}
-
-  const handleSubmit = (e)=>{
-
+  const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-  if (form.checkValidity() === false) {
-    e.stopPropagation();
-  }
-  setValidated(true);
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+    }
+    setValidated(true);
 
-    if(name !== '' && email !== '' && proof!== ''){
-
-
-
-
-      Axios.get("http://localhost:3001/api/organizer/email-exist/" + email,
-        {
-          headers: { "x-auth-token": authService.getUserToken() },
-        })
-      .then((res)=>{
+    if (name !== "" && email !== "" && proof !== "") {
+      console.log("Check Email");
+      Axios.get("http://localhost:3001/email-exist/" + email, {
+        headers: { "x-auth-token": authService.getUserToken() },
+      }).then((res) => {
         //console.log(res.data.result);
-        if(res.data.result.length === 0){
-           Axios.post("http://localhost:3001/api/organizer/submit-new-organizer-form",{
-            name : name,
-            email: email,
-            proof:proof
-          
-           },
-             {
-               headers: { "x-auth-token": authService.getUserToken() },
-             }).then((res)=>{
-            if(res.data.success){
-              alert('request sent');
-              window.location.reload(false);
-            }else{
-              alert('cannot send request');
-
+        if (res.data.result.length === 0) {
+          Axios.post(
+            "http://localhost:3001/submit-new-organizer-form",
+            {
+              name: name,
+              email: email,
+              proof: proof,
+            },
+            {
+              headers: { "x-auth-token": authService.getUserToken() },
             }
-          })
-          
-        }else{
+          ).then((res) => {
+            console.log(res);
+            if (res.data.success) {
+              alert("request sent");
+              window.location.reload(false);
+            } else {
+              alert("cannot send request");
+            }
+          });
+        } else {
           setShowAlert(true);
         }
-      })
-    
-
-      
+      });
     }
-    
-      if(name !== '' && email !== '' && proof!== '' ){
 
-    setName('');
-    setEmail('');
-    setProof('');
-    handleClose()
-    document.querySelector(".signup-options-overlay").style.display='none';
-    document.querySelector(".signup-options").style.display='none';
-     // window.location.reload(false);
-   
-   
-     }
-
-  }
-
+    if (name !== "" && email !== "" && proof !== "") {
+      setName("");
+      setEmail("");
+      setProof("");
+      handleClose();
+      document.querySelector(".signup-options-overlay").style.display = "none";
+      document.querySelector(".signup-options").style.display = "none";
+      // window.location.reload(false);
+    }
+  };
 
   return (
     <div className="NavDiv">
-
-      {showAlert && <div className="alert alert-warning" role="alert">The Email Already Exists !!</div> }
+      {showAlert && (
+        <div className="alert alert-warning" role="alert">
+          The Email Already Exists !!
+        </div>
+      )}
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand style={{ paddingLeft: 30 }}>
           <Nav.Link href="/"> IJ Games</Nav.Link>
@@ -177,54 +164,105 @@ export default function HomeNavbar() {
             zIndex: "3",
           }}
         >
-          <button type="button" onClick={()=>{window.location.href="signUp"}} className="btn btn-outline-light">
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = "signUp";
+            }}
+            className="btn btn-outline-light"
+          >
             AS PLAYER
           </button>
-          <button type="button" className="btn btn-outline-light" onClick={handleShow}>
+          <button
+            type="button"
+            className="btn btn-outline-light"
+            onClick={handleShow}
+          >
             AS ORGANIZER
           </button>
 
-          <Modal show={show} onHide={handleClose}       size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Registration Form - Organizer</Modal.Title>
-        </Modal.Header>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Modal.Body>
-        
-            
-            <div className="form-group row">
-                <label for="org-name" className="col-sm-2 col-form-label">Name</label>
-                <div className="col-sm-10">
-                 <Form.Control type="text" className="input form-control" name="org-name" placeholder="Name" required value={name} onChange={handleChange}  />
+          <Modal
+            show={show}
+            onHide={handleClose}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Registration Form - Organizer</Modal.Title>
+            </Modal.Header>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+              <Modal.Body>
+                <div className="form-group row">
+                  <label for="org-name" className="col-sm-2 col-form-label">
+                    Name
+                  </label>
+                  <div className="col-sm-10">
+                    <Form.Control
+                      type="text"
+                      className="input form-control"
+                      name="org-name"
+                      placeholder="Name"
+                      required
+                      value={name}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
-            </div>
 
-            <div className="form-group row">
-                <label for="org-email" className="col-sm-2 col-form-label">Email</label>
-                <div className="col-sm-10">
-                 <Form.Control type="email" className="input form-control" name="org-email" placeholder="Email" required value={email} onChange={handleChange}/>
+                <div className="form-group row">
+                  <label for="org-email" className="col-sm-2 col-form-label">
+                    Email
+                  </label>
+                  <div className="col-sm-10">
+                    <Form.Control
+                      type="email"
+                      className="input form-control"
+                      name="org-email"
+                      placeholder="Email"
+                      required
+                      value={email}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
-            </div>
 
-            <div className="form-group row">
-                <label for="org-proof" className="col-sm-2 col-form-label">Proof</label>
-                <div className="col-sm-10">
-                 <Form.Control type="text" className="input form-control" name="org-proof" placeholder="Organizational Proof" required value={proof} onChange={handleChange} title="Provide a link to your oragization's official website or facebook page or any other proof of existance"  />
+                <div className="form-group row">
+                  <label for="org-proof" className="col-sm-2 col-form-label">
+                    Proof
+                  </label>
+                  <div className="col-sm-10">
+                    <Form.Control
+                      type="text"
+                      className="input form-control"
+                      name="org-proof"
+                      placeholder="Organizational Proof"
+                      required
+                      value={proof}
+                      onChange={handleChange}
+                      title="Provide a link to your oragization's official website or facebook page or any other proof of existance"
+                    />
+                  </div>
                 </div>
-            </div>
-              
-        </Modal.Body>
-        <Modal.Footer>
-        <button type="button" onClick={handleClose} className="footer-btn">Close</button>
-          <button  type="submit" onClick={handleSubmit} className="footer-btn">Register</button>
-        </Modal.Footer>
-        </Form>  
-      </Modal>
-
-
-
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="footer-btn"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  className="footer-btn"
+                >
+                  Register
+                </button>
+              </Modal.Footer>
+            </Form>
+          </Modal>
         </Form>
       </div>
       <Outlet />
