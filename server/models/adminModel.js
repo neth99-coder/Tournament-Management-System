@@ -126,7 +126,7 @@ function acceptRequest(data) {
                       }
                     });
                     var mailOptions = {
-                      from: "ijgames1@hotmail.com",
+                      from: "squ4doption@gmail.com",
                       to: email,
                       subject:
                         "Temporary Password For IJGmaes Organizer account",
