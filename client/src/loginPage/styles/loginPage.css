@@ -7,7 +7,7 @@ body {
   background: #fff;
 }
 
-.sidenav {
+.login-sidenav {
   height: 100%;
   background-color: #000;
   overflow-x: hidden;
@@ -16,8 +16,8 @@ body {
   float: left;
 }
 
-.main {
-  width: 50vw;
+.login-main {
+  width: 55vw;
   float: right;
   height:100vh;
   padding: 0px 10px;
@@ -26,8 +26,12 @@ body {
 
 
 .login-form{
-    margin-top: 200px;
+    margin-top: 150px;
+    margin-left:20px;
 }
+
+
+
 /* @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
@@ -74,11 +78,36 @@ body {
   color: #fff;
 }
 
-.login-main-text h2 {
-  font-weight: 300;
-}
+
 
 .btn-black {
   background-color: #000 !important;
   color: #fff;
+}
+
+
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+} 
+
+ 
+.login-sidenav{
+  margin-top: 58px;
+  height: 100vh;
+  background-image: url("../../images/sidebar-bg.jpeg");
+  background-position: 0px 0px;
+  background-repeat: repeat-x;
+  background-size: 1500px;
+  animation: animatedBackground 40s linear infinite alternate;
+  opacity: 0.5;
+  float: left;
+  width: 45vw;
+
+
 }

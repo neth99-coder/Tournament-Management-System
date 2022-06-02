@@ -95,16 +95,16 @@ function LoginPage() {
         Admin
       </button>
 
-      <div class="sidenav">
+      <div class="login-sidenav">
         <div class="login-main-text">
-          <h2>
+          <h1>
             IJGames
             <br /> Login Page
-          </h2>
-          <p>Login from here to access.</p>
+          </h1>
+          <h4>Login from here to access.</h4>
         </div>
       </div>
-      <div class="main">
+      <div class="login-main">
         <div class="col-md-6 col-sm-12">
           <div class="login-form">
             <form onSubmit={login}>

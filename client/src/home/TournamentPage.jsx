@@ -448,7 +448,7 @@ export default function TournamentPage(props) {
         </div>{" "}
         <div
           className="select-team-box model"
-          style={{ width: "600px", border: "none", backgroundColor: "#F7F8F8" }}
+          style={{ width: "600px", border: "none", backgroundColor: "#F7F8F8",overflow: "scroll" }}
         >
           {" "}
           {teamArray.map((item, i) => {

@@ -48,8 +48,8 @@ function SignupPage() {
       <div>
          <div class="sidenav">
             <div class="signup-main-text">
-               <h2>IJGames<br /> </h2>
-               <p>Welcome !! lets get started.</p>
+               <h1>IJGames<br /> </h1>
+               <h4>Welcome !! lets get started.</h4>
             </div>
          </div>
          <div class="main signup-box">

@@ -16,7 +16,6 @@ export default function TournamentsCarousel() {
       )
       .then(function (response) {
         // handle success
-        console.log("heh")
         const tournaments = response.data.result;
         var tournament_arr = [];
 
