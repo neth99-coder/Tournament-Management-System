@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigationbar from "../bars/Adminnavigationbar";
 import "react-datepicker/dist/react-datepicker.css";
 import axios, { Axios } from "axios";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form, Alert,Spinner } from "react-bootstrap";
 import authService from "../services/auth.service";
 function AlertBox(props) {
   if (props.props) {
@@ -55,9 +55,13 @@ function Example(props) {
     validate();
     if (isSubmit === true) {
       axios
-        .post("https://tournament-management-system-1.herokuapp.com/api/admin/confirmPasswords", passwords, {
-          headers: { "x-auth-token": authService.getUserToken() },
-        })
+        .post(
+          "https://tournament-management-system-1.herokuapp.com/api/admin/confirmPasswords",
+          passwords,
+          {
+            headers: { "x-auth-token": authService.getUserToken() },
+          }
+        )
         .then((response) => {
           if (!response.data.success) {
             setError(true);
@@ -139,11 +143,13 @@ function UpdateAdminProfile() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const res = axios
       .get(
-        "https://tournament-management-system-1.herokuapp.com/api/admin/getProfile/" + authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/admin/getProfile/" +
+          authService.getUserID(),
         {
           headers: { "x-auth-token": authService.getUserToken() },
         }
@@ -153,6 +159,7 @@ function UpdateAdminProfile() {
         setName(data["NAME"]);
         setEmail(data["EMAIL"]);
         setID(data["ADMIN_ID"]);
+        setIsLoading(false);
       });
   }, [ID]);
 
@@ -189,9 +196,13 @@ function UpdateAdminProfile() {
 
     if (putData !== undefined) {
       axios
-        .put("https://tournament-management-system-1.herokuapp.com/api/admin/updateProfile", putData, {
-          headers: { "x-auth-token": authService.getUserToken() },
-        })
+        .put(
+          "https://tournament-management-system-1.herokuapp.com/api/admin/updateProfile",
+          putData,
+          {
+            headers: { "x-auth-token": authService.getUserToken() },
+          }
+        )
         .then((response) => {
           window.location.reload(false);
         });
@@ -200,119 +211,125 @@ function UpdateAdminProfile() {
   return (
     <div>
       {/* <Navigationbar username={name} /> */}
-      <div className="container rounded bg-white mt-5 mb-5">
-        <div className="row">
-          <div className="col-md-3 border-right">
-            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-              <img
-                className="rounded-circle mt-5"
-                width="150px"
-                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                alt="OK"
-              />
-              <span> </span>
-            </div>
-          </div>
-          <div className="col-md-5 border-right">
-            <div className="p-3 py-5">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="text-right">Profile Settings</h4>
+      {isLoading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        <div className="container rounded bg-white mt-5 mb-5">
+          <div className="row">
+            <div className="col-md-3 border-right">
+              <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img
+                  className="rounded-circle mt-5"
+                  width="150px"
+                  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                  alt="OK"
+                />
+                <span> </span>
               </div>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-5">
-                    <label className="labels">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Name"
-                      name="name"
-                      value={name || ""}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
-
-                  <div className="col-md-5">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateName"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
-                  </div>
-
-                  <div className="col-md-2">
-                    <br />
-                  </div>
+            </div>
+            <div className="col-md-5 border-right">
+              <div className="p-3 py-5">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h4 className="text-right">Profile Settings</h4>
                 </div>
-              </form>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-5">
-                    <label className="labels">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      value={email || ""}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-5">
+                      <label className="labels">Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name"
+                        name="name"
+                        value={name || ""}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
 
-                  <div className="col-md-5">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateEmail"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
-                  </div>
+                    <div className="col-md-5">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateName"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
 
-                  <div className="col-md-2">
-                    <br />
+                    <div className="col-md-2">
+                      <br />
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-5">
+                      <label className="labels">Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Email"
+                        name="email"
+                        value={email || ""}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
 
-              <form>
-                <div className="row mt-2">
-                  <div className="col-md-5">
-                    <label className="labels">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      placeholder="Password"
-                      name="password"
-                      value={""}
-                      required
-                      readOnly
-                    />
+                    <div className="col-md-5">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateEmail"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
+
+                    <div className="col-md-2">
+                      <br />
+                    </div>
                   </div>
-                  <div className="col-md-5">
-                    <br />
-                    <Example ID={ID} />
+                </form>
+
+                <form>
+                  <div className="row mt-2">
+                    <div className="col-md-5">
+                      <label className="labels">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        name="password"
+                        value={""}
+                        required
+                        readOnly
+                      />
+                    </div>
+                    <div className="col-md-5">
+                      <br />
+                      <Example ID={ID} />
+                    </div>
+                    <div className="col-md-2">
+                      <br />
+                      <p>{}</p>
+                    </div>
                   </div>
-                  <div className="col-md-2">
-                    <br />
-                    <p>{ }</p>
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
