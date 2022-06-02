@@ -1,18 +1,19 @@
 import { React, useEffect, useState } from "react";
 import TournamentCard from "./TournamentCard";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 import axios from "axios";
 import authService from "../services/auth.service";
 
 export default function TournamentsCarousel() {
   const [tournamentArray, setTournamentArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get("https://tournament-management-system-1.herokuapp.com/tournaments", {
         headers: { "x-auth-token": authService.getUserToken() },
-      }
-      )
+      })
       .then(function (response) {
         // handle success
         const tournaments = response.data.result;
@@ -24,6 +25,7 @@ export default function TournamentsCarousel() {
           tournament_arr.push(chunk);
         }
         setTournamentArray(tournament_arr);
+        setIsLoading(false);
       })
       .catch(function (error) {
         // handle error
@@ -44,6 +46,13 @@ export default function TournamentsCarousel() {
       >
         UPCOMING TOURNAMENTS{" "}
       </div>{" "}
+      {isLoading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        <></>
+      )}
       <Carousel style={{ height: "400px", padding: "30px" }}>
         {" "}
         {tournamentArray.map((i) => {
