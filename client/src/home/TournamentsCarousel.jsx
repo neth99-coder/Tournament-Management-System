@@ -9,11 +9,14 @@ export default function TournamentsCarousel() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/tournaments", {
+      .get("http://localhost:3001/tournaments"
+      , {
         headers: { "x-auth-token": authService.getUserToken() },
-      })
+      }
+      )
       .then(function (response) {
         // handle success
+        console.log("heh")
         const tournaments = response.data.result;
         var tournament_arr = [];
 
@@ -57,6 +60,7 @@ export default function TournamentsCarousel() {
               >
                 {" "}
                 {i.map((j) => {
+                  console.log(j.REGISTER);
                   return <TournamentCard data={j} />;
                 })}{" "}
               </div>{" "}
