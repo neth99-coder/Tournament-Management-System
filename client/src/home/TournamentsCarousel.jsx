@@ -2,13 +2,16 @@ import { React, useEffect, useState } from "react";
 import TournamentCard from "./TournamentCard";
 import { Carousel } from "react-bootstrap";
 import axios from "axios";
+import authService from "../services/auth.service";
 
 export default function TournamentsCarousel() {
   const [tournamentArray, setTournamentArray] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/tournaments")
+      .get("http://localhost:3001/tournaments", {
+        headers: { "x-auth-token": authService.getUserToken() },
+      })
       .then(function (response) {
         // handle success
         const tournaments = response.data.result;
@@ -39,7 +42,7 @@ export default function TournamentsCarousel() {
         }}
       >
         UPCOMING TOURNAMENTS{" "}
-      </div>
+      </div>{" "}
       <Carousel style={{ height: "400px", padding: "30px" }}>
         {" "}
         {tournamentArray.map((i) => {
@@ -52,13 +55,14 @@ export default function TournamentsCarousel() {
                   justifyContent: "space-evenly",
                 }}
               >
+                {" "}
                 {i.map((j) => {
                   return <TournamentCard data={j} />;
                 })}{" "}
-              </div>
+              </div>{" "}
             </Carousel.Item>
           );
-        })}
+        })}{" "}
       </Carousel>{" "}
     </div>
   );

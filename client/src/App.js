@@ -41,9 +41,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<HomeNavbar />}>
-          <Route path="" element={<Home />} />
-        </Route>
+        <Route exact path="/" element={<Home />}/>
+      
 
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
@@ -51,7 +50,8 @@ function App() {
         <Route path="/tournamentPage" element={<TournamentPage />} />
         {type === 0 ? (
           <Route exact path="player" element={<Playernavigationbar />}>
-            <Route path="" element={<Home />} />
+             <Route path="" element={<Home />} />
+            <Route path="dashboard" element={<Home />} />
             <Route path="tournaments" element={<RegisteredTournaments />} />
             <Route path="profile" element={<Playerprofile id={ID} />} />
             <Route
@@ -68,6 +68,7 @@ function App() {
         ) : type === 1 ? (
           <Route path="organizer" element={<Organizernavigationbar />}>
             <Route path="" element={<Home />} />
+            <Route path="dashboard" element={<Home />} />
             <Route path="profile" element={<OrganizerProfile />} />
             <Route path="tournaments" element={<OrganizeTournaments />} />
             <Route
@@ -83,7 +84,8 @@ function App() {
           </Route>
         ) : type === 2 ? (
           <Route path="admin" element={<Adminnavigationbar />}>
-            <Route path="" element={<AdminProfile />} />
+            <Route path="" element={<Home/>} />
+            <Route path="dashboard" element={<Home />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="requests" element={<Requests />} />
             <Route

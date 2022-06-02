@@ -1,10 +1,12 @@
 import Axios from 'axios';
 import React, { useState } from 'react';
 import { Modal, Form} from 'react-bootstrap';
+import authService from '../../services/auth.service';
 import styles from "./InfoCard.module.css";
 //import {useNavigate} from 'react-router-dom';
 
 const  InfoCard= (props) => {
+
 
   const [password,setPassword] = useState('');
   const [ID,setID] = useState();
@@ -44,7 +46,10 @@ const [validated, setValidated] = useState(false);
         email:props.request.EMAIL
       } ;
 
-      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form",data);
+      Axios.post("http://localhost:3001/api/admin/submit-org-accept-form", data,
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        });
     
       
     }
@@ -67,7 +72,9 @@ const [validated, setValidated] = useState(false);
 
     };
     
-    Axios.post("http://localhost:3001/api/admin/submit-org-reject-form",data);
+    Axios.post("http://localhost:3001/api/admin/submit-org-reject-form", data, {
+      headers: { "x-auth-token": authService.getUserToken() },
+    });
 
     setID(null);
     window.location.reload(false);

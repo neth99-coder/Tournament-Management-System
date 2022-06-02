@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar ,Button} from "react-bootstrap";
+import {Nav, Navbar ,Button} from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import { Outlet, Link } from "react-router-dom";
 import authService from "../services/auth.service";
@@ -14,7 +14,7 @@ function Adminnavigationbar(pros) {
           {pros.username} Dashboard
         </Navbar.Brand> */}
         <Link
-          to="dashboard"
+          to="/admin"
           className="navbar-brand"
           style={{ paddingLeft: 30 }}
         >
@@ -22,21 +22,23 @@ function Adminnavigationbar(pros) {
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <div className="mr-auto navbar-links">
+          <Nav className="mr-auto navbar-links">
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
             <Nav.Link href="requests">Organizer Requests</Nav.Link> */}
-            <Link to="profile" className="nav-link active">
+            <Link to="/admin/profile" className="nav-link active">
               Profile
             </Link>
-            <Link to="profileSettings" className="nav-link active">
+            <Link to="/admin/profileSettings" className="nav-link active">
               Profile Settings
             </Link>
-            <Link to="requests" className="nav-link active">
+            <Link to="/admin/requests" className="nav-link active">
               Organizer Requests
             </Link>
-            <Button
-              style={{ float: "right", right: "0" }}
+            
+          </Nav>
+          <Button
+                 style={{marginRight:"20px"}}
               className="ms-auto gap-0"
               onClick={() => {
                 authService.logout() && navigate("/login");
@@ -44,7 +46,6 @@ function Adminnavigationbar(pros) {
             >
               Logout
             </Button>
-          </div>
         </Navbar.Collapse>
       </Navbar>
       <Outlet />

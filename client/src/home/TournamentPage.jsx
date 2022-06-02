@@ -7,6 +7,9 @@ import "./styles/overlay-model.css";
 import HomeNavbar from "../bars/HomeNavbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
+import Playernavigationbar from "../bars/Playernavigationbar"
+import Organizernavigationbar from "../bars/Organizernavigationbar"
+import Adminnavigationbar from "../bars/Adminnavigationbar"
 
 export default function TournamentPage(props) {
   const [team, setTeam] = useState("");
@@ -14,26 +17,34 @@ export default function TournamentPage(props) {
   const [joinedTeam, setJoinedTeam] = useState(null);
   const [regState, setRegState] = useState("AS INDIVIDUAL");
 
-  const player_id = authService.getCurrentUser();
+  const player_id = authService.getUserID();
+  console.log(player_id);
 
   const location = useLocation();
 
   useEffect(() => {
-    
+
     if (authService.getUserType() === 2 || authService.getUserType() === 1) {
-      document.getElementById("createTeamBtn").style.display="none";
+      document.getElementById("createTeamBtn").style.display = "none";
       document.getElementById("registerBtn").style.display = "none";
     }
 
     axios
-      .post("http://localhost:3001/getReg", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/getReg",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(function (response) {
         // handle success
         if (response.data.registered === true && joinedTeam === null) {
           setRegState("UN REGISTER");
+          document.querySelector(".team-reg").classList.add("disabled");
         }
       })
       .catch(function (error) {
@@ -42,10 +53,16 @@ export default function TournamentPage(props) {
       });
 
     axios
-      .post("http://localhost:3001/isInTeam", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/isInTeam",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(function (response) {
         // handle success
         if (response.data.success === true) {
@@ -63,10 +80,16 @@ export default function TournamentPage(props) {
   const handleRegister = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/register", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/register",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -87,10 +110,16 @@ export default function TournamentPage(props) {
   const handleUnregister = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/unregister", {
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/unregister",
+        {
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -111,11 +140,17 @@ export default function TournamentPage(props) {
   const handleJoinTeam = (event, team_id) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/jointeam", {
-        teamID: team_id,
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/jointeam",
+        {
+          teamID: team_id,
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           if (response.data.success === true) {
@@ -136,11 +171,17 @@ export default function TournamentPage(props) {
   const handleLeaveTeam = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/leaveteam", {
-        teamID: joinedTeam,
-        playerId: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/leaveteam",
+        {
+          teamID: joinedTeam,
+          playerId: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           console.log(response);
@@ -162,9 +203,15 @@ export default function TournamentPage(props) {
   const handleViewTeams = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/viewteams", {
-        tournamentID: location.state.TOURNAMENT_ID,
-      })
+      .post(
+        "http://localhost:3001/viewteams",
+        {
+          tournamentID: location.state.TOURNAMENT_ID,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           setTeamArray(response.data.result);
@@ -178,11 +225,17 @@ export default function TournamentPage(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3001/teamreq", {
-        playerID: player_id,
-        tournamentID: location.state.TOURNAMENT_ID,
-        teamName: team,
-      })
+      .post(
+        "http://localhost:3001/teamreq",
+        {
+          playerID: player_id,
+          tournamentID: location.state.TOURNAMENT_ID,
+          teamName: team,
+        },
+        {
+          headers: { "x-auth-token": authService.getUserToken() },
+        }
+      )
       .then(
         (response) => {
           alert("Team Create Request Sent!");
@@ -197,16 +250,18 @@ export default function TournamentPage(props) {
   let navigate = useNavigate();
   return (
     <div>
-      <HomeNavbar />
+      {/* <HomeNavbar /> */
+        !authService.getCurrentUser() ? <HomeNavbar /> : authService.getUserType() === 0 ? <Playernavigationbar /> : authService.getUserType() === 1 ? <Organizernavigationbar /> : <Adminnavigationbar />
+      }
       <div
         className="tournament-page-bg"
         style={{
-          top: "85px",
+          top:"70px",
           bottom: "0",
           left: "0",
           right: "0",
           width: "100%",
-          height: "500px",
+          height: "80%",
           backgroundImage: 'url("https://wallpaperaccess.com/full/7448.png")',
           position: "absolute",
           opacity: "0.25",
@@ -217,7 +272,7 @@ export default function TournamentPage(props) {
         className="tournament-container"
         style={{
           padding: "40px",
-          marginTop: "20px",
+          marginTop: "5vw",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-evenly",
@@ -265,10 +320,10 @@ export default function TournamentPage(props) {
                 navigate("/login");
                 window.location.reload(false);
               }
-               document.querySelector(
-                 ".reg-options-overlay"
-               ).style.display = "block";
-               document.querySelector(".reg-options").style.display = "flex";
+              document.querySelector(
+                ".reg-options-overlay"
+              ).style.display = "block";
+              document.querySelector(".reg-options").style.display = "flex";
             }}
           >
             REGISTER NOW{" "}
@@ -281,13 +336,13 @@ export default function TournamentPage(props) {
               if (!authService.getCurrentUser()) {
                 navigate("/login");
                 window.location.reload(false);
-              } 
-                document.querySelector(
-                  ".create-team-form-overlay"
-                ).style.display = "block";
-                document.querySelector(".create-team-form").style.display =
-                  "block";
               }
+              document.querySelector(
+                ".create-team-form-overlay"
+              ).style.display = "block";
+              document.querySelector(".create-team-form").style.display =
+                "block";
+            }
             }
           >
             CREATE TEAM{" "}

@@ -48,7 +48,7 @@ function loginUser(obj) {
                 { email, type, ID: isUserIn.ID },
                 process.env.ACCESS_TOKEN_SECRET,
                 {
-                  expiresIn: "900s",
+                  expiresIn: "2d",
                 }
               );
               // const user = JWT.verify(token, process.env.ACCESS_TOKEN_SECRET);

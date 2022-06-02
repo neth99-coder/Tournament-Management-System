@@ -18,7 +18,7 @@ function LoginPage() {
       .then(function (res) {
         const { success, result } = res.data;
         if (success) {
-          localStorage.setItem("user", JSON.stringify(res.data.result));
+          localStorage.setItem("user", res.data.result);
           let decoded = jwt_decode(result);
           console.log("Login Successful");
           switch (decoded.type) {

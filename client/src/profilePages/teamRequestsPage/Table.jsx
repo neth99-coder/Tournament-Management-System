@@ -2,11 +2,13 @@ import React from "react";
 import InfoCard from "./InfoCard";
 
 const Table = (props) => {
+ 
   function handleClick(e) {
     const btnId = e.target.id;
-    const [id] = btnId.split(" ")[1];
+    const id = btnId.split(" ")[1];
+    console.log(id)
     const hidden = document.getElementById(id).hidden;
-    document.getElementById(id).hidden = !hidden;
+        document.getElementById(id).hidden = !hidden;
   }
   if (props.requests.length === 0) {
     return (

@@ -1,5 +1,15 @@
 const organizerModel = require("../models/organizerModel");
 const getProfile = async (req, res) => {
+  if (
+    req.params.organizerID.toString() !== req.tokenUserID.toString() ||
+    req.tokenUserType.toString() !== "1"
+  ) {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return false;
+  }
   await organizerModel
     .getProfile(req.params.organizerID)
     .then((result) => {
@@ -17,6 +27,16 @@ const getProfile = async (req, res) => {
 };
 
 const getTournaments = async (req, res) => {
+  if (
+    req.params.organizerID.toString() !== req.tokenUserID.toString() ||
+    req.tokenUserType.toString() !== "1"
+  ) {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return false;
+  }
   await organizerModel
     .getTournaments(req.params.organizerID)
     .then((result) => {
@@ -34,6 +54,13 @@ const getTournaments = async (req, res) => {
 };
 
 const getGameTypes = async (req, res) => {
+  if (req.tokenUserType.toString() !== "1") {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return false;
+  }
   await organizerModel
     .getGameTypes()
     .then((result) => {
@@ -51,6 +78,16 @@ const getGameTypes = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
+  if (
+    req.body.ID.toString() !== req.tokenUserID.toString() ||
+    req.tokenUserType.toString() !== "1"
+  ) {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return;
+  }
   await organizerModel
     .updateProfile(req.body)
     .then((result) => {
@@ -68,6 +105,16 @@ const updateProfile = async (req, res) => {
 };
 
 const confirmPasswords = async (req, res) => {
+  if (
+    req.body.ID.toString() !== req.tokenUserID.toString() ||
+    req.tokenUserType.toString() !== "1"
+  ) {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return;
+  }
   await organizerModel
     .confirmPasswords(req.body)
     .then((result) => {
@@ -82,6 +129,16 @@ const confirmPasswords = async (req, res) => {
 };
 
 const createNewTournament = async (req, res) => {
+  if (
+    req.body.organizerID.toString() !== req.tokenUserID.toString() ||
+    req.tokenUserType.toString() !== "1"
+  ) {
+    res.json({
+      sucess: false,
+      err: "User don't have access",
+    });
+    return;
+  }
   await organizerModel
     .createNewTournament(req.body)
     .then((result) => {
@@ -96,6 +153,7 @@ const createNewTournament = async (req, res) => {
 };
 
 const addRequest = async (req, res) => {
+  
   await organizerModel
     .addRequest(req.body)
     .then((result) => {
