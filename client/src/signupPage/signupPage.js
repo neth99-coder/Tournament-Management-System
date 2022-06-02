@@ -34,8 +34,10 @@ function SignupPage() {
                console.log(success);
                if (success) {
                   alert("Signup Successful");
+                  window.location.href = "/login";
                } else {
                   alert("Sign Up Failed");
+                  window.location.reload(false);
                }
             }
          }, (error) => {
