@@ -44,17 +44,14 @@ export default function HomeNavbar() {
 
     if(name !== '' && email !== '' && proof!== ''){
 
-
-
-
-      Axios.get("http://localhost:3001/api/organizer/email-exist/" + email,
+      Axios.get("http://localhost:3001/email-exist/" + email,
         {
           headers: { "x-auth-token": authService.getUserToken() },
         })
       .then((res)=>{
         //console.log(res.data.result);
         if(res.data.result.length === 0){
-           Axios.post("http://localhost:3001/api/organizer/submit-new-organizer-form",{
+           Axios.post("http://localhost:3001/submit-new-organizer-form",{
             name : name,
             email: email,
             proof:proof

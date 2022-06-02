@@ -168,6 +168,35 @@ const isInTeam = async (req, res) => {
     });
 };
 
+const addOrganizerRequest = async (req, res) => {
+  
+  await homeModel
+    .addOrganizerRequest(req.body)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
+const emailExist = async (req, res) => {
+  await homeModel
+    .emailExist(req.params.email)
+    .then((result) => {
+      res.json({ success: true, result });
+    })
+    .catch((err) => {
+      res.json({
+        success: false,
+        err,
+      });
+    });
+};
+
 module.exports = {
-  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam,register,unregister,isRegistered,isInTeam
+  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam,register,unregister,isRegistered,isInTeam,addOrganizerRequest,emailExist
 };

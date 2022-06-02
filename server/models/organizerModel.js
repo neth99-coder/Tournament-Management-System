@@ -127,47 +127,6 @@ function createNewTournament(data) {
   });
 }
 
-async function addRequest(data) {
-  return await new Promise((resolve, reject) => {
-    const name = data.name;
-    const email = data.email;
-    const proof = data.proof;
-
-    // await db.query("SELECT * FROM organizer WHERE EMAIL = ?",[email]).then((err,res)=>{
-    //   if(res.length === 0){
-    const sql =
-      "INSERT INTO organizer_request (NAME,EMAIL,PROOF) VALUES (?,?,?)";
-
-    db.query(sql, [name, email, proof], (err, result) => {
-      if (result) {
-        return resolve(result);
-      } else {
-        return reject(err);
-      }
-    });
-    // }else{
-    //   return reject(err);
-    // }
-  });
-  //console.log(haveEmail());
-  //if(haveEmail()){return reject(new Error("Email exists !!"));}
-}
-
-function emailExist(email) {
-  return new Promise((resolve, reject) => {
-    db.query(
-      "SELECT * FROM organizer WHERE EMAIL = ?",
-      [email],
-      (err, result) => {
-        if (result) {
-          return resolve(result);
-        } else {
-          return reject(err);
-        }
-      }
-    );
-  });
-}
 
 function getTeamRequest(organizerID) {
   return new Promise((resolve, reject) => {
@@ -249,8 +208,6 @@ module.exports = {
   updateProfile,
   confirmPasswords,
   createNewTournament,
-  addRequest,
-  emailExist,
   getTeamRequest,
   acceptTeamRequest,
   rejectTeamRequest,

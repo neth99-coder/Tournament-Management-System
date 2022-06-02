@@ -152,35 +152,6 @@ const createNewTournament = async (req, res) => {
     });
 };
 
-const addRequest = async (req, res) => {
-  
-  await organizerModel
-    .addRequest(req.body)
-    .then((result) => {
-      res.json({ success: true, result });
-    })
-    .catch((err) => {
-      res.json({
-        success: false,
-        err,
-      });
-    });
-};
-
-const emailExist = async (req, res) => {
-  await organizerModel
-    .emailExist(req.params.email)
-    .then((result) => {
-      res.json({ success: true, result });
-    })
-    .catch((err) => {
-      res.json({
-        success: false,
-        err,
-      });
-    });
-};
-
 const getTeamRequest = async (req, res) => {
   await organizerModel
     .getTeamRequest(req.params.organizerID)
@@ -233,8 +204,6 @@ module.exports = {
   getTournaments,
   getGameTypes,
   createNewTournament,
-  addRequest,
-  emailExist,
   getTeamRequest,
   acceptTeamRequest,
   rejectTeamRequest,
