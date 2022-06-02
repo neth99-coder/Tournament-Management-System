@@ -14,7 +14,10 @@ function LoginPage() {
 
     const data = { email, password, type };
     axios
-      .post("http://localhost:3001/api/auth/login", data)
+      .post(
+        "https://tournament-management-system-1.herokuapp.com/api/auth/login",
+        data
+      )
       .then(function (res) {
         const { success, result } = res.data;
         if (success) {

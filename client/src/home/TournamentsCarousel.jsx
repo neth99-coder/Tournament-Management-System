@@ -9,7 +9,7 @@ export default function TournamentsCarousel() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/tournaments", {
+      .get("https://tournament-management-system-1.herokuapp.com/tournaments", {
         headers: { "x-auth-token": authService.getUserToken() },
       })
       .then(function (response) {

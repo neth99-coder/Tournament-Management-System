@@ -2,12 +2,11 @@ const mysql = require("mysql");
 
 const config = require("config");
 
-
 const connection = mysql.createConnection({
-  host: process.env.HOST,
-  user: config.get("db_username"),
-  password: config.get("db_password"),
-  database: process.env.DATABASE,
+  host: "sql6.freesqldatabase.com",
+  user: "sql6497215",
+  password: "eIEikkL2aD",
+  database: "sql6497215",
 });
 connection.connect((err) => {
   if (err) {
