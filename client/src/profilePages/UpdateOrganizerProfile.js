@@ -32,7 +32,7 @@ function Example(props) {
     } else {
       axios
         .post(
-          "http://localhost:3001/api/organizer/confirmPasswords",
+          "https://tournament-management-system-1.herokuapp.com/api/organizer/confirmPasswords",
           passwords,
           {
             headers: { "x-auth-token": authService.getUserToken() },
@@ -120,8 +120,8 @@ function UpdateOrganizerProfile() {
   useEffect(() => {
     const res = axios
       .get(
-        "http://localhost:3001/api/organizer/getProfile/" +
-          authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/organizer/getProfile/" +
+        authService.getUserID(),
         {
           headers: { "x-auth-token": authService.getUserToken() },
         }
@@ -152,7 +152,7 @@ function UpdateOrganizerProfile() {
 
     if (putData !== undefined) {
       axios
-        .put("http://localhost:3001/api/organizer/updateProfile", putData, {
+        .put("https://tournament-management-system-1.herokuapp.com/api/organizer/updateProfile", putData, {
           headers: { "x-auth-token": authService.getUserToken() },
         })
         .then((response) => {

@@ -32,11 +32,11 @@ const Table = (props) => {
           {props.requests.map((cur) => {
             return (
               <tr className="data-table-row">
-                <td>{cur.request_id}</td>
+                <td>{cur.REQUEST_ID}</td>
                 <td>
-                  {cur.team_name}
+                  {cur.TEAM_NAME}
                   <br />
-                  <div hidden id={cur.request_id}>
+                  <div hidden id={cur.REQUEST_ID}>
                     <InfoCard request={cur} />
                   </div>
                 </td>
@@ -46,7 +46,7 @@ const Table = (props) => {
                     type="button"
                     className="btn btn-success"
                     onClick={handleClick}
-                    id={"btn " + cur.request_id}
+                    id={"btn " + cur.REQUEST_ID}
                   >
                     View
                   </button>

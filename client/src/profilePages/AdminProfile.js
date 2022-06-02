@@ -11,7 +11,7 @@ function Adminprofile() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/admin/getProfile/" + authService.getUserID(),
         {
           headers: { "x-auth-token": authService.getUserToken() },
         }

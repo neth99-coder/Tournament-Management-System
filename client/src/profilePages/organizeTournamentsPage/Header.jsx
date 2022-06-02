@@ -27,7 +27,7 @@ function Header() {
 
   useEffect(() => {
     setOrganizerId(authService.getUserID());
-    Axios.get("http://localhost:3001/api/organizer/games-type", {
+    Axios.get("https://tournament-management-system-1.herokuapp.com/api/organizer/games-type", {
       headers: { "x-auth-token": authService.getUserToken() },
     }).then((res) => {
       // console.log(res.data);
@@ -92,7 +92,7 @@ function Header() {
         closingDateTime: closingDate + " " + closingTime,
       };
       Axios.post(
-        "http://localhost:3001/api/organizer/submit-new-tournament-form",
+        "https://tournament-management-system-1.herokuapp.com/api/organizer/submit-new-tournament-form",
         data,
         {
           headers: { "x-auth-token": authService.getUserToken() },

@@ -40,13 +40,13 @@ export default function HomeNavbar() {
 
     if (name !== "" && email !== "" && proof !== "") {
       console.log("Check Email");
-      Axios.get("http://localhost:3001/email-exist/" + email, {
+      Axios.get("https://tournament-management-system-1.herokuapp.com/email-exist/" + email, {
         headers: { "x-auth-token": authService.getUserToken() },
       }).then((res) => {
         //console.log(res.data.result);
         if (res.data.result.length === 0) {
           Axios.post(
-            "http://localhost:3001/submit-new-organizer-form",
+            "https://tournament-management-system-1.herokuapp.com/submit-new-organizer-form",
             {
               name: name,
               email: email,

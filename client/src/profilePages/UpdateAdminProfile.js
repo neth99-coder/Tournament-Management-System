@@ -55,7 +55,7 @@ function Example(props) {
     validate();
     if (isSubmit === true) {
       axios
-        .post("http://localhost:3001/api/admin/confirmPasswords", passwords, {
+        .post("https://tournament-management-system-1.herokuapp.com/api/admin/confirmPasswords", passwords, {
           headers: { "x-auth-token": authService.getUserToken() },
         })
         .then((response) => {
@@ -143,7 +143,7 @@ function UpdateAdminProfile() {
   useEffect(() => {
     const res = axios
       .get(
-        "http://localhost:3001/api/admin/getProfile/" + authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/admin/getProfile/" + authService.getUserID(),
         {
           headers: { "x-auth-token": authService.getUserToken() },
         }
@@ -189,7 +189,7 @@ function UpdateAdminProfile() {
 
     if (putData !== undefined) {
       axios
-        .put("http://localhost:3001/api/admin/updateProfile", putData, {
+        .put("https://tournament-management-system-1.herokuapp.com/api/admin/updateProfile", putData, {
           headers: { "x-auth-token": authService.getUserToken() },
         })
         .then((response) => {
@@ -305,7 +305,7 @@ function UpdateAdminProfile() {
                   </div>
                   <div className="col-md-2">
                     <br />
-                    <p>{}</p>
+                    <p>{ }</p>
                   </div>
                 </div>
               </form>

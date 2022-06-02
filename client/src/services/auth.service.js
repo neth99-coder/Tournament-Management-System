@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-const API_URL = "http://localhost:3001/api/auth";
+const API_URL = "https://tournament-management-system-1.herokuapp.com/api/auth";
 
 const signup = (userData) => {
   return axios.post(API_URL + "/signup", { userData }).then((response) => {

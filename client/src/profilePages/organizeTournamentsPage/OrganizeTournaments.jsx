@@ -8,7 +8,7 @@ import authService from "../../services/auth.service";
 import styles from "./OrganizeTournaments.module.css";
 
 const OrganizeTournaments = (props) => {
-  const [tournaments, setTournaments] = useState(["empty"]);
+  const [tournaments, setTournaments] = useState(null);
 
   useEffect(() => {
     getTournamnets();
@@ -18,7 +18,7 @@ const OrganizeTournaments = (props) => {
   async function getTournamnets() {
     let res = await Axios({
       url:
-        "http://localhost:3001/api/organizer/tournaments/" +
+        "https://tournament-management-system-1.herokuapp.com/api/organizer/tournaments/" +
         authService.getUserID(),
       method: "get",
       timeout: 8000,
@@ -35,7 +35,7 @@ const OrganizeTournaments = (props) => {
   return (
     <div>
       <Header />
-      {tournaments.length === 0 ? (
+      {tournaments === null || tournaments === [] ? (
         <div
           className="alert alert-dark"
           role="alert"

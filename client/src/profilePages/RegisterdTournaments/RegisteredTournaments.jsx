@@ -5,7 +5,7 @@ import Card from "../organizeTournamentsPage/Card";
 import { Link } from "react-router-dom";
 
 const RegisteredTournaments = () => {
-  const [tournaments, setTournaments] = useState(["empty"]);
+  const [tournaments, setTournaments] = useState(null);
 
   useEffect(() => {
     getTournamnets();
@@ -17,7 +17,7 @@ const RegisteredTournaments = () => {
   async function getTournamnets() {
     let res = await Axios({
       url:
-        "http://localhost:3001/api/player/tournaments/" +
+        "https://tournament-management-system-1.herokuapp.com/api/player/tournaments/" +
         authService.getUserID(),
       method: "get",
       timeout: 8000,
@@ -28,11 +28,12 @@ const RegisteredTournaments = () => {
     });
 
     setTournaments(res.data.result);
+    console.log(res.data);
   }
 
   return (
     <div>
-      {tournaments.length === 0 ? (
+      {tournaments === null || tournaments === []  ? (
         <div
           className="alert alert-dark"
           role="alert"

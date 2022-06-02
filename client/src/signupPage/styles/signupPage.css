@@ -12,12 +12,12 @@ body {
     background-color: #000;
     overflow-x: hidden;
     padding-top: 20px;
-    width: 45vw;
+    width: 43vw;
     float: left;
   }
   
   .main {
-    width: 50vw;
+    width: 55vw;
     float: right;
     height:100vh;
     padding: 0px 10px;
@@ -26,8 +26,8 @@ body {
   
   
   .signup-form{
-      margin-top: 100px;
-      margin-left:20px;
+      margin-top: 60px;
+      margin-left:40px;
   }
 
 
@@ -87,3 +87,27 @@ body {
     color: #fff;
   }
   
+  @keyframes animatedBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  } 
+  
+   
+  .sidenav{
+    
+    height: 100vh;
+    background-image: url("../../images/sidebar-bg.jpeg");
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    background-size: 1500px;
+    animation: animatedBackground 40s linear infinite alternate;
+    opacity: 0.5;
+    float: left;
+    width: 43vw;
+  
+  
+  }
