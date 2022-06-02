@@ -18,7 +18,7 @@ const OrganizeTournaments = (props) => {
   async function getTournamnets() {
     let res = await Axios({
       url:
-        "http://localhost:3001/api/organizer/tournaments/" +
+        "https://tournament-management-system-1.herokuapp.com/api/organizer/tournaments/" +
         authService.getUserID(),
       method: "get",
       timeout: 8000,

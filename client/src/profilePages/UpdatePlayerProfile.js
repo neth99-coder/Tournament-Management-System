@@ -34,7 +34,7 @@ function Example(props) {
     } else {
       axios
         .post(
-          "http://localhost:3001/api/player/confirmPasswords",
+          "https://tournament-management-system-1.herokuapp.com/api/player/confirmPasswords",
 
           passwords,
           {
@@ -130,8 +130,8 @@ function UpdatePlayerprofile() {
     let token = authService.getUserToken();
     const res = axios
       .get(
-        "http://localhost:3001/api/player/getProfile/" +
-          authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/player/getProfile/" +
+        authService.getUserID(),
         {
           headers: { "x-auth-token": token },
         }
@@ -144,7 +144,7 @@ function UpdatePlayerprofile() {
         setGender(!data["GENDER"] ? "Male" : "Female");
         setdob(new Date(data["DOB"]));
         setID(data["PLAYER_ID"]);
-        setProfilePic(data["profilePic"]["data"]);
+        // setProfilePic(data["profilePic"]["data"]);
         setPassword(data["PASSWORD"]);
       });
   }, []);
@@ -178,7 +178,7 @@ function UpdatePlayerprofile() {
 
       axios
         .put(
-          "http://localhost:3001/api/player/updateProfile",
+          "https://tournament-management-system-1.herokuapp.com/api/player/updateProfile",
 
           putData,
           {

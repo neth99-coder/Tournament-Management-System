@@ -34,13 +34,13 @@ function LoginPage() {
             case 1:
               // navigate("/organizer");
               // window.location.reload(false);
-              window.location.href = "/player";
+              window.location.href = "/organizer";
 
               break;
             case 2:
               // navigate("/admin");
               // window.location.reload(false);
-              window.location.href = "/player";
+              window.location.href = "/admin";
 
               break;
             default:

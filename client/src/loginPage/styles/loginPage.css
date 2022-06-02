@@ -12,25 +12,22 @@ body {
   background-color: #000;
   overflow-x: hidden;
   padding-top: 20px;
-  width: 45vw;
+  width: 43vw;
   float: left;
 }
 
 .login-main {
   width: 55vw;
   float: right;
-  height:100vh;
+  height: 100vh;
   padding: 0px 10px;
   background-color: rgba(255, 255, 255, 0.073);
 }
 
-
-.login-form{
-    margin-top: 150px;
-    margin-left:20px;
+.login-form {
+  margin-top: 150px;
+  margin-left: 20px;
 }
-
-
 
 /* @media screen and (max-height: 450px) {
   .sidenav {
@@ -78,14 +75,10 @@ body {
   color: #fff;
 }
 
-
-
 .btn-black {
   background-color: #000 !important;
   color: #fff;
 }
-
-
 
 @keyframes animatedBackground {
   from {
@@ -94,10 +87,9 @@ body {
   to {
     background-position: 100% 0;
   }
-} 
+}
 
- 
-.login-sidenav{
+.login-sidenav {
   margin-top: 58px;
   height: 100vh;
   background-image: url("../../images/sidebar-bg.jpeg");
@@ -107,7 +99,5 @@ body {
   animation: animatedBackground 40s linear infinite alternate;
   opacity: 0.5;
   float: left;
-  width: 45vw;
-
-
+  width: 43vw;
 }

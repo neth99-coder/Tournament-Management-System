@@ -12,7 +12,7 @@ body {
     background-color: #000;
     overflow-x: hidden;
     padding-top: 20px;
-    width: 45vw;
+    width: 43vw;
     float: left;
   }
   
@@ -107,7 +107,7 @@ body {
     animation: animatedBackground 40s linear infinite alternate;
     opacity: 0.5;
     float: left;
-    width: 45vw;
+    width: 43vw;
   
   
   }

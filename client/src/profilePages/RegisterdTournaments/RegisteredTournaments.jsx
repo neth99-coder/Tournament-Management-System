@@ -17,7 +17,7 @@ const RegisteredTournaments = () => {
   async function getTournamnets() {
     let res = await Axios({
       url:
-        "http://localhost:3001/api/player/tournaments/" +
+        "https://tournament-management-system-1.herokuapp.com/api/player/tournaments/" +
         authService.getUserID(),
       method: "get",
       timeout: 8000,

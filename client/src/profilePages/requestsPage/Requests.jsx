@@ -6,7 +6,7 @@ const Requests = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/api/admin/requests", {
+    Axios.get("https://tournament-management-system-1.herokuapp.com/api/admin/requests", {
       headers: { "x-auth-token": authService.getUserToken() },
     }).then((res) => {
       //console.log(res.data);

@@ -18,30 +18,31 @@ function SignupPage() {
       event.preventDefault();
 
       const data = { name, email, password, gender, dob, country, type: 0 };
-      if (name==="" ||email==="" || password===""||dob===null||country==="" || confirmPassword===""){
+      if (name === "" || email === "" || password === "" || dob === null || country === "" || confirmPassword === "") {
          alert("fill all fields");
-      }else if (password!==confirmPassword) {
+      } else if (password !== confirmPassword) {
          alert("Passwords don't match")
       } else {
-      axios.post("http://localhost:3001/api/auth/signup", data).then(function (res) {
-         if (res.data.result === "user found") {
-            alert("user already exist")
-         } else {
-
-
-
-            const { success } = res.data;
-            console.log(success);
-            if (success) {
-               alert("Signup Successful");
+         axios.post("https://tournament-management-system-1.herokuapp.com/api/auth/signup", data).then(function (res) {
+            if (res.data.result === "user found") {
+               alert("user already exist")
             } else {
-               alert("Sign Up Failed");
+
+
+
+               const { success } = res.data;
+               console.log(success);
+               if (success) {
+                  alert("Signup Successful");
+               } else {
+                  alert("Sign Up Failed");
+               }
             }
+         }, (error) => {
+            console.log(error);
          }
-      }, (error) => {
-         console.log(error);
+         );
       }
-      );}
    }
 
    return (
@@ -108,7 +109,7 @@ function SignupPage() {
                            setCountry(e.target.value);
                         }} />
                      </div>
-                     <button class="btn btn-secondary" type="submit" style={{ marginLeft: '20px', margin: "10px" }} onClick={(e) => {signup(e);}}>Sign Up</button>
+                     <button class="btn btn-secondary" type="submit" style={{ marginLeft: '20px', margin: "10px" }} onClick={(e) => { signup(e); }}>Sign Up</button>
                   </form>
                </div>
             </div>

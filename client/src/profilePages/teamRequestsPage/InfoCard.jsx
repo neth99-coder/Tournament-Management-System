@@ -24,13 +24,13 @@ const InfoCard = (props) => {
     }
 
     const data = {
-      request_id: props.request.request_id,
-      team_name: props.request.team_name,
-      player_id: props.request.player_id,
-      player_tournament_id: props.request.player_tournament_id,
+      request_id: props.request.REQUEST_ID,
+      team_name: props.request.TEAM_NAME,
+      player_id: props.request.PLAYER_ID,
+      player_tournament_id: props.request.PLAYER_TOURNAMENT_ID,
     };
 
-    Axios.post("http://localhost:3001/api/organizer/accept-teamrequest", data, {
+    Axios.post("https://tournament-management-system-1.herokuapp.com/api/organizer/accept-teamrequest", data, {
       headers: { "x-auth-token": authService.getUserToken() },
     });
 
@@ -41,10 +41,10 @@ const InfoCard = (props) => {
   function handleReject(e) {
     e.preventDefault();
     const data = {
-      request_id: props.request.request_id,
+      request_id: props.request.REQUEST_ID,
     };
 
-    Axios.post("http://localhost:3001/api/organizer/reject-teamrequest", data, {
+    Axios.post("https://tournament-management-system-1.herokuapp.com/api/organizer/reject-teamrequest", data, {
       headers: { "x-auth-token": authService.getUserToken() },
     });
 
@@ -56,11 +56,11 @@ const InfoCard = (props) => {
     <div className="card w-100 text-white bg-dark">
       <div className="card-body">
         <h5 className="card-title"> Tournament Name </h5>{" "}
-        <p className="card-text"> {props.request.tournament_name} </p>{" "}
+        <p className="card-text"> {props.request.TOURNAMENT_NAME} </p>{" "}
         <h5 className="card-title"> Team Name </h5>{" "}
-        <p className="card-text"> {props.request.team_name} </p>{" "}
+        <p className="card-text"> {props.request.TEAM_NAME} </p>{" "}
         <h5 className="card-title"> Player Name </h5>{" "}
-        <p className="card-text"> {props.request.name} </p>{" "}
+        <p className="card-text"> {props.request.NAME} </p>{" "}
         {/* <h5 className="card-title">Proof Link</h5>
                     <a className="card-text" href={props.request.PROOF}>
                       {props.request.PROOF}
@@ -83,7 +83,7 @@ const InfoCard = (props) => {
       <Modal show={showA} onHide={handleCloseA}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Request Acceptance - {props.request.team_name}{" "}
+            Request Acceptance - {props.request.TEAM_NAME}{" "}
           </Modal.Title>{" "}
         </Modal.Header>
         <Form onSubmit={handleAccept}>
@@ -119,7 +119,7 @@ const InfoCard = (props) => {
       <Modal show={showR} onHide={handleCloseR}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Request Rejection - {props.request.team_name}{" "}
+            Request Rejection - {props.request.TEAM_NAME}{" "}
           </Modal.Title>{" "}
         </Modal.Header>
         <form>

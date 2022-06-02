@@ -8,8 +8,8 @@ const TeamRequests = () => {
 
   useEffect(() => {
     Axios.get(
-      "http://localhost:3001/api/organizer/teamRequests/" +
-        authService.getUserID(),
+      "https://tournament-management-system-1.herokuapp.com/api/organizer/teamRequests/" +
+      authService.getUserID(),
       {
         headers: { "x-auth-token": authService.getUserToken() },
       }

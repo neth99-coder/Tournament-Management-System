@@ -19,10 +19,10 @@ function Playerprofile(props) {
   // let location = useLocation();
   useEffect(() => {
     let token = authService.getUserToken();
-     axios
+    axios
       .get(
-        "http://localhost:3001/api/player/getProfile/" +
-          authService.getUserID(),
+        "https://tournament-management-system-1.herokuapp.com/api/player/getProfile/" +
+        authService.getUserID(),
         {
           headers: { "x-auth-token": token },
         }
@@ -35,7 +35,7 @@ function Playerprofile(props) {
         setGender(!data["GENDER"] ? "Male" : "Female");
         setSelectedDate(new Date(data["DOB"]));
         setID(data["PLAYER_ID"]);
-        setProfilePic(data["profilePic"]["data"]);
+        // setProfilePic(data["profilePic"]["data"]);
       });
   }, []);
 

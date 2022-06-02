@@ -31,7 +31,7 @@ export default function TournamentPage(props) {
 
     axios
       .post(
-        "http://localhost:3001/getReg",
+        "https://tournament-management-system-1.herokuapp.com/getReg",
         {
           playerId: player_id,
           tournamentID: location.state.TOURNAMENT_ID,
@@ -54,7 +54,7 @@ export default function TournamentPage(props) {
 
     axios
       .post(
-        "http://localhost:3001/isInTeam",
+        "https://tournament-management-system-1.herokuapp.com/isInTeam",
         {
           playerId: player_id,
           tournamentID: location.state.TOURNAMENT_ID,
@@ -81,7 +81,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/register",
+        "https://tournament-management-system-1.herokuapp.com/register",
         {
           playerId: player_id,
           tournamentID: location.state.TOURNAMENT_ID,
@@ -111,7 +111,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/unregister",
+        "https://tournament-management-system-1.herokuapp.com/unregister",
         {
           playerId: player_id,
           tournamentID: location.state.TOURNAMENT_ID,
@@ -141,7 +141,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/jointeam",
+        "https://tournament-management-system-1.herokuapp.com/jointeam",
         {
           teamID: team_id,
           playerId: player_id,
@@ -172,7 +172,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/leaveteam",
+        "https://tournament-management-system-1.herokuapp.com/leaveteam",
         {
           teamID: joinedTeam,
           playerId: player_id,
@@ -204,7 +204,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/viewteams",
+        "https://tournament-management-system-1.herokuapp.com/viewteams",
         {
           tournamentID: location.state.TOURNAMENT_ID,
         },
@@ -226,7 +226,7 @@ export default function TournamentPage(props) {
     event.preventDefault();
     axios
       .post(
-        "http://localhost:3001/teamreq",
+        "https://tournament-management-system-1.herokuapp.com/teamreq",
         {
           playerID: player_id,
           tournamentID: location.state.TOURNAMENT_ID,
@@ -256,7 +256,7 @@ export default function TournamentPage(props) {
       <div
         className="tournament-page-bg"
         style={{
-          top:"70px",
+          top: "70px",
           bottom: "0",
           left: "0",
           right: "0",
@@ -448,7 +448,7 @@ export default function TournamentPage(props) {
         </div>{" "}
         <div
           className="select-team-box model"
-          style={{ width: "600px", border: "none", backgroundColor: "#F7F8F8",overflow: "scroll" }}
+          style={{ width: "600px", border: "none", backgroundColor: "#F7F8F8", overflow: "scroll" }}
         >
           {" "}
           {teamArray.map((item, i) => {
