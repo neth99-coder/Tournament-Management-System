@@ -9,6 +9,7 @@ import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import countryList from "react-select-country-list";
 import authService from "../services/auth.service";
+import { Spinner } from "react-bootstrap";
 function AlertBox(props) {
   if (props.props) {
     return (
@@ -121,17 +122,18 @@ function UpdatePlayerprofile() {
   const [gender, setGender] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
   useEffect(() => {
+    setIsLoading(true);
     let token = authService.getUserToken();
     const res = axios
       .get(
         "https://tournament-management-system-1.herokuapp.com/api/player/getProfile/" +
-        authService.getUserID(),
+          authService.getUserID(),
         {
           headers: { "x-auth-token": token },
         }
@@ -146,6 +148,7 @@ function UpdatePlayerprofile() {
         setID(data["PLAYER_ID"]);
         // setProfilePic(data["profilePic"]["data"]);
         setPassword(data["PASSWORD"]);
+        setIsLoading(false);
       });
   }, []);
 
@@ -193,200 +196,206 @@ function UpdatePlayerprofile() {
   return (
     <div>
       {/* <Navigationbar username={name} /> */}
-      <div className="container rounded bg-white mt-5 mb-5">
-        <div className="row">
-          <div className="col-md-3 border-right">
-            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-              <img
-                className="rounded-circle mt-5"
-                width="150px"
-                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                alt="OK"
-              />
-              <span> </span>
-            </div>
-          </div>
-          <div className="col-md-5 border-right">
-            <div className="p-3 py-5">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="text-right">Profile Settings</h4>
+      {isLoading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        <div className="container rounded bg-white mt-5 mb-5">
+          <div className="row">
+            <div className="col-md-3 border-right">
+              <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img
+                  className="rounded-circle mt-5"
+                  width="150px"
+                  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                  alt="OK"
+                />
+                <span> </span>
               </div>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Name"
-                      name="name"
-                      value={name || ""}
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
+            </div>
+            <div className="col-md-5 border-right">
+              <div className="p-3 py-5">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h4 className="text-right">Profile Settings</h4>
+                </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name"
+                        name="name"
+                        value={name || ""}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
 
-                  <div className="col-md-6">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateName"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
+                    <div className="col-md-6">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateName"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      value={email || ""}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      required
-                    />
-                  </div>
+                </form>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Email"
+                        name="email"
+                        value={email || ""}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
 
-                  <div className="col-md-6">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateEmail"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
+                    <div className="col-md-6">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateEmail"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Country</label>
-                    <select
-                      className="form-control"
-                      name="country"
-                      id="country"
-                      value={country || ""}
-                      onChange={(e) => {
-                        setCountry(e.target.value);
-                      }}
-                      required
-                    >
-                      {countryList()
-                        .getData()
-                        .map((element) => (
-                          <option key={element.value}>{element.label}</option>
-                        ))}
-                    </select>
-                  </div>
+                </form>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Country</label>
+                      <select
+                        className="form-control"
+                        name="country"
+                        id="country"
+                        value={country || ""}
+                        onChange={(e) => {
+                          setCountry(e.target.value);
+                        }}
+                        required
+                      >
+                        {countryList()
+                          .getData()
+                          .map((element) => (
+                            <option key={element.value}>{element.label}</option>
+                          ))}
+                      </select>
+                    </div>
 
-                  <div className="col-md-6">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateCountry"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
+                    <div className="col-md-6">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateCountry"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Gender</label>
-                    <br />
-                    <select
-                      name="gender"
-                      onChange={(e) => {
-                        setGender(e.target.value);
-                      }}
-                      value={gender}
-                      className="form-control"
-                      required
-                    >
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
+                </form>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Gender</label>
+                      <br />
+                      <select
+                        name="gender"
+                        onChange={(e) => {
+                          setGender(e.target.value);
+                        }}
+                        value={gender}
+                        className="form-control"
+                        required
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateGender"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateGender"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
+                </form>
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Date of birth</label>
+                      <DatePicker
+                        className="form-control"
+                        selected={dob}
+                        onChange={(date) => {
+                          setdob(date);
+                        }}
+                        placeholderText={"dd/mm/yyyy"}
+                        maxDate={new Date()}
+                        minDate={new Date("01/01/1980")}
+                        name="dob"
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <br />
+                      <button
+                        className="btn btn-primary profile-button"
+                        name="updateDob"
+                        type="submit"
+                      >
+                        Update Here
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
-              <form onSubmit={handleSubmit}>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Date of birth</label>
-                    <DatePicker
-                      className="form-control"
-                      selected={dob}
-                      onChange={(date) => {
-                        setdob(date);
-                      }}
-                      placeholderText={"dd/mm/yyyy"}
-                      maxDate={new Date()}
-                      minDate={new Date("01/01/1980")}
-                      name="dob"
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <br />
-                    <button
-                      className="btn btn-primary profile-button"
-                      name="updateDob"
-                      type="submit"
-                    >
-                      Update Here
-                    </button>
-                  </div>
-                </div>
-              </form>
+                </form>
 
-              <form>
-                <div className="row mt-2">
-                  <div className="col-md-6">
-                    <label className="labels">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      placeholder="Password"
-                      name="password"
-                      value={""}
-                      required
-                      readOnly
-                    />
+                <form>
+                  <div className="row mt-2">
+                    <div className="col-md-6">
+                      <label className="labels">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        name="password"
+                        value={""}
+                        required
+                        readOnly
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <br />
+                      <Example ID={ID} />
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <br />
-                    <Example ID={ID} />
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

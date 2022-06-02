@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import "./styles/signupPage.css";
-
+import countryList from "react-select-country-list";
 function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -155,18 +155,26 @@ function SignupPage() {
                   }}
                 />
               </div>
+
               <div class="form-group">
                 <label style={{ color: "white" }}>Country</label>
-                <input
-                  type="text"
-                  class="form-control"
+                <select
+                  className="form-control"
+                  name="country"
+                  id="country"
                   style={{ margin: "10px" }}
-                  required
-                  placeholder="Country"
+                  value={country || ""}
                   onChange={(e) => {
                     setCountry(e.target.value);
                   }}
-                />
+                  required
+                >
+                  {countryList()
+                    .getData()
+                    .map((element) => (
+                      <option key={element.value}>{element.label}</option>
+                    ))}
+                </select>
               </div>
               <button
                 class="btn btn-secondary"
