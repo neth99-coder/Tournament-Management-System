@@ -7,10 +7,8 @@ const db = require("../db/db");
 
 function getProfile(playerID) {
   return new Promise((resolve, reject) => {
-    
-    var sql = "SELECT * FROM player where PLAYER_ID=?;";
+    var sql = "SELECT * FROM PLAYER WHERE PLAYER_ID=?;";
     db.query(sql, [playerID], (err, result) => {
-
       if (err) {
         return reject(err);
       } else {
@@ -20,19 +18,19 @@ function getProfile(playerID) {
   });
 }
 
-function getRegisteredTournaments(PlayerID){
-  return new Promise((resolve,reject)=>{
-    var sql = "SELECT  tournament.TOURNAMENT_ID,tournament.ORGANIZER_ID,tournament.NAME,tournament.GAME_ID,DATE_FORMAT(tournament.START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(tournament.END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(tournament.REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME FROM player_tournament NATURAL JOIN tournament WHERE player_tournament.PLAYER_ID = ? ";
-    db.query(sql,[PlayerID],(err,result)=>{
-      if(err){
+function getRegisteredTournaments(PlayerID) {
+  return new Promise((resolve, reject) => {
+    var sql =
+      "END_DATETIME,DATE_FORMAT(TOURNAMENT.REGISTERCLOSE_DATETIME,'%D-%M-%Y %H:%I') AS REGISTERCLOSE_DATETIME FROM PLAYER_TOURNAMENT NATURAL JOIN TOURNAMENT WHERE PLAYER_TOURNAMENT.PLAYER_ID = ? ";
+    db.query(sql, [PlayerID], (err, result) => {
+      if (err) {
         return reject(err);
-      }else{
+      } else {
         return resolve(result);
       }
-    })
-  })
+    });
+  });
 }
-
 
 function updateProfile(data) {
   return new Promise((resolve, reject) => {
@@ -49,7 +47,7 @@ function updateProfile(data) {
         value === "Male" ? (value = 0) : (value = 1);
       }
     }
-    let sql = `UPDATE PLAYER SET ${key}=? where player_id=?`;
+    let sql = `UPDATE PLAYER SET ${key}=? WHERE PLAYER_ID=?`;
     db.query(sql, [value, player_id], (err, result) => {
       if (err) {
         return reject(err);
@@ -86,5 +84,9 @@ function confirmPasswords(data) {
   });
 }
 
-
-module.exports = { getProfile, getRegisteredTournaments ,updateProfile, confirmPasswords };
+module.exports = {
+  getProfile,
+  getRegisteredTournaments,
+  updateProfile,
+  confirmPasswords,
+};

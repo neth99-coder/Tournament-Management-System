@@ -7,7 +7,7 @@ const db = require("../db/db");
 
 function getProfile(organizerID) {
   return new Promise((resolve, reject) => {
-    var sql = "SELECT * FROM organizer where ORGANIZER_ID=?;";
+    var sql = "SELECT * FROM ORGANIZER where ORGANIZER_ID=?;";
     db.query(sql, [organizerID], (err, result) => {
       if (err) {
         return reject(err);
@@ -21,7 +21,7 @@ function getProfile(organizerID) {
 async function getTournaments(organizerID) {
   return await new Promise((resolve, reject) => {
     var sql =
-      "SELECT TOURNAMENT_ID,ORGANIZER_ID,NAME,GAME_ID,DATE_FORMAT(START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME  FROM tournament WHERE ORGANIZER_ID = ? ";
+      "SELECT TOURNAMENT_ID,ORGANIZER_ID,NAME,GAME_ID,DATE_FORMAT(START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME  FROM TOURNAMENT WHERE ORGANIZER_ID = ? ";
     db.query(sql, [organizerID], (err, result) => {
       if (result) {
         // console.log(result);
@@ -36,7 +36,7 @@ async function getTournaments(organizerID) {
 
 function getGameTypes() {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM game", (err, result) => {
+    db.query("SELECT * FROM GAME", (err, result) => {
       if (result) {
         // console.log(result);
         return resolve(result);
@@ -63,7 +63,7 @@ function updateProfile(data) {
         value === "Male" ? (value = 0) : (value = 1);
       }
     }
-    let sql = `UPDATE organizer SET ${key}=? where ORGANIZER_ID=?`;
+    let sql = `UPDATE ORGANIZER SET ${key}=? where ORGANIZER_ID=?`;
     db.query(sql, [value, organizer_id], (err, result) => {
       if (err) {
         return reject(err);
@@ -110,7 +110,7 @@ function createNewTournament(data) {
     const closingDateTime = data.closingDateTime;
 
     const sql =
-      "INSERT INTO tournament (ORGANIZER_ID, NAME, GAME_ID, START_DATETIME, END_DATETIME, REGISTERCLOSE_DATETIME) VALUES (?,?,?,?,?,?)";
+      "INSERT INTO TOURNAMENT (ORGANIZER_ID, NAME, GAME_ID, START_DATETIME, END_DATETIME, REGISTERCLOSE_DATETIME) VALUES (?,?,?,?,?,?)";
     db.query(
       sql,
       [organizerId, name, gameId, startDateTime, endDateTime, closingDateTime],
@@ -130,7 +130,7 @@ function createNewTournament(data) {
 function getTeamRequest(organizerID) {
   return new Promise((resolve, reject) => {
     var sql =
-      "SELECT team_request.request_id,team_request.player_tournament_id,player_tournament.player_id,player.name,team_request.team_name,tournament.name as tournament_name from ((team_request NATURAL JOIN player_tournament) NATURAL JOIN player) JOIN tournament using(tournament_id) WHERE team_request.status='0' and tournament.organizer_id=?;";
+      "SELECT TEAM_REQUEST.REQUEST_ID,TEAM_REQUEST.PLAYER_TOURNAMENT_ID,PLAYER_TOURNAMENT.PLAYER_ID,PLAYER.NAME,TEAM_REQUEST.TEAM_NAME,TOURNAMENT.NAME as TOURNAMENT_NAME FROM ((TEAM_REQUEST NATURAL JOIN PLAYER_TOURNAMENT) NATURAL JOIN PLAYER) JOIN TOURNAMENT using(TOURNAMENT_ID) WHERE TEAM_REQUEST.STATUS='0' and TOURNAMENT.ORGANIZER_ID=?;";
     db.query(sql, [organizerID], (err, result) => {
       if (err) {
         return reject(err);
@@ -154,12 +154,12 @@ function acceptTeamRequest(data) {
           throw err;
         }
 
-        const sql_1 = "UPDATE team_request SET status=? WHERE request_id=?";
+        const sql_1 = "UPDATE TEAM_REQUEST SET STATUS=? WHERE REQUEST_ID=?";
 
         db.query(sql_1, [status, request_id], (err, result) => {
           if (result) {
             const sql_2 =
-              "INSERT INTO team (name,leader_tournament_id) VALUES (?,?)";
+              "INSERT INTO TEAM (NAME,LEADER_TOURNAMENT_ID) VALUES (?,?)";
             db.query(sql_2, [name, leader_tournament_id], (err, result) => {
               if (err) {
                 throw err;
@@ -188,7 +188,7 @@ function rejectTeamRequest(data) {
   return new Promise((resolve, reject) => {
     const request_id = data.request_id;
     const status = -1;
-    const sql = "UPDATE team_request SET status=? WHERE request_id=?;";
+    const sql = "UPDATE TEAM_REQUEST SET STATUS=? WHERE REQUEST_ID=?;";
     db.query(sql, [status, request_id], (err, result) => {
       if (err) {
         return reject(err);
