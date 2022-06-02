@@ -33,7 +33,7 @@ const RegisteredTournaments = () => {
 
   return (
     <div>
-      {tournaments === null || tournaments === undefined ? (
+      {tournaments === null || tournaments === []  ? (
         <div
           className="alert alert-dark"
           role="alert"
