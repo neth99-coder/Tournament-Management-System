@@ -95,7 +95,7 @@ function App() {
             />
           </Route>
         ) : (
-          <Route path="*" element={<NoPage />} />
+          <Route path="/" element={<NoPage />} />
         )}
         <Route path="*" element={<NoPage />} />
       </Routes>

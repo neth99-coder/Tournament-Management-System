@@ -26,17 +26,21 @@ function LoginPage() {
           console.log("Login Successful");
           switch (decoded.type) {
             case 0:
-              navigate("/player");
-              window.location.reload(false);
+              // navigate("/player");
+              // window.location.reload(false);
+              window.location.href = "/player";
+
               break;
             case 1:
-              navigate("/organizer");
-              window.location.reload(false);
+              // navigate("/organizer");
+              // window.location.reload(false);
+              window.location.href = "/player";
 
               break;
             case 2:
-              navigate("/admin");
-              window.location.reload(false);
+              // navigate("/admin");
+              // window.location.reload(false);
+              window.location.href = "/player";
 
               break;
             default:
