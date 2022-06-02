@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/neth99-coder/Tournament-Management-System#readme",
     "dependencies": {
+        "@sendgrid/mail": "^7.7.0",
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.20.0",
