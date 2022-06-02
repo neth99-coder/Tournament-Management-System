@@ -130,7 +130,7 @@ const confirmPasswords = async (req, res) => {
 
 const createNewTournament = async (req, res) => {
   if (
-    req.body.organizerID.toString() !== req.tokenUserID.toString() ||
+    req.body.organizerId.toString() !== req.tokenUserID.toString() ||
     req.tokenUserType.toString() !== "1"
   ) {
     res.json({

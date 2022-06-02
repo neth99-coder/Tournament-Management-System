@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./styles/loginPage.css";
 import jwt_decode from "jwt-decode";
@@ -49,20 +49,30 @@ function LoginPage() {
 
   function setTypeUser(event) {
     setType(0);
+    document.getElementById("organizerBtn").classList.remove("btn-secondary");
+    document.getElementById("playerBtn").classList.add("btn-secondary");
+    document.getElementById("adminBtn").classList.remove("btn-secondary");
   }
 
   function setTypeOrganizer(event) {
     setType(1);
+    document.getElementById("organizerBtn").classList.add("btn-secondary");
+    document.getElementById("playerBtn").classList.remove("btn-secondary");
+    document.getElementById("adminBtn").classList.remove("btn-secondary");
   }
 
   function setTypeAdmin(event) {
     setType(2);
+    document.getElementById("organizerBtn").classList.remove("btn-secondary");
+    document.getElementById("playerBtn").classList.remove("btn-secondary");
+    document.getElementById("adminBtn").classList.add("btn-secondary");
   }
 
   return (
     <div>
       <button
-        class="btn btn-black"
+        class="btn btn-black btn-secondary"
+        id="playerBtn"
         style={{ margin: "10px" }}
         onClick={setTypeUser}
       >
@@ -70,6 +80,7 @@ function LoginPage() {
       </button>
       <button
         class="btn btn-black"
+        id="organizerBtn"
         style={{ margin: "10px" }}
         onClick={setTypeOrganizer}
       >
@@ -77,6 +88,7 @@ function LoginPage() {
       </button>
       <button
         class="btn btn-black"
+        id="adminBtn"
         style={{ margin: "10px" }}
         onClick={setTypeAdmin}
       >
