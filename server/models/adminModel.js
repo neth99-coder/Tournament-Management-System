@@ -10,7 +10,7 @@ const transporter = require("../transporter/transporter");
 
 function getProfile(adminID) {
   return new Promise((resolve, reject) => {
-    var sql = "SELECT * FROM admin where admin_ID=?;";
+    var sql = "SELECT * FROM ADMIN WHERE ADMIN_ID=?";
     db.query(sql, [adminID], (err, result) => {
       if (err) {
         return reject(err);
@@ -24,7 +24,7 @@ function getProfile(adminID) {
 function getRequests() {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT * FROM organizer_request WHERE STATUS=0",
+      "SELECT * FROM ORGANIZER_REQUEST WHERE STATUS=0",
       (err, result) => {
         if (result) {
           // console.log(result);
@@ -52,7 +52,7 @@ function updateProfile(data) {
         value === "Male" ? (value = 0) : (value = 1);
       }
     }
-    let sql = `UPDATE admin SET ${key}=? where admin_id=?`;
+    let sql = `UPDATE ADMIN SET ${key}=? WHERE ADMIN_ID=?`;
     db.query(sql, [value, admin_id], (err, result) => {
       if (err) {
         return reject(err);
@@ -69,7 +69,7 @@ function confirmPasswords(data) {
     let currentPassword = data.currentPassword;
     let newPassword = data.newPassword;
 
-    let sql1 = "SELECT PASSWORD FROM admin WHERE admin_ID=?";
+    let sql1 = "SELECT PASSWORD FROM ADMIN WHERE ADMIN_ID=?";
     db.query(sql1, [admin_id], (err, result, fields) => {
       if (err) {
         return reject(err);
@@ -77,7 +77,7 @@ function confirmPasswords(data) {
         const password = result[0].PASSWORD;
 
         if (password == currentPassword) {
-          let sql2 = "UPDATE admin SET PASSWORD=? WHERE admin_ID=?";
+          let sql2 = "UPDATE ADMIN SET PASSWORD=? WHERE ADMIN_ID=?";
 
           db.query(sql2, [newPassword, admin_id], (err, result) => {
             return resolve("Password Updated");
@@ -107,13 +107,13 @@ function acceptRequest(data) {
             }
 
             const sql =
-              "UPDATE organizer_request SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
+              "UPDATE ORGANIZER_REQUEST SET STATUS = ?, PASSWORD = ? WHERE REQUEST_ID = ?";
 
             db.query(sql, [status, hash, id], (err, result) => {
               if (result) {
                 //console.log(id+ " this is email");
                 const sql =
-                  "INSERT INTO organizer (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
+                  "INSERT INTO ORGANIZER (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
                 db.query(sql, [name, email, hash], (err, result) => {
                   if (err) {
                     throw err;
@@ -126,7 +126,7 @@ function acceptRequest(data) {
                       }
                     });
                     var mailOptions = {
-                      from: "squ4doption@gmail.com",
+                      from: "ijgames1@hotmail.com",
                       to: email,
                       subject:
                         "Temporary Password For IJGmaes Organizer account",
@@ -163,7 +163,7 @@ function rejectRequest(data) {
     const email = data.email;
     const status = -1;
 
-    const sql = "UPDATE organizer_request SET STATUS = ? WHERE REQUEST_ID = ?";
+    const sql = "UPDATE ORGANIZER_REQUEST SET STATUS = ? WHERE REQUEST_ID = ?";
 
     db.query(sql, [status, id], (err, result) => {
       if (result) {

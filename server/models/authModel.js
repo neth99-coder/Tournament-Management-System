@@ -14,18 +14,18 @@ function loginUser(obj) {
   return new Promise((resolve, reject) => {
     switch (type) {
       case 0:
-        user = "player";
+        user = "PLAYER";
         break;
       case 1:
-        user = "organizer";
+        user = "ORGANIZER";
         break;
       case 2:
-        user = "admin";
+        user = "ADMIN";
         break;
       default:
         break;
     }
-    var sql = "SELECT " + user + "_ID as ID,EMAIL FROM " + user + ";";
+    var sql = "SELECT " + user + "_ID AS ID,EMAIL FROM " + user + ";";
     var isUserIn;
     db.query(sql, (err, result) => {
       console.log(err);
@@ -37,7 +37,7 @@ function loginUser(obj) {
       }
 
       if (isUserIn.EMAIL) {
-        let qry = "SELECT PASSWORD FROM " + user + " WHERE EMAIL=?;";
+        let qry = "SELECT PASSWORD FROM " + user + " WHERE EMAIL=?";
         db.query(qry, [email], (err, result) => {
           //   bcrypt.hash(password, saltRounds, function (err, hash) {
           console.log(password);
@@ -75,7 +75,7 @@ function signupUser(obj) {
 
   let user = "";
   return new Promise((resolve, reject) => {
-    var sql = "SELECT player_ID as ID,EMAIL FROM player;";
+    var sql = "SELECT PLAYER_ID AS ID,EMAIL FROM PLAYER";
 
     console.log(sql);
 
@@ -87,7 +87,7 @@ function signupUser(obj) {
       if (isUserIn === undefined) {
         bcrypt.hash(password, 8, function (err, hash) {
           db.query(
-            "INSERT INTO player (name, email, password, gender, dob, country) VALUES (?, ?, ?, ?, ?, ?);",
+            "INSERT INTO PLAYER (NAME, EMAIL, PASSWORD, GENDER, DOB, COUNTRY) VALUES (?, ?, ?, ?, ?, ?)",
             [name, email, hash, gender, dob, country],
             function (err, result) {
               if (result) {
