@@ -44,7 +44,7 @@ function Navigationbar(pros) {
           </Nav>
           <Button
             style={{ marginRight: "20px" }}
-            className="ms-auto gap-0"
+            className="ms-auto gap-0 btn-light"
             onClick={() => {
               authService.logout() && navigate("/login");
               window.location.reload(false);

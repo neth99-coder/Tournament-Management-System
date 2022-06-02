@@ -13,11 +13,7 @@ function Adminnavigationbar(pros) {
         {/* <Navbar.Brand style={{ paddingLeft: 30 }} href="dashboard">
           {pros.username} Dashboard
         </Navbar.Brand> */}
-        <Link
-          to="/admin"
-          className="navbar-brand"
-          style={{ paddingLeft: 30 }}
-        >
+        <Link to="/admin" className="navbar-brand" style={{ paddingLeft: 30 }}>
           {pros.username} Dashboard
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -35,17 +31,17 @@ function Adminnavigationbar(pros) {
             <Link to="/admin/requests" className="nav-link active">
               Organizer Requests
             </Link>
-            
           </Nav>
           <Button
-                 style={{marginRight:"20px"}}
-              className="ms-auto gap-0"
-              onClick={() => {
-                authService.logout() && navigate("/login");
-              }}
-            >
-              Logout
-            </Button>
+            style={{ marginRight: "20px" }}
+            className="ms-auto gap-0 btn-light"
+            onClick={() => {
+              authService.logout() && navigate("/login");
+              window.location.reload(false);
+            }}
+          >
+            Logout
+          </Button>
         </Navbar.Collapse>
       </Navbar>
       <Outlet />
