@@ -14,7 +14,10 @@ function LoginPage() {
 
     const data = { email, password, type };
     axios
-      .post("http://localhost:3001/api/auth/login", data)
+      .post(
+        "https://tournament-management-system-1.herokuapp.com/api/auth/login",
+        data
+      )
       .then(function (res) {
         const { success, result } = res.data;
         if (success) {
@@ -23,17 +26,21 @@ function LoginPage() {
           console.log("Login Successful");
           switch (decoded.type) {
             case 0:
-              navigate("/player");
-              window.location.reload(false);
+              // navigate("/player");
+              // window.location.reload(false);
+              window.location.href = "/player";
+
               break;
             case 1:
-              navigate("/organizer");
-              window.location.reload(false);
+              // navigate("/organizer");
+              // window.location.reload(false);
+              window.location.href = "/player";
 
               break;
             case 2:
-              navigate("/admin");
-              window.location.reload(false);
+              // navigate("/admin");
+              // window.location.reload(false);
+              window.location.href = "/player";
 
               break;
             default:
