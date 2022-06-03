@@ -18,22 +18,23 @@ const getTournaments = async (req, res) => {
 };
 
 const addNewTeamRequest = async (req, res) => {
-  await homeModel.addNewTeamRequest(req.body).then((result) => {
-    res.json({
-      success: true,
-      result,
-    });
-  })
+  await homeModel
+    .addNewTeamRequest(req.body)
+    .then((result) => {
+      res.json({
+        success: true,
+        result,
+      });
+    })
     .catch((err) => {
       res.json({
         success: false,
         err,
       });
     });
-}
+};
 
 const getTeams = async (req, res) => {
- 
   await homeModel
     .getTeams(req.body)
     .then((result) => {
@@ -51,7 +52,6 @@ const getTeams = async (req, res) => {
 };
 
 const joinTeam = async (req, res) => {
- 
   await homeModel
     .joinTeam(req.body)
     .then((result) => {
@@ -69,7 +69,6 @@ const joinTeam = async (req, res) => {
 };
 
 const leaveTeam = async (req, res) => {
- 
   await homeModel
     .leaveTeam(req.body)
     .then((result) => {
@@ -87,7 +86,6 @@ const leaveTeam = async (req, res) => {
 };
 
 const register = async (req, res) => {
- 
   await homeModel
     .register(req.body)
     .then((result) => {
@@ -105,7 +103,6 @@ const register = async (req, res) => {
 };
 
 const unregister = async (req, res) => {
- 
   await homeModel
     .unregister(req.body)
     .then((result) => {
@@ -123,23 +120,20 @@ const unregister = async (req, res) => {
 };
 
 const isRegistered = async (req, res) => {
- 
   await homeModel
     .isRegistered(req.body)
     .then((result) => {
-      console.log(result);
-      if (result.length >0){
+      if (result.length > 0) {
         res.json({
           success: true,
-          registered:true,
+          registered: true,
         });
-      }else{
+      } else {
         res.json({
           success: true,
-          registered:false,
+          registered: false,
         });
       }
-      
     })
     .catch((err) => {
       res.json({
@@ -150,7 +144,6 @@ const isRegistered = async (req, res) => {
 };
 
 const isInTeam = async (req, res) => {
- 
   await homeModel
     .isInTeam(req.body)
     .then((result) => {
@@ -160,7 +153,6 @@ const isInTeam = async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err)
       res.json({
         success: false,
         err,
@@ -169,7 +161,6 @@ const isInTeam = async (req, res) => {
 };
 
 const addOrganizerRequest = async (req, res) => {
-  
   await homeModel
     .addOrganizerRequest(req.body)
     .then((result) => {
@@ -198,5 +189,15 @@ const emailExist = async (req, res) => {
 };
 
 module.exports = {
-  getTournaments,addNewTeamRequest,getTeams,joinTeam,leaveTeam,register,unregister,isRegistered,isInTeam,addOrganizerRequest,emailExist
+  getTournaments,
+  addNewTeamRequest,
+  getTeams,
+  joinTeam,
+  leaveTeam,
+  register,
+  unregister,
+  isRegistered,
+  isInTeam,
+  addOrganizerRequest,
+  emailExist,
 };
