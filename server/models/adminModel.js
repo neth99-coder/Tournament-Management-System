@@ -29,7 +29,6 @@ function getRequests() {
       "SELECT * FROM ORGANIZER_REQUEST WHERE STATUS=0",
       (err, result) => {
         if (result) {
-          // console.log(result);
           return resolve(result);
         } else {
           return reject(err);
@@ -113,7 +112,6 @@ function acceptRequest(data) {
 
             db.query(sql, [status, hash, id], (err, result) => {
               if (result) {
-                //console.log(id+ " this is email");
                 const sql =
                   "INSERT INTO ORGANIZER (NAME, EMAIL, PASSWORD) VALUES (?,?,?)";
                 db.query(sql, [name, email, hash], (err, result) => {
@@ -215,7 +213,6 @@ function rejectRequest(data) {
             console.error(error);
           });
       } else {
-        console.log(err);
         return reject(err);
       }
     });

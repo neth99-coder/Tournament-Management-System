@@ -9,7 +9,6 @@ const { use } = require("../transporter/transporter");
 
 function loginUser(obj) {
   const { email, password, type } = obj;
-  console.log(type);
   let user = "";
   return new Promise((resolve, reject) => {
     switch (type) {
@@ -40,8 +39,6 @@ function loginUser(obj) {
         let qry = "SELECT PASSWORD FROM " + user + " WHERE EMAIL=?";
         db.query(qry, [email], (err, result) => {
           //   bcrypt.hash(password, saltRounds, function (err, hash) {
-          console.log(password);
-          console.log(result[0].PASSWORD);
           bcrypt.compare(password, result[0].PASSWORD, function (err, result) {
             if (result) {
               const token = JWT.sign(
@@ -68,16 +65,9 @@ function loginUser(obj) {
 function signupUser(obj) {
   const { name, email, password, gender, dob, country, type } = obj;
 
-  console.log("a");
-  console.log(type);
-
-  console.log(obj);
-
   let user = "";
   return new Promise((resolve, reject) => {
     var sql = "SELECT PLAYER_ID AS ID,EMAIL FROM PLAYER";
-
-    console.log(sql);
 
     var isUserIn;
     db.query(sql, (err, result) => {
@@ -91,7 +81,6 @@ function signupUser(obj) {
             [name, email, hash, gender, dob, country],
             function (err, result) {
               if (result) {
-                console.log("inserted");
                 return resolve(result);
               } else {
                 console.log(err);

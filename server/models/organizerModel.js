@@ -24,7 +24,6 @@ async function getTournaments(organizerID) {
       "SELECT TOURNAMENT_ID,ORGANIZER_ID,NAME,GAME_ID,DATE_FORMAT(START_DATETIME,'%d-%m-%y %H:%i') as START_DATETIME,DATE_FORMAT(END_DATETIME,'%d-%m-%y %H:%i') as END_DATETIME,DATE_FORMAT(REGISTERCLOSE_DATETIME,'%d-%m-%y %H:%i') as REGISTERCLOSE_DATETIME  FROM TOURNAMENT WHERE ORGANIZER_ID = ? ";
     db.query(sql, [organizerID], (err, result) => {
       if (result) {
-        // console.log(result);
         return resolve(result);
       } else {
         console.log(err);
@@ -38,7 +37,6 @@ function getGameTypes() {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM GAME", (err, result) => {
       if (result) {
-        // console.log(result);
         return resolve(result);
       } else {
         console.log(err);
