@@ -27,7 +27,6 @@ function loginUser(obj) {
     var sql = "SELECT " + user + "_ID AS ID,EMAIL FROM " + user + ";";
     var isUserIn;
     db.query(sql, (err, result) => {
-      console.log(err);
       isUserIn = result.find((element) => {
         return element.EMAIL === email;
       });
@@ -83,7 +82,6 @@ function signupUser(obj) {
               if (result) {
                 return resolve(result);
               } else {
-                console.log(err);
                 return reject(err);
               }
             }

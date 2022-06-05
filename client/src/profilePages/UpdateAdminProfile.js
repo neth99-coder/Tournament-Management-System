@@ -267,7 +267,7 @@ function UpdateAdminProfile() {
                     </div>
                   </div>
                 </form>
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}>
                   <div className="row mt-2">
                     <div className="col-md-5">
                       <label className="labels">Email</label>
@@ -299,13 +299,13 @@ function UpdateAdminProfile() {
                       <br />
                     </div>
                   </div>
-                </form>
+                </form> */}
 
                 <form>
                   <div className="row mt-2">
                     <div className="col-md-5">
-                      <label className="labels">Password</label>
-                      <input
+                      {/* <label className="labels">Password</label> */}
+                      {/* <input
                         type="password"
                         className="form-control"
                         placeholder="Password"
@@ -313,7 +313,7 @@ function UpdateAdminProfile() {
                         value={""}
                         required
                         readOnly
-                      />
+                      /> */}
                     </div>
                     <div className="col-md-5">
                       <br />
