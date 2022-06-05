@@ -97,32 +97,33 @@ function Header() {
         {
           headers: { "x-auth-token": authService.getUserToken() },
         }
-      );
+      ).then(() => {
+        if (
+          name !== "" &&
+          gameId !== "" &&
+          startDate !== "" &&
+          startTime !== "" &&
+          endDate !== "" &&
+          endTime !== "" &&
+          closingDate !== "" &&
+          closingTime !== ""
+        ) {
+          setClosingDate("");
+          setClosingTime("");
+          setEndDate("");
+          setEndTime("");
+          setGameId("");
+          setGameType("");
+          setName("");
+          setOptions([]);
+          setStartDate("");
+          setStartTime("");
+          window.location.reload(false);
+        }
+      });
     }
 
-    // if (
-    //   name !== "" &&
-    //   gameId !== "" &&
-    //   startDate !== "" &&
-    //   startTime !== "" &&
-    //   endDate !== "" &&
-    //   endTime !== "" &&
-    //   closingDate !== "" &&
-    //   closingTime !== ""
-    // ) 
-    {
-      setClosingDate("");
-      setClosingTime("");
-      setEndDate("");
-      setEndTime("");
-      setGameId("");
-      setGameType("");
-      setName("");
-      setOptions([]);
-      setStartDate("");
-      setStartTime("");
-      window.location.reload(false);
-    }
+
   };
   return (
     <header>
