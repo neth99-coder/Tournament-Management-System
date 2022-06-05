@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar ,Button} from "react-bootstrap";
+import { Nav, Navbar, Button } from "react-bootstrap";
 import "./styles/navbarstyle.css";
 import { Outlet, Link } from "react-router-dom";
 import authService from "../services/auth.service";
@@ -13,16 +13,17 @@ function Organizernavigationbar(pros) {
         {/* <Navbar.Brand style={{ paddingLeft: 30 }} href="dashboard">
           {pros.username} Dashboard
         </Navbar.Brand> */}
-        <Link
-          to="/organizer"
-          className="navbar-brand"
-          style={{ paddingLeft: 30 }}
-        >
-          {pros.username} Tournaments
-        </Link>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto ">
+            <Link
+              to="/organizer"
+              className="navbar-brand"
+              style={{ paddingLeft: 30 }}
+            >
+              {pros.username} Dashboard
+            </Link>
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link>
             <Nav.Link href="teamrequests">Team Requests</Nav.Link>

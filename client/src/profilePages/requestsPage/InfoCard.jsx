@@ -54,11 +54,11 @@ const InfoCard = (props) => {
 
     }
 
-    if (password !== '') {
-      setPassword('');
-      setID(null);
-      window.location.reload(false);
-    }
+    // if (password !== '') {
+    //   setPassword('');
+    //   setID(null);
+    //   window.location.reload(false);
+    // }
 
   }
 

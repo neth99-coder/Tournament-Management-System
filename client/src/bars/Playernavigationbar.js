@@ -15,23 +15,24 @@ function Navigationbar(pros) {
         {/* <Navbar.Brand style={{ paddingLeft: 30 }} href="dashboard">
           {pros.username} Dashboard
         </Navbar.Brand> */}
-        <Link
-          to="/player/dashboard"
-          className="navbar-brand"
-          style={{ paddingLeft: 30 }}
-        >
-          Dashboard
-        </Link>
-        <Link
-          to="/player/tournaments"
-          className="navbar-brand"
-          style={{ paddingLeft: 30 }}
-        >
-          {pros.username} Tournaments
-        </Link>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
+            <Link
+              to="/player/dashboard"
+              className="navbar-brand"
+              style={{ paddingLeft: 30 }}
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/player/tournaments"
+              className="navbar-brand"
+              style={{ paddingLeft: 30 }}
+            >
+              {pros.username} Tournaments
+            </Link>
             {/* <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="profileSettings">Profile Settings</Nav.Link> */}
             <Link to="/player/profile" className="nav-link active">

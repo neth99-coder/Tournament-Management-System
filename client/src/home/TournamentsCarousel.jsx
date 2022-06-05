@@ -3,10 +3,15 @@ import TournamentCard from "./TournamentCard";
 import { Carousel, Spinner } from "react-bootstrap";
 import axios from "axios";
 import authService from "../services/auth.service";
+import { useMediaQuery } from 'react-responsive'
+
+
 
 export default function TournamentsCarousel() {
   const [tournamentArray, setTournamentArray] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [tournaments, setTournaments] = useState([]);
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -16,15 +21,20 @@ export default function TournamentsCarousel() {
       })
       .then(function (response) {
         // handle success
-        const tournaments = response.data.result;
+        // response.data.result
+
+
+        setTournaments(response.data.result);
+        const temp_arr=response.data.result;
         var tournament_arr = [];
 
         const chunkSize = 4;
-        for (let i = 0; i < tournaments.length; i += chunkSize) {
-          const chunk = tournaments.slice(i, i + chunkSize);
+        for (let i = 0; i < temp_arr.length; i += chunkSize) {
+          const chunk = response.data.result.slice(i, i + chunkSize);
           tournament_arr.push(chunk);
         }
         setTournamentArray(tournament_arr);
+    
         setIsLoading(false);
       })
       .catch(function (error) {
@@ -55,7 +65,8 @@ export default function TournamentsCarousel() {
       )}
       <Carousel style={{ height: "400px", padding: "30px" }}>
         {" "}
-        {tournamentArray.map((i) => {
+
+        {useMediaQuery({ query: '(min-width: 700px)' }) && tournamentArray.map((i) => {
           return (
             <Carousel.Item>
               <div
@@ -67,14 +78,37 @@ export default function TournamentsCarousel() {
               >
                 {" "}
                 {i.map((j) => {
-                  console.log(j.REGISTER);
+                  // console.log(j.REGISTER);
                   return <TournamentCard data={j} />;
                 })}{" "}
               </div>{" "}
             </Carousel.Item>
           );
-        })}{" "}
-      </Carousel>{" "}
+        })}
+        {useMediaQuery({ query: '(max-width: 700px)' }) && tournaments.map((i) => {
+          return (
+            <Carousel.Item>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                }}
+              >
+
+                <TournamentCard data={i} />
+
+              </div>
+            </Carousel.Item>
+          )
+        })
+
+
+        }
+
+
+
+      </Carousel>
     </div>
   );
 }

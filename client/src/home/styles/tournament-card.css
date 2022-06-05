@@ -14,3 +14,19 @@
 }
 
 
+  @media screen and (max-width: 700px) {
+    .tournament-container{
+    flex-direction: column !important;
+    }
+
+    #registerBtn{
+      margin: 20px  !important;
+    }
+    #createTeamBtn{
+      margin: 20px  !important;
+    }
+
+    .table-striped{
+      align-self: center !important;
+    }
+  }

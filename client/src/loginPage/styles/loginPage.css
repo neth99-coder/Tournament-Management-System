@@ -101,3 +101,16 @@ body {
   float: left;
   width: 43vw;
 }
+
+@media screen and (max-width: 700px) {
+  .login-main{
+    float: none;
+    align-self: center;
+    margin: auto 20%;
+    padding-right: 10px;
+    background: none;     
+  }
+  .login-sidenav{
+    display: none;
+  }
+ }

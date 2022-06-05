@@ -100,16 +100,17 @@ function Header() {
       );
     }
 
-    if (
-      name !== "" &&
-      gameId !== "" &&
-      startDate !== "" &&
-      startTime !== "" &&
-      endDate !== "" &&
-      endTime !== "" &&
-      closingDate !== "" &&
-      closingTime !== ""
-    ) {
+    // if (
+    //   name !== "" &&
+    //   gameId !== "" &&
+    //   startDate !== "" &&
+    //   startTime !== "" &&
+    //   endDate !== "" &&
+    //   endTime !== "" &&
+    //   closingDate !== "" &&
+    //   closingTime !== ""
+    // ) 
+    {
       setClosingDate("");
       setClosingTime("");
       setEndDate("");

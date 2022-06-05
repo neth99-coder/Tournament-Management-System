@@ -284,26 +284,26 @@ export default function TournamentPage(props) {
         >
           <tbody>
             <tr>
-              <td> Name </td> <td> {location.state.NAME} </td>{" "}
-            </tr>{" "}
+              <td> Name </td> <td> {location.state.NAME} </td>
+            </tr>
             <tr>
-              <td> Organizer </td> <td> {location.state.ORGANIZER} </td>{" "}
-            </tr>{" "}
+              <td> Organizer </td> <td> {location.state.ORGANIZER} </td>
+            </tr>
             <tr>
-              <td> Game </td> <td> {location.state.GAME} </td>{" "}
-            </tr>{" "}
+              <td> Game </td> <td> {location.state.GAME} </td>
+            </tr>
             <tr>
-              <td> Date </td> <td> {location.state.DATE} </td>{" "}
-            </tr>{" "}
+              <td> Date </td> <td> {location.state.DATE} </td>
+            </tr>
             <tr>
-              <td> Start </td> <td> {location.state.TIME} </td>{" "}
-            </tr>{" "}
+              <td> Start </td> <td> {location.state.TIME} </td>
+            </tr>
             <tr>
-              <td> Registeration Closing </td>{" "}
-              <td> {location.state.REG_CLOSE} </td>{" "}
-            </tr>{" "}
-          </tbody>{" "}
-        </table>{" "}
+              <td> Registeration Closing </td>
+              <td> {location.state.REG_CLOSE} </td>
+            </tr>
+          </tbody>
+        </table>
         <div
           style={{
             display: "flex",

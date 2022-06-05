@@ -32,3 +32,5 @@ export default function TournamentCard(props) {
         </div>
     );
 }
+
+
