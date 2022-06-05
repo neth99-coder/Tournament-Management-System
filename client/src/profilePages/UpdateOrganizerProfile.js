@@ -221,7 +221,7 @@ function UpdateOrganizerProfile() {
                     </div>
                   </div>
                 </form>
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}>
                   <div className="row mt-2">
                     <div className="col-md-6">
                       <label className="labels">Email</label>
@@ -249,12 +249,12 @@ function UpdateOrganizerProfile() {
                       </button>
                     </div>
                   </div>
-                </form>
+                </form> */}
 
                 <form>
                   <div className="row mt-2">
                     <div className="col-md-6">
-                      <label className="labels">Password</label>
+                      {/* <label className="labels">Password</label>
                       <input
                         type="password"
                         className="form-control"
@@ -263,7 +263,7 @@ function UpdateOrganizerProfile() {
                         value={""}
                         required
                         readOnly
-                      />
+                      /> */}
                     </div>
                     <div className="col-md-6">
                       <br />

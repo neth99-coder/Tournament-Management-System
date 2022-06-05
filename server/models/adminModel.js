@@ -2,8 +2,8 @@ const { json } = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../db/db");
 const transporter = require("../transporter/transporter");
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// const sgMail = require("@sendgrid/mail");
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
@@ -71,23 +71,51 @@ function confirmPasswords(data) {
     let newPassword = data.newPassword;
 
     let sql1 = "SELECT PASSWORD FROM ADMIN WHERE ADMIN_ID=?";
-    db.query(sql1, [admin_id], (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      } else {
-        const password = result[0].PASSWORD;
+     db.query(sql1, [admin_id], (err, result, fields) => {
+       if (err) {
+         return reject(err);
+       } else {
+         const password = result[0].PASSWORD;
+         bcrypt.compare(
+           currentPassword,
+           result[0].PASSWORD,
+           function (err, result) {
+             if (result) {
+               bcrypt.hash(newPassword, 8, function (err, hash) {
+                 let sql2 =
+                   "UPDATE ADMIN SET PASSWORD=? WHERE ADMIN_ID=?";
 
-        if (password == currentPassword) {
-          let sql2 = "UPDATE ADMIN SET PASSWORD=? WHERE ADMIN_ID=?";
+                 db.query(sql2, [hash, admin_id], (err, result) => {
+                   if (err) {
+                     return reject("password does not hashed");
+                   }
+                   return resolve("Password Updated");
+                 });
+               });
+             } else {
+               return reject("Password do not matching");
+             }
+           }
+         );
+       }
+     });
+    // db.query(sql1, [admin_id], (err, result, fields) => {
+    //   if (err) {
+    //     return reject(err);
+    //   } else {
+    //     const password = result[0].PASSWORD;
 
-          db.query(sql2, [newPassword, admin_id], (err, result) => {
-            return resolve("Password Updated");
-          });
-        } else {
-          return reject("Password do not matching");
-        }
-      }
-    });
+    //     if (password == currentPassword) {
+    //       let sql2 = "UPDATE ADMIN SET PASSWORD=? WHERE ADMIN_ID=?";
+
+    //       db.query(sql2, [newPassword, admin_id], (err, result) => {
+    //         return resolve("Password Updated");
+    //       });
+    //     } else {
+    //       return reject("Password do not matching");
+    //     }
+    //   }
+    // });
   });
 }
 
@@ -134,28 +162,14 @@ function acceptRequest(data) {
                     };
                     transporter.sendMail(mailOptions, function (error, info) {
                       if (error) {
-                        console.log(error);
+                        // console.log(error);
                         throw err;
                       } else {
                         console.log("Email sent: " + info.response);
                         return resolve("Email Sent");
                       }
                     });
-                    // const msg = {
-                    //   to: email, // Change to your recipient
-                    //   from: "ijgames1@hotmail.com", // Change to your verified sender
-                    //   subject:
-                    //     "Temporary Password For IJGmaes Organizer account",
-                    //   text: "Password: " + password,
-                    // };
-                    // sgMail
-                    //   .send(msg)
-                    //   .then(() => {
-                    //     console.log("Email sent");
-                    //   })
-                    //   .catch((error) => {
-                    //     console.error(error);
-                    //   });
+                    
                   }
                 });
               } else {
@@ -191,28 +205,14 @@ function rejectRequest(data) {
         };
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
-            console.log(error);
+            // console.log(error);
             return reject(error);
           } else {
             console.log("Email sent: " + info.response);
             return resolve("Email sent");
           }
         });
-        //   const msg = {
-        //     to: email,
-        //     from: "ijgames1@hotmail.com",
-        //     subject: "Request Rejection from IJGmaes",
-        //     text: "We are sorry to say that your account request has been rejected by IJGmaes",
-        //   };
-        //   sgMail
-        //     .send(msg)
-        //     .then(() => {
-        //       console.log("Email sent");
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-        //
+        
       } else {
         return reject(err);
       }

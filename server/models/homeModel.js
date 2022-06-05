@@ -119,7 +119,7 @@ function joinTeam(data) {
   return new Promise((resolve, reject) => {
     db.beginTransaction(function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         reject(err);
       }
       db.query(
@@ -159,7 +159,7 @@ function leaveTeam(data) {
   return new Promise((resolve, reject) => {
     db.beginTransaction(function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         reject(err);
       }
       db.query(

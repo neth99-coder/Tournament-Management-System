@@ -18,7 +18,7 @@ export default function TournamentPage(props) {
   const [regState, setRegState] = useState("AS INDIVIDUAL");
 
   const player_id = authService.getUserID();
-  console.log(player_id);
+  // console.log(player_id);
 
   const location = useLocation();
 
@@ -49,7 +49,7 @@ export default function TournamentPage(props) {
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
+        // console.log(error);
       });
 
     axios
@@ -73,7 +73,7 @@ export default function TournamentPage(props) {
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -102,7 +102,7 @@ export default function TournamentPage(props) {
         },
         (error) => {
           alert("unable to register!");
-          console.log(error);
+          // console.log(error);
         }
       );
   };
@@ -132,7 +132,7 @@ export default function TournamentPage(props) {
         },
         (error) => {
           alert("unable to unregister!");
-          console.log(error);
+          // console.log(error);
         }
       );
   };
@@ -163,7 +163,7 @@ export default function TournamentPage(props) {
         },
         (error) => {
           alert("unable to join!");
-          console.log(error);
+          // console.log(error);
         }
       );
   };
@@ -184,7 +184,7 @@ export default function TournamentPage(props) {
       )
       .then(
         (response) => {
-          console.log(response);
+          // console.log(response);
           if (response.data.success === true) {
             setJoinedTeam(null);
             alert("left!");
@@ -195,7 +195,7 @@ export default function TournamentPage(props) {
         },
         (error) => {
           setJoinedTeam(null);
-          console.log(error);
+          // console.log(error);
         }
       );
   };
@@ -217,7 +217,7 @@ export default function TournamentPage(props) {
           setTeamArray(response.data.result);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
   };
@@ -242,7 +242,7 @@ export default function TournamentPage(props) {
           window.location.reload();
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
   };

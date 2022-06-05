@@ -39,7 +39,7 @@ export default function HomeNavbar() {
     setValidated(true);
 
     if (name !== "" && email !== "" && proof !== "") {
-      console.log("Check Email");
+      // console.log("Check Email");
       Axios.get("https://tournament-management-system-1.herokuapp.com/email-exist/" + email, {
         headers: { "x-auth-token": authService.getUserToken() },
       }).then((res) => {
@@ -56,7 +56,7 @@ export default function HomeNavbar() {
               headers: { "x-auth-token": authService.getUserToken() },
             }
           ).then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.data.success) {
               alert("request sent");
               window.location.reload(false);

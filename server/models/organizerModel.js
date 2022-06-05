@@ -1,6 +1,6 @@
 const { json } = require("express");
 const db = require("../db/db");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 // const saltRounds = 10;
 // const myPlaintextPassword = "s0//P4$$w0rD";
 // const someOtherPlaintextPassword = "not_bacon";
@@ -26,7 +26,7 @@ async function getTournaments(organizerID) {
       if (result) {
         return resolve(result);
       } else {
-        console.log(err);
+        // console.log(err);
         return reject(err);
       }
     });
@@ -39,7 +39,7 @@ function getGameTypes() {
       if (result) {
         return resolve(result);
       } else {
-        console.log(err);
+        // console.log(err);
         return reject(err);
       }
     });
@@ -84,18 +84,48 @@ function confirmPasswords(data) {
         return reject(err);
       } else {
         const password = result[0].PASSWORD;
-        if (password == currentPassword) {
-          let sql2 = "UPDATE ORGANIZER SET PASSWORD=? WHERE ORGANIZER_ID=?";
+        // console.log(password);
+        bcrypt.compare(
+          currentPassword,
+          result[0].PASSWORD,
+          function (err, result) {
+            if (result) {
+              bcrypt.hash(newPassword, 8, function (err, hash) {
+                let sql2 =
+                  "UPDATE ORGANIZER SET PASSWORD=? WHERE ORGANIZER_ID=?";
 
-          db.query(sql2, [newPassword, organizer_id], (err, result) => {
-            return resolve("Password Updated");
-          });
-        } else {
-          return reject("Password do not matching");
-        }
+                db.query(sql2, [hash, organizer_id], (err, result) => {
+                  if (err) {
+                    return reject("password does not hashed");
+                  }
+                  return resolve("Password Updated");
+                });
+              });
+            } else {
+              return reject("Password do not matching");
+            }
+          }
+        );
       }
     });
   });
+  // db.query(sql1, [organizer_id], (err, result, fields) => {
+  //   if (err) {
+  //     return reject(err);
+  //   } else {
+  //     const password = result[0].PASSWORD;
+  //     if (password == currentPassword) {
+  //       let sql2 = "UPDATE ORGANIZER SET PASSWORD=? WHERE ORGANIZER_ID=?";
+
+  //       db.query(sql2, [newPassword, organizer_id], (err, result) => {
+  //         return resolve("Password Updated");
+  //       });
+  //     } else {
+  //       return reject("Password do not matching");
+  //     }
+  //   }
+  // });
+  // });
 }
 
 function createNewTournament(data) {
@@ -114,10 +144,10 @@ function createNewTournament(data) {
       [organizerId, name, gameId, startDateTime, endDateTime, closingDateTime],
       (err, result) => {
         if (result) {
-          console.log("inserted");
+          // console.log("inserted");
           return resolve(result);
         } else {
-          console.log(err);
+          // console.log(err);
           return reject(err);
         }
       }
