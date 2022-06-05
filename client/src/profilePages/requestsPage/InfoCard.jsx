@@ -1,14 +1,12 @@
-import Axios from 'axios';
-import React, { useState } from 'react';
-import { Modal, Form } from 'react-bootstrap';
-import authService from '../../services/auth.service';
+import Axios from "axios";
+import React, { useState } from "react";
+import { Modal, Form } from "react-bootstrap";
+import authService from "../../services/auth.service";
 import styles from "./InfoCard.module.css";
 //import {useNavigate} from 'react-router-dom';
 
 const InfoCard = (props) => {
-
-
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [ID, setID] = useState();
   // const [email,setEmail] = useState('');
   //  const navigate = useNavigate();
@@ -37,21 +35,27 @@ const InfoCard = (props) => {
 
     // setID(props.request.REQUEST_ID);
     // setEmail(props.request.EMAIL);
-    if (password !== '') {
-
+    if (password !== "") {
       const data = {
         reqId: props.request.REQUEST_ID,
         orgName: props.request.NAME,
         password: password,
-        email: props.request.EMAIL
+        email: props.request.EMAIL,
       };
 
-      Axios.post("https://tournament-management-system-1.herokuapp.com/api/admin/submit-org-accept-form", data,
+      Axios.post(
+        "https://tournament-management-system-1.herokuapp.com/api/admin/submit-org-accept-form",
+        data,
         {
           headers: { "x-auth-token": authService.getUserToken() },
-        });
-
-
+        }
+      ).then(() => {
+        if (password !== "") {
+          setPassword("");
+          setID(null);
+          window.location.reload(false);
+        }
+      });
     }
 
     // if (password !== '') {
@@ -59,22 +63,24 @@ const InfoCard = (props) => {
     //   setID(null);
     //   window.location.reload(false);
     // }
-
-  }
+  };
 
   function handleReject(e) {
-    e.preventDefault()
+    e.preventDefault();
     // setID(props.request.REQUEST_ID);
     //setEmail(props.request.EMAIL);
     const data = {
       reqId: props.request.REQUEST_ID,
-      email: props.request.EMAIL
-
+      email: props.request.EMAIL,
     };
 
-    Axios.post("https://tournament-management-system-1.herokuapp.com/api/admin/submit-org-reject-form", data, {
-      headers: { "x-auth-token": authService.getUserToken() },
-    });
+    Axios.post(
+      "https://tournament-management-system-1.herokuapp.com/api/admin/submit-org-reject-form",
+      data,
+      {
+        headers: { "x-auth-token": authService.getUserToken() },
+      }
+    );
 
     setID(null);
     window.location.reload(false);
@@ -86,9 +92,23 @@ const InfoCard = (props) => {
         <h5 className="card-title">Email</h5>
         <p className="card-text">{props.request.EMAIL}</p>
         <h5 className="card-title">Proof Link</h5>
-        <a className="card-text" href={props.request.PROOF}>{props.request.PROOF}</a>
-        <button type="button" className={`${styles['btn-accept']} btn btn-success`} onClick={handleShowA}>Accept</button>
-        <button type="button" className={`${styles['btn-reject']} btn btn-danger`} onClick={handleShowR}>Reject</button>
+        <a className="card-text" href={props.request.PROOF}>
+          {props.request.PROOF}
+        </a>
+        <button
+          type="button"
+          className={`${styles["btn-accept"]} btn btn-success`}
+          onClick={handleShowA}
+        >
+          Accept
+        </button>
+        <button
+          type="button"
+          className={`${styles["btn-reject"]} btn btn-danger`}
+          onClick={handleShowR}
+        >
+          Reject
+        </button>
       </div>
 
       <Modal show={showA} onHide={handleCloseA}>
@@ -98,14 +118,37 @@ const InfoCard = (props) => {
 
         <Form noValidate validated={validated} onSubmit={handleAccept}>
           <Modal.Body>
-            <label for="org-temp-pass" className="col-form-label">Give organization a temporary password</label>
-            <Form.Control type="password" className="form-control" name="org-temp-pass" value={password} onChange={handleChange} required />
-            <Form.Control type="text" name='req-id-a' value={ID} hidden readOnly />
+            <label for="org-temp-pass" className="col-form-label">
+              Give organization a temporary password
+            </label>
+            <Form.Control
+              type="password"
+              className="form-control"
+              name="org-temp-pass"
+              value={password}
+              onChange={handleChange}
+              required
+            />
+            <Form.Control
+              type="text"
+              name="req-id-a"
+              value={ID}
+              hidden
+              readOnly
+            />
           </Modal.Body>
 
           <Modal.Footer>
-            <button type="button" className="btn btn-dark" onClick={handleCloseA}>Close</button>
-            <button type="submit" className="btn btn-dark" name="accept">Accept</button>
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={handleCloseA}
+            >
+              Close
+            </button>
+            <button type="submit" className="btn btn-dark" name="accept">
+              Accept
+            </button>
           </Modal.Footer>
         </Form>
       </Modal>
@@ -118,14 +161,36 @@ const InfoCard = (props) => {
         <form>
           <Modal.Body>
             <div className="mb-3">
-              <label for="recipient-name" className="col-form-label">Are you sure you want to reject this request?</label>
-              <input type="text" className="form-control" name="req-id-r" value={ID} hidden readOnly />
+              <label for="recipient-name" className="col-form-label">
+                Are you sure you want to reject this request?
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="req-id-r"
+                value={ID}
+                hidden
+                readOnly
+              />
             </div>
           </Modal.Body>
 
           <Modal.Footer>
-            <button type="button" className="btn btn-dark" onClick={handleCloseR}>No</button>
-            <button type="submit" className="btn btn-dark" name="reject" onClick={handleReject}>Yes</button>
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={handleCloseR}
+            >
+              No
+            </button>
+            <button
+              type="submit"
+              className="btn btn-dark"
+              name="reject"
+              onClick={handleReject}
+            >
+              Yes
+            </button>
           </Modal.Footer>
         </form>
       </Modal>

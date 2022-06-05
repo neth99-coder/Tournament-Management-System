@@ -125,37 +125,37 @@ function acceptRequest(data) {
                         //db.end();
                       }
                     });
-                    // var mailOptions = {
-                    //   from: "squ4doption@gmail.com",
-                    //   to: email,
-                    //   subject:
-                    //     "Temporary Password For IJGmaes Organizer account",
-                    //   text: "Password: " + password,
-                    // };
-                    // transporter.sendMail(mailOptions, function (error, info) {
-                    //   if (error) {
-                    //     console.log(error);
-                    //     throw err;
-                    //   } else {
-                    //     console.log("Email sent: " + info.response);
-                    //     return resolve("Email Sent");
-                    //   }
-                    // });
-                    const msg = {
-                      to: email, // Change to your recipient
-                      from: "ijgames1@hotmail.com", // Change to your verified sender
+                    var mailOptions = {
+                      from: "ijgames1@hotmail.com",
+                      to: email,
                       subject:
                         "Temporary Password For IJGmaes Organizer account",
                       text: "Password: " + password,
                     };
-                    sgMail
-                      .send(msg)
-                      .then(() => {
-                        console.log("Email sent");
-                      })
-                      .catch((error) => {
-                        console.error(error);
-                      });
+                    transporter.sendMail(mailOptions, function (error, info) {
+                      if (error) {
+                        console.log(error);
+                        throw err;
+                      } else {
+                        console.log("Email sent: " + info.response);
+                        return resolve("Email Sent");
+                      }
+                    });
+                    // const msg = {
+                    //   to: email, // Change to your recipient
+                    //   from: "ijgames1@hotmail.com", // Change to your verified sender
+                    //   subject:
+                    //     "Temporary Password For IJGmaes Organizer account",
+                    //   text: "Password: " + password,
+                    // };
+                    // sgMail
+                    //   .send(msg)
+                    //   .then(() => {
+                    //     console.log("Email sent");
+                    //   })
+                    //   .catch((error) => {
+                    //     console.error(error);
+                    //   });
                   }
                 });
               } else {
@@ -183,35 +183,36 @@ function rejectRequest(data) {
     db.query(sql, [status, id], (err, result) => {
       if (result) {
         //console.log('updated');
-        // var mailOptions = {
-        //   from: "squ4doption@gmail.com",
-        //   to: email,
-        //   subject: "Request Rejection from IJGmaes",
-        //   text: "We are sorry to say that your account request has been rejected by IJGmaes",
-        // };
-        // transporter.sendMail(mailOptions, function (error, info) {
-        //   if (error) {
-        //     console.log(error);
-        //     return reject(error);
-        //   } else {
-        //     console.log("Email sent: " + info.response);
-        //     return resolve("Email sent");
-        //   }
-        // });
-        const msg = {
-          to: email,
+        var mailOptions = {
           from: "ijgames1@hotmail.com",
+          to: email,
           subject: "Request Rejection from IJGmaes",
           text: "We are sorry to say that your account request has been rejected by IJGmaes",
         };
-        sgMail
-          .send(msg)
-          .then(() => {
-            console.log("Email sent");
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+            return reject(error);
+          } else {
+            console.log("Email sent: " + info.response);
+            return resolve("Email sent");
+          }
+        });
+        //   const msg = {
+        //     to: email,
+        //     from: "ijgames1@hotmail.com",
+        //     subject: "Request Rejection from IJGmaes",
+        //     text: "We are sorry to say that your account request has been rejected by IJGmaes",
+        //   };
+        //   sgMail
+        //     .send(msg)
+        //     .then(() => {
+        //       console.log("Email sent");
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
+        //
       } else {
         return reject(err);
       }
